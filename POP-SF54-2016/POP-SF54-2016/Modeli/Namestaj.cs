@@ -8,7 +8,7 @@ namespace POP_SF54_2016.Modeli
 {
     class Namestaj
     {
-        public int Id { get; set; }
+        public int ID { get; set; }
         public bool Obrisan { get; set; }
         public string Naziv { get; set; }
         public string Sifra { get; set; }
