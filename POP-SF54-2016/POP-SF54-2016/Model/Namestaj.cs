@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace POP_SF54_2016.Modeli
 {
-    class Namestaj
+    public class Namestaj
     {
         public int ID { get; set; }
         public bool Obrisan { get; set; }
@@ -14,7 +14,6 @@ namespace POP_SF54_2016.Modeli
         public string Sifra { get; set; }
         public double JedinicnaCena { get; set; }
         public int KolicinaUMagacinu { get; set; }
-        public string Tip { get; set; }
         public TipNamestaja TipNamestaja { get; set; }
     }
 }

@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ArrayOfTipNamestaja xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <TipNamestaja>
+    <ID>42</ID>
+    <Obrisan>false</Obrisan>
+    <Naziv>fotelja</Naziv>
+  </TipNamestaja>
+  <TipNamestaja>
+    <ID>2</ID>
+    <Obrisan>false</Obrisan>
+    <Naziv>stolica</Naziv>
+  </TipNamestaja>
+  <TipNamestaja>
+    <ID>3</ID>
+    <Obrisan>true</Obrisan>
+    <Naziv>aaaaa</Naziv>
+  </TipNamestaja>
+  <TipNamestaja>
+    <ID>4</ID>
+    <Obrisan>true</Obrisan>
+    <Naziv>jk</Naziv>
+  </TipNamestaja>
+  <TipNamestaja>
+    <ID>5</ID>
+    <Obrisan>false</Obrisan>
+    <Naziv>namnam</Naziv>
+  </TipNamestaja>
+</ArrayOfTipNamestaja>
