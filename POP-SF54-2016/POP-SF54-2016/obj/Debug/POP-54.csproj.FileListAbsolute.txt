@@ -1,7 +1,0 @@
-C:\Users\tinak\VisualStudio\POP-SF54-2016\POP-SF54-2016\POP-SF54-2016\bin\Debug\POP-SF54-2016.exe.config
-C:\Users\tinak\VisualStudio\POP-SF54-2016\POP-SF54-2016\POP-SF54-2016\bin\Debug\POP-SF54-2016.exe
-C:\Users\tinak\VisualStudio\POP-SF54-2016\POP-SF54-2016\POP-SF54-2016\bin\Debug\POP-SF54-2016.pdb
-C:\Users\tinak\VisualStudio\POP-SF54-2016\POP-SF54-2016\POP-SF54-2016\obj\Debug\POP-54.csprojResolveAssemblyReference.cache
-C:\Users\tinak\VisualStudio\POP-SF54-2016\POP-SF54-2016\POP-SF54-2016\obj\Debug\POP-54.csproj.CoreCompileInputs.cache
-C:\Users\tinak\VisualStudio\POP-SF54-2016\POP-SF54-2016\POP-SF54-2016\obj\Debug\POP-SF54-2016.exe
-C:\Users\tinak\VisualStudio\POP-SF54-2016\POP-SF54-2016\POP-SF54-2016\obj\Debug\POP-SF54-2016.pdb
