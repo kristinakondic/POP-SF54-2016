@@ -1,0 +1,21 @@
+﻿<?xml version="1.0" encoding="utf-8" ?> 
+<ArrayOfUser xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <User>
+    <ID>0</ID>
+    <Name>Sofronije</Name>
+    <Surname>Milivojevic</Surname>
+    <Username>a</Username>
+    <Password>a</Password>
+    <UserType>admin</UserType>
+    <Deleted>false</Deleted>
+  </User>
+  <User>
+    <ID>1</ID>
+    <Name>Aleksa</Name>
+    <Surname>Bulajic</Surname>
+    <Username>m</Username>
+    <Password>m</Password>
+    <UserType>salesman</UserType>
+    <Deleted>false</Deleted>
+  </User>
+</ArrayOfUser>

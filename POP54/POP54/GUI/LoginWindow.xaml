@@ -1,0 +1,33 @@
+﻿<Window x:Class="POP54.GUI.LoginWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:POP54.GUI"
+        mc:Ignorable="d"
+        Title="Furniture Store - Login" Height="290" Width="350" 
+        WindowStartupLocation="CenterScreen">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="71*"/>
+            <RowDefinition Height="48*"/>
+            <RowDefinition Height="48*"/>
+            <RowDefinition Height="22*"/>
+            <RowDefinition Height="40*"/>
+            <RowDefinition Height="30*"/>
+        </Grid.RowDefinitions>
+        <Label Content=" Welcome" Margin="126,24,126,10" FontSize="14" HorizontalContentAlignment="Center"/>
+
+        <Label Content="Username" Width="Auto" Grid.Row="1" Margin="52,13,221,8" Padding="0" FontSize="12"/>
+        <TextBox Name="tbUsername" Grid.Row="1" Margin="126,10,103,10"/>
+
+        <Label Content="Password" Width="Auto" Grid.Row="2" Margin="52,13,221,8" Padding="0" FontSize="12"/>
+        <TextBox Name="tbPassword" Grid.Row="2" Margin="126,10,103,10"/>
+
+        <Label Name="lblWrongLogin" Content="Wrong username/password combination!" 
+               Width="Auto" Grid.Row="3" HorizontalContentAlignment="Center" 
+               Foreground="Red"  FontSize="10" Padding="3" Visibility="Hidden"/>
+
+        <Button Name="btnLogin" Content="Login" Grid.Row="4" Margin="144,5,120,5" Click="BtnLogin_Click"/>
+    </Grid>
+</Window>

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using POP54.Model;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -23,6 +24,8 @@ namespace POP54
         public MainWindow()
         {
             InitializeComponent();
+
+
         }
     }
 }

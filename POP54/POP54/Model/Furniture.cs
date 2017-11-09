@@ -18,7 +18,7 @@ namespace POP54.Model
 
         public override string ToString()
         {
-            return String.Format("{0,-5}|{1,-15}|{2,-10}|{3,-5}|{4,-5}|{5,-5}", ID, Name, Price, Quantity, Type.Id, Deleted);
+            return String.Format("{0,-5}|{1,-15}|{2,-10}|{3,-5}|{4,-5}|{5,-5}", ID, Name, Price, Quantity, Type.ID, Deleted);
         }
     }
 }
