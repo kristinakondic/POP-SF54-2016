@@ -8,7 +8,7 @@ namespace POP54.Model
 {
     public enum TypeOfUser
     {
-        admin, salesman
+        ADMIN, SALESMAN
     }
 
     [Serializable]
@@ -24,7 +24,7 @@ namespace POP54.Model
 
         public override string ToString()
         {
-            return String.Format("{0,-5}|{1,-15}|{2,-15}|{3,-15}|{4,-15}|{5,-18}|{6,-5}", ID, Name, Surname, Username, Password, UserType, Deleted);
+            return String.Format("{0,-5}{1,-15}{2,-15}{3,-15}{4,-15}{5,-18}{6,-5}", ID, Name, Surname, Username, Password, UserType, Deleted);
         }
     }
 }

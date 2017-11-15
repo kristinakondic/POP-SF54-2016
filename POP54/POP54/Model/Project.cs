@@ -47,13 +47,13 @@ namespace POP54.Model
         {
             get
             {
-                this.furnitureTypesList = GenericSerializer.Deserialize<FurnitureType>("furniture_types.xml");
+                this.furnitureTypesList = GenericSerializer.Deserialize<FurnitureType>("furniture_type.xml");
                 return this.furnitureTypesList;
             }
             set
             {
                 this.furnitureTypesList = value;
-                GenericSerializer.Serialize<FurnitureType>("furniture_types.xml", this.furnitureTypesList);
+                GenericSerializer.Serialize<FurnitureType>("furniture_type.xml", this.furnitureTypesList);
             }
         }
         public List<Furniture> FurnitureList

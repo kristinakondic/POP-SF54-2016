@@ -10,12 +10,12 @@ namespace POP54.Model
     public class FurnitureSelling
     {
         public int ID { get; set; }
-        public List<Furniture> FurnitureForSale { get; set; }
+        public int IdFurnitureForSale { get; set; }
         public DateTime DateOfSale { get; set; }
         public int BillNo { get; set; }
         public String Buyer { get; set; }
         public double PDV { get; set; }
-        public List<AdditionalService> AdditionalServices { get; set; }
+        public int IdAdditionalServices { get; set; }
         public double FullPrice { get; set; }
 
 

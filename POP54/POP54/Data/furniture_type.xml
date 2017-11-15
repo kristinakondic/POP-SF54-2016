@@ -1,0 +1,13 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ArrayOfFurnitureType xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <FurnitureType>
+    <ID>1</ID>
+    <Name>Lezaj</Name>
+    <Deleted>false</Deleted> 
+  </FurnitureType>
+  <FurnitureType>
+    <ID>5</ID>
+    <Name>Stolica</Name>
+    <Deleted>false</Deleted>
+  </FurnitureType>
+</ArrayOfFurnitureType>

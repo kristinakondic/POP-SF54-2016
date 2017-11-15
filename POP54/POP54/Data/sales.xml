@@ -1,0 +1,11 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ArrayOfSale xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Sale>
+    <ID>1</ID>
+    <FurnitureOnSale>1</FurnitureOnSale>
+    <Discount>1230</Discount>
+    <StartDate>2017-12-08T17:49:09.8790856+01:00</StartDate>
+    <EndDate>2019-01-25T00:00:00</EndDate>
+    <Deleted>false</Deleted>
+  </Sale>
+</ArrayOfSale>

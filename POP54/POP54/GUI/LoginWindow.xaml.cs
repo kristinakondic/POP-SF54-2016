@@ -23,7 +23,7 @@ namespace POP54.GUI
         public LoginWindow()
         {
             InitializeComponent();
-            
+
         }
         private void BtnLogin_Click(object sender, RoutedEventArgs e)
         {
@@ -37,16 +37,18 @@ namespace POP54.GUI
             {
                 if (user.Username == username && user.Password == password)
                 {
-                    if (user.UserType == TypeOfUser.salesman)
+                    if (user.UserType == TypeOfUser.SALESMAN)
                     {
                         MainWindow mainWindow = new MainWindow();
                         mainWindow.Show();
+                        this.Close();
                         ok = true;
                     }
                     else
                     {
-                        AdminWindow adminWindow = new AdminWindow();
-                        adminWindow.Show();
+                        MainWindow mainWindow = new MainWindow();
+                        mainWindow.Show();
+                        this.Close();
                         ok = true;
                     }
                 }
@@ -54,7 +56,7 @@ namespace POP54.GUI
 
             if (ok == false)
             {
-                lblWrongLogin.Visibility=Visibility.Visible;
+                lblWrongLogin.Visibility = Visibility.Visible;
             }
         }
 

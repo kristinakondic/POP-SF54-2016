@@ -12,10 +12,21 @@ namespace POP54.Model
         public int ID { get; set; }
         public string Name { get; set; }
         public bool Deleted { get; set; }
-
         public override string ToString()
         {
-            return String.Format("{0,-5}|{1,-15}|{2,-5}", ID, Name, Deleted);
+            return String.Format("{0,-5}{1,-15}{2,-5}", ID, Name, Deleted);
+        }
+
+        public static FurnitureType GetId(int Id)
+        {
+            foreach (var furnitureType in Project.Instance.FurnitureTypesList)
+            {
+                if (furnitureType.ID == Id)
+                {
+                    return furnitureType;
+                }
+            }
+            return null;
         }
     }
 }

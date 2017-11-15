@@ -5,9 +5,89 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:POP54"
         mc:Ignorable="d"
-        Title="Furniture Store" Height="290" Width="350"
+        Title="Furniture Store" Height="700" Width="800"
         WindowStartupLocation="CenterScreen">
-    <Grid>
-       
-    </Grid>
+    <DockPanel>
+        <Menu DockPanel.Dock="Top">
+            <MenuItem Header="_File">
+                <MenuItem Header="_My profile"/>
+                <MenuItem Header="_Log out"/>
+                <MenuItem Header="_Exit"/>
+            </MenuItem>
+            <MenuItem Header="_Furniture">
+                <MenuItem Header="_Add"/>
+                <MenuItem Header="_Edit"/>
+                <MenuItem Header="_Delete"/>
+            </MenuItem>
+        </Menu>
+        <StackPanel>
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+
+                <DataGrid Name="dgFurniture" Margin="10,43,10,-544" FontSize="12" ItemsSource="{Binding Furniture}">
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Header="Id" Binding="{Binding ID}" />
+                        <DataGridTextColumn Header="Name" Binding="{Binding Name}" />
+                        <DataGridTextColumn Header="Product code" Binding="{Binding ProductCode}" />
+                        <DataGridTextColumn Header="Price" Binding="{Binding Price}" />
+                        <DataGridTextColumn Header="Quantity" Binding="{Binding Quantity}" />
+                        <DataGridTextColumn Header="Furniture type" Binding="{Binding FurnitureTypeId}" />
+                    </DataGrid.Columns>
+                </DataGrid>
+
+                <DataGrid Name="dgFurnitureType" Margin="10,43,10,-544" FontSize="12" ItemsSource="{Binding FurnitureType}" Visibility="Collapsed">
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Header="Id" Binding="{Binding ID}" />
+                        <DataGridTextColumn Header="Name" Binding="{Binding Name}" />
+                    </DataGrid.Columns>
+                </DataGrid>
+
+                <DataGrid Name="dgSales" Margin="10,43,10,-544" FontSize="12" ItemsSource="{Binding Sale}" Visibility="Collapsed">
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Header="Id" Binding="{Binding ID}" />
+                        <DataGridTextColumn Header="Discount" Binding="{Binding Discount}" />
+                        <DataGridTextColumn Header="Start date" Binding="{Binding StartDate}" />
+                        <DataGridTextColumn Header="End date" Binding="{Binding EndDate}" />
+                        <DataGridTextColumn Header="Furniture on sale" Binding="{Binding FurnitureOnSale}" />
+                    </DataGrid.Columns>
+                </DataGrid>
+
+                <DataGrid Name="dgUsers" Margin="10,43,10,-544" FontSize="12" ItemsSource="{Binding User}" Visibility="Collapsed">
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Header="Id" Binding="{Binding ID}" />
+                        <DataGridTextColumn Header="Name" Binding="{Binding Name}" />
+                        <DataGridTextColumn Header="Surname" Binding="{Binding Surname}" />
+                        <DataGridTextColumn Header="Username" Binding="{Binding Username}" />
+                        <DataGridTextColumn Header="Password" Binding="{Binding Password}" />
+                        <DataGridTextColumn Header="User type" Binding="{Binding UserType}" />
+
+                    </DataGrid.Columns>
+                </DataGrid>
+
+                <Label Content="Sort:" Margin="434,8,147,1"/>
+                <StackPanel Margin="479,10,10,10" Grid.Column="0">
+                    <ComboBox>
+                        <ComboBoxItem>ComboBox Item #1</ComboBoxItem>
+                        <ComboBoxItem IsSelected="True">ComboBox Item #2</ComboBoxItem>
+                        <ComboBoxItem>ComboBox Item #3</ComboBoxItem>
+                    </ComboBox>
+                </StackPanel>
+
+                <Button Name="btnFurniture" Content="Furniture" Grid.Column="1" Margin="19,43,32,-60" Click="BtnFurniture_Click" />
+                <Button Name="btnFurnitureType" Content="FurnitureType" Margin="19,142,32,-160" Grid.Column="1" Click="BtnFurnitureType_Click"/>
+                <Button Name="btnSales" Content="Sales" Grid.Column="1" Margin="19,242,32,-260" Click="BtnSales_Click"  />
+                <Button Name="btnUsers" Content="Users" Grid.Column="1" Margin="19,343,32,-361" Click="BtnUsers_Click"/>
+
+                <Button Name="btnAdd" Content="Add" Margin="20,602,520,-590" Click="BtnAdd_Click" />
+                <Button Name="btnEdit" Content="Edit" Margin="140,602,400,-590" Click="BtnEdit_Click"/>
+                <Button Name="btnDelete" Content="Delete" Margin="261,602,279,-590"/>
+                <Button Name="btnExit" Content="Exit" Margin="530,602,10,-590" Click="BtnExit_Click"/>
+            </Grid>
+        </StackPanel>
+    </DockPanel>
+
+
 </Window>
