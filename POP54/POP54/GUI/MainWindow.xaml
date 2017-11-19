@@ -27,7 +27,7 @@
                     <ColumnDefinition Width="Auto"/>
                 </Grid.ColumnDefinitions>
 
-                <DataGrid Name="dgFurniture" Margin="10,43,10,-544" FontSize="12" ItemsSource="{Binding Furniture}">
+                <DataGrid Name="dgFurniture" Margin="10,43,10,-544" FontSize="12" AutoGenerateColumns="False" ItemsSource="{Binding Furnitures}">
                     <DataGrid.Columns>
                         <DataGridTextColumn Header="Id" Binding="{Binding ID}" />
                         <DataGridTextColumn Header="Name" Binding="{Binding Name}" />

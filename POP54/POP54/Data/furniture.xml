@@ -25,7 +25,7 @@
     <Price>2555</Price>
     <Quantity>10</Quantity>
     <FurnitureTypeId>5</FurnitureTypeId>
-    <Deleted>false</Deleted>
+    <Deleted>true</Deleted>
   </Furniture>
   <Furniture>
     <ID>4</ID>
@@ -38,64 +38,46 @@
   </Furniture>
   <Furniture>
     <ID>5</ID>
-    <Name>thr</Name>
-    <ProductCode>ytj</ProductCode>
-    <Price>65</Price>
-    <Quantity>54</Quantity>
-    <FurnitureTypeId>0</FurnitureTypeId>
-    <Deleted>false</Deleted>
-  </Furniture>
-  <Furniture>
-    <ID>6</ID>
-    <Name>das</Name>
-    <ProductCode>5</ProductCode>
-    <Price>54</Price>
-    <Quantity>54</Quantity>
-    <FurnitureTypeId>5</FurnitureTypeId>
-    <Deleted>false</Deleted>
-  </Furniture>
-  <Furniture>
-    <ID>7</ID>
-    <Name>df</Name>
-    <ProductCode>653,k</ProductCode>
-    <Price>52</Price>
-    <Quantity>4</Quantity>
-    <FurnitureTypeId>1</FurnitureTypeId>
-    <Deleted>false</Deleted>
-  </Furniture>
-  <Furniture>
-    <ID>8</ID>
-    <Name>sd</Name>
-    <ProductCode>ad</ProductCode>
-    <Price>443</Price>
-    <Quantity>4</Quantity>
-    <FurnitureTypeId>1</FurnitureTypeId>
-    <Deleted>false</Deleted>
-  </Furniture>
-  <Furniture>
-    <ID>9</ID>
-    <Name>dsf</Name>
-    <ProductCode>dfs3</ProductCode>
-    <Price>33</Price>
-    <Quantity>3</Quantity>
-    <FurnitureTypeId>1</FurnitureTypeId>
-    <Deleted>false</Deleted>
-  </Furniture>
-  <Furniture>
-    <ID>10</ID>
-    <Name>sd</Name>
-    <ProductCode>d</ProductCode>
+    <Name>ertg</Name>
+    <ProductCode>g</ProductCode>
     <Price>4</Price>
     <Quantity>4</Quantity>
     <FurnitureTypeId>1</FurnitureTypeId>
     <Deleted>false</Deleted>
   </Furniture>
   <Furniture>
-    <ID>11</ID>
-    <Name>er</Name>
-    <ProductCode>ewr</ProductCode>
+    <ID>6</ID>
+    <Name>wer</Name>
+    <ProductCode>ewq</ProductCode>
     <Price>33</Price>
-    <Quantity>33</Quantity>
+    <Quantity>3</Quantity>
+    <FurnitureTypeId>1</FurnitureTypeId>
+    <Deleted>false</Deleted>
+  </Furniture>
+  <Furniture>
+    <ID>7</ID>
+    <Name>df</Name>
+    <ProductCode>df</ProductCode>
+    <Price>3</Price>
+    <Quantity>3</Quantity>
+    <FurnitureTypeId>1</FurnitureTypeId>
+    <Deleted>false</Deleted>
+  </Furniture>
+  <Furniture>
+    <ID>8</ID>
+    <Name>werf</Name>
+    <ProductCode>33</ProductCode>
+    <Price>3</Price>
+    <Quantity>3</Quantity>
+    <FurnitureTypeId>1</FurnitureTypeId>
+    <Deleted>false</Deleted>
+  </Furniture>
+  <Furniture>
+    <ID>9</ID>
+    <Name>we</Name>
+    <ProductCode>43</ProductCode>
+    <Price>3</Price>
+    <Quantity>3</Quantity>
     <FurnitureTypeId>1</FurnitureTypeId>
     <Deleted>false</Deleted>
   </Furniture>

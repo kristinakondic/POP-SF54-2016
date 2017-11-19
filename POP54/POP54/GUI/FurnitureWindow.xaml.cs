@@ -20,6 +20,8 @@ namespace POP54.GUI
     /// </summary>
     public partial class FurnitureWindow : Window
     {
+
+       
         public enum Operation
         {
             ADD,
@@ -45,23 +47,27 @@ namespace POP54.GUI
             switch (operation)
             {
                 case Operation.ADD:
-                    try
-                    {
-                        var newFurniture = new Furniture()
+                        try
                         {
-                            ID = lsFurniture.Count + 1,
-                            Name = this.tbName.Text,
-                            ProductCode = this.tbCode.Text,
-                            Price = double.Parse(this.tbPrice.Text),
-                            Quantity = int.Parse(this.tbQuantity.Text),
-                            FurnitureTypeId = furType.ID
-                        };
-                        lsFurniture.Add(newFurniture);
-                    }
-                    catch(Exception ex)
-                    {
-                        MessageBox.Show("Error input!", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
-                    }
+                            var newFurniture = new Furniture()
+                            {
+                                ID = lsFurniture.Count + 1,
+                                Name = this.tbName.Text,
+                                ProductCode = this.tbCode.Text,
+                                Price = double.Parse(this.tbPrice.Text),
+                                Quantity = int.Parse(this.tbQuantity.Text),
+                                FurnitureTypeId = furType.ID
+                            };
+                            ((MainWindow)Application.Current.MainWindow).Furnitures.Add(newFurniture);
+                            MessageBox.Show("Success!", "Success", MessageBoxButton.OK, MessageBoxImage.Information);
+                            this.Close();
+                        }
+                        catch (Exception ex)
+                        {
+                            lblWrongInput.Visibility = Visibility.Visible;
+
+                        }
+                    
                     break;
                 case Operation.EDIT:
                     var editFurniture = Furniture.GetId(furniture.ID);
@@ -77,7 +83,7 @@ namespace POP54.GUI
             }
 
             Project.Instance.FurnitureList = lsFurniture;
-            this.Close();
+          
         }
     }
 }

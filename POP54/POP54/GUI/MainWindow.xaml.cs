@@ -2,6 +2,7 @@
 using POP54.Model;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -26,9 +27,14 @@ namespace POP54
     /// </summary>
     public partial class MainWindow : Window
     {
+
+        public ObservableCollection<Furniture> Furnitures { get; set; }
+
         public MainWindow()
         {
+            
             InitializeComponent();
+            
             ShowTable(TableType.FURNITURE);
         }
 
@@ -37,15 +43,19 @@ namespace POP54
         {
             if (tbType == TableType.FURNITURE)
             {
-                dgFurniture.Items.Clear();
+                Furnitures = new ObservableCollection<Furniture>();
+                dgFurniture.ItemsSource = Furnitures;
+             
+              
                 foreach (var furniture in Project.Instance.FurnitureList)
                 {
                     if (furniture.Deleted == false)
                     {
-                        dgFurniture.Items.Add(furniture);
+                        Furnitures.Add(furniture);
                     }
                 }
                 dgFurniture.SelectedIndex = 0;
+                
             }
             else if (tbType == TableType.FURNITURE_TYPE)
             {
@@ -127,7 +137,6 @@ namespace POP54
             var newFurniture = new Furniture();
             FurnitureWindow furnitureWindow = new FurnitureWindow(newFurniture, FurnitureWindow.Operation.ADD);
             furnitureWindow.Show();
-            ShowTable(TableType.FURNITURE);
         }
         private void BtnExit_Click(object sender, RoutedEventArgs e)
         {
