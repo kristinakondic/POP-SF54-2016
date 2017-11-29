@@ -1,13 +1,28 @@
-﻿<?xml version="1.0" encoding="utf-8" ?>
+<?xml version="1.0" encoding="utf-8"?>
 <ArrayOfFurnitureType xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <FurnitureType>
-    <ID>1</ID>
     <Name>Lezaj</Name>
-    <Deleted>false</Deleted> 
+    <Deleted>false</Deleted>
+    <ID>1</ID>
   </FurnitureType>
   <FurnitureType>
-    <ID>5</ID>
     <Name>Stolica</Name>
     <Deleted>false</Deleted>
+    <ID>5</ID>
+  </FurnitureType>
+  <FurnitureType>
+    <Name>erte</Name>
+    <Deleted>true</Deleted>
+    <ID>3</ID>
+  </FurnitureType>
+  <FurnitureType>
+    <Name>rgfae</Name>
+    <Deleted>true</Deleted>
+    <ID>4</ID>
+  </FurnitureType>
+  <FurnitureType>
+    <Name>jvhvbhj</Name>
+    <Deleted>true</Deleted>
+    <ID>5</ID>
   </FurnitureType>
 </ArrayOfFurnitureType>

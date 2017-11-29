@@ -1,23 +1,54 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace POP54.Model
-{
-    [Serializable]
-    public class FurnitureType
+{ 
+    public class FurnitureType : INotifyPropertyChanged, ICloneable
     {
-        public int ID { get; set; }
-        public string Name { get; set; }
-        public bool Deleted { get; set; }
+        private int id;
+        private string name;
+        private bool deleted;
+
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        public string Name
+        {
+            get { return name; }
+            set
+            {
+                name = value;
+                OnPropertyChanged("Name");
+            }
+        }
+        public bool Deleted
+        {
+            get { return deleted; }
+            set
+            {
+                deleted = value;
+                OnPropertyChanged("Deleted");
+            }
+        }
+        public int ID
+        {
+            get { return id; }
+            set
+            {
+                id = value;
+                OnPropertyChanged("ID");
+            }
+        }
+
         public override string ToString()
         {
             return String.Format("{0,-5}{1,-15}{2,-5}", ID, Name, Deleted);
         }
 
-        public static FurnitureType GetId(int Id)
+        public static FurnitureType GetById(int Id)
         {
             foreach (var furnitureType in Project.Instance.FurnitureTypesList)
             {
@@ -27,6 +58,23 @@ namespace POP54.Model
                 }
             }
             return null;
+        }
+        protected void OnPropertyChanged(string propertyName)
+        {
+            if (PropertyChanged != null)
+            {
+                PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+            }
+        }
+
+        public object Clone()
+        {
+            return new FurnitureType
+            {
+                ID = id,
+                Name = name,
+                Deleted = deleted
+            };
         }
     }
 }

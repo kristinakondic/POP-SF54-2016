@@ -8,28 +8,46 @@
         Title="FurnitureWindow" Height="350" Width="300"
         WindowStartupLocation="CenterScreen">
     <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="27*"/>
+            <ColumnDefinition Width="46*"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="50*"/>
+            <RowDefinition Height="50*"/>
+            <RowDefinition Height="50*"/>
+            <RowDefinition Height="50*"/>
+            <RowDefinition Height="50*"/>
+            <RowDefinition Height="69*"/>
+        </Grid.RowDefinitions>
         <Label Content="Name" HorizontalAlignment="Left" Margin="20,10,0,0" VerticalAlignment="Top" Width="60" Height="30"/>
-        <TextBox Name="tbName" HorizontalAlignment="Left" Height="30" Margin="91,10,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="160"/>
-        <Label Name="lblWrongInput" Content="Wrong input!" 
-               Width="Auto" HorizontalContentAlignment="Center" 
-               Foreground="Red"  FontSize="10" Padding="3" Visibility="Hidden" Margin="91,235,41,46" />
-        <Label Content="Code" HorizontalAlignment="Left" Margin="20,56,0,0" VerticalAlignment="Top" Width="60" Height="30"/>
-        <TextBox  Name="tbCode" HorizontalAlignment="Left" Height="30" Margin="91,56,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="160"/>
-        <Label Content="Price" HorizontalAlignment="Left" Margin="20,104,0,0" VerticalAlignment="Top" Width="60" Height="30" RenderTransformOrigin="0.6,-0.433"/>
-        <TextBox Name="tbPrice" HorizontalAlignment="Left" Margin="91,104,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="160" Height="30"/>
-        <Label Content="Quantity" HorizontalAlignment="Left" Margin="20,157,0,0" VerticalAlignment="Top" Width="60" Height="30"/>
-        <TextBox Name="tbQuantity" HorizontalAlignment="Left" Margin="91,154,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="160" Height="30"/>
-        <ComboBox Name="cbFurnitureType" ItemsSource="{Binding FurnitureTypesList}" SelectedIndex="0" Margin="91,202,41,0" Height="28" VerticalAlignment="Top" >
+        <TextBox Name="tbName" HorizontalAlignment="Left" Text="{Binding Path=Name}" Height="30" Margin="13,10,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="160" Grid.Column="1"/>
+        <Label Content="Code" HorizontalAlignment="Left" Margin="20,10,0,0" VerticalAlignment="Top" Width="60" Height="30" Grid.Row="1"/>
+        <TextBox  Name="tbCode" Text="{Binding Path=ProductCode}" HorizontalAlignment="Left" Height="30" Margin="13,10,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="160" Grid.Row="1" Grid.Column="1"/>
+        <Label Content="Price" HorizontalAlignment="Left" Margin="20,10,0,0" VerticalAlignment="Top" Width="60" Height="30" RenderTransformOrigin="0.6,-0.433" Grid.Row="2"/>
+        <TextBox Name="tbPrice" Text="{Binding Path=Price}" HorizontalAlignment="Left" Margin="13,10,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="160" Height="30" Grid.Row="2" Grid.Column="1"/>
+        <Label Content="Quantity" HorizontalAlignment="Left" Margin="20,10,0,0" VerticalAlignment="Top" Width="60" Height="30" Grid.Row="3"/>
+        <TextBox Name="tbQuantity" Text="{Binding Path=Quantity}" HorizontalAlignment="Left" Margin="13,10,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="160" Height="30" Grid.Row="3" Grid.Column="1"/>
+        <ComboBox  Name="cbFurnitureType" SelectedItem="{Binding Path=FurnitureType}" Margin="13,12,10,0" Height="28" VerticalAlignment="Top" Grid.Row="4" Grid.Column="1" >
             <ComboBox.ItemTemplate>
                 <DataTemplate>
                     <TextBlock Text="{Binding Name}"/>
                 </DataTemplate>
             </ComboBox.ItemTemplate>
+            <ComboBox.ItemContainerStyle>
+                <Style TargetType="ComboBoxItem">
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding Deleted}" Value="True">
+                            <Setter Property="Visibility" Value="Collapsed"/>
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </ComboBox.ItemContainerStyle>
         </ComboBox>
-        <Label Content="Type" HorizontalAlignment="Left" Margin="20,202,0,0" VerticalAlignment="Top" Width="60" Height="30"/>
+        <Label Content="Type" HorizontalAlignment="Left" Margin="20,12,0,0" VerticalAlignment="Top" Width="60" Height="30" Grid.Row="4"/>
 
-        <Button Name="btnSave" Content="Save" Margin="40,278,173,10" Click="BtnSave_Click"/>
-        <Button Name="btnCancel" Content="Cancel" Margin="172,278,41,10" Click="BtnCancel_Click"/>
+        <Button Name="btnSave" Content="Save" Margin="31,21,0,20" Click="BtnSave_Click" Grid.Row="5"/>
+        <Button Name="btnCancel" Content="Cancel" Margin="66,21,41,20" Click="BtnCancel_Click" Grid.Row="5" Grid.Column="1" RenderTransformOrigin="0.536,0.421"/>
 
 
     </Grid>

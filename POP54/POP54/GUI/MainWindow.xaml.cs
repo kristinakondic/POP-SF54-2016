@@ -1,5 +1,6 @@
 ﻿using POP54.GUI;
 using POP54.Model;
+using POP54.Util;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -22,11 +23,14 @@ namespace POP54
     {
         FURNITURE, FURNITURE_TYPE, SALES, USERS
     }
-    /// <summary>
-    /// Interaction logic for MainWindow.xaml
-    /// </summary>
+
     public partial class MainWindow : Window
     {
+        public Furniture SelectedFurniture { get; set; }
+        public FurnitureType SelectedFurnitureType { get; set; }
+        public User SelectedUser { get; set; }
+        public Sale SelectedSale { get; set; }
+        public AdditionalService SelectedAdditionalService { get; set; }
 
         public ObservableCollection<Furniture> Furnitures { get; set; }
 
@@ -34,75 +38,35 @@ namespace POP54
         {
             
             InitializeComponent();
-            
-            ShowTable(TableType.FURNITURE);
-        }
+            dgFurniture.ItemsSource = Project.Instance.FurnitureList;
+            dgFurniture.ColumnWidth = new DataGridLength(1, DataGridLengthUnitType.Star);
+            dgFurniture.IsSynchronizedWithCurrentItem = true;
+            dgFurniture.DataContext = this;
 
+            dgFurnitureType.ItemsSource = Project.Instance.FurnitureTypesList;
+            dgFurnitureType.IsSynchronizedWithCurrentItem = true;
+            dgFurnitureType.DataContext = this;
 
-        public void ShowTable(TableType tbType)
-        {
-            if (tbType == TableType.FURNITURE)
-            {
-                Furnitures = new ObservableCollection<Furniture>();
-                dgFurniture.ItemsSource = Furnitures;
-             
-              
-                foreach (var furniture in Project.Instance.FurnitureList)
-                {
-                    if (furniture.Deleted == false)
-                    {
-                        Furnitures.Add(furniture);
-                    }
-                }
-                dgFurniture.SelectedIndex = 0;
-                
-            }
-            else if (tbType == TableType.FURNITURE_TYPE)
-            {
-                dgFurnitureType.Items.Clear();
-                foreach (var furnitureTypes in Project.Instance.FurnitureTypesList)
-                {
-                    if (furnitureTypes.Deleted == false){
-                        dgFurnitureType.Items.Add(furnitureTypes);
-                    }
-                }
-                dgFurnitureType.SelectedIndex = 0;
-                dgFurnitureType.Visibility = Visibility.Visible;
-            }
-            else if (tbType == TableType.SALES)
-            {
-                dgSales.Items.Clear();
-                foreach (var sales in Project.Instance.SalesList)
-                {
-                    if (sales.Deleted == false)
-                    {
-                        dgSales.Items.Add(sales);
-                    }
-                }
-                dgSales.SelectedIndex = 0;
-                dgSales.Visibility = Visibility.Visible;
-            }
-            else if (tbType == TableType.USERS)
-            {
-                dgSales.Items.Clear();
-                foreach (var user in Project.Instance.UsersList)
-                {
-                    if (user.Deleted == false)
-                    {
-                        dgUsers.Items.Add(user);
-                    }
-                }
-                dgUsers.SelectedIndex = 0;
-                dgUsers.Visibility = Visibility.Visible;
-            }
+            dgUsers.ItemsSource = Project.Instance.UsersList;
+            dgUsers.IsSynchronizedWithCurrentItem = true;
+            dgUsers.DataContext = this;
+
+            dgSales.ItemsSource = Project.Instance.SalesList;
+            dgSales.IsSynchronizedWithCurrentItem = true;
+            dgSales.DataContext = this;
+
+            dgAdditionalService.ItemsSource = Project.Instance.AdditionalServicesList;
+            dgAdditionalService.IsSynchronizedWithCurrentItem = true;
+            dgAdditionalService.DataContext = this;
         }
+       
         private void BtnFurniture_Click(object sender, RoutedEventArgs e)
         {
             dgFurniture.Visibility = Visibility.Visible;
             dgFurnitureType.Visibility = Visibility.Collapsed;
             dgSales.Visibility = Visibility.Collapsed;
             dgUsers.Visibility = Visibility.Collapsed;
-            ShowTable(TableType.FURNITURE);
+            dgAdditionalService.Visibility = Visibility.Collapsed;
         }
 
         private void BtnFurnitureType_Click(object sender, RoutedEventArgs e)
@@ -111,7 +75,7 @@ namespace POP54
             dgFurnitureType.Visibility = Visibility.Visible;
             dgSales.Visibility = Visibility.Collapsed;
             dgUsers.Visibility = Visibility.Collapsed;
-            ShowTable(TableType.FURNITURE_TYPE);
+            dgAdditionalService.Visibility = Visibility.Collapsed;
         }
 
         private void BtnSales_Click(object sender, RoutedEventArgs e)
@@ -120,7 +84,7 @@ namespace POP54
             dgFurnitureType.Visibility = Visibility.Collapsed;
             dgSales.Visibility = Visibility.Visible;
             dgUsers.Visibility = Visibility.Collapsed;
-            ShowTable(TableType.SALES);
+            dgAdditionalService.Visibility = Visibility.Collapsed;
         }
 
         private void BtnUsers_Click(object sender, RoutedEventArgs e)
@@ -129,14 +93,51 @@ namespace POP54
             dgFurnitureType.Visibility = Visibility.Collapsed;
             dgSales.Visibility = Visibility.Collapsed;
             dgUsers.Visibility = Visibility.Visible;
-            ShowTable(TableType.USERS);
+            dgAdditionalService.Visibility = Visibility.Collapsed;
+        }
+
+        private void BtnAditionalService_Click(object sender, RoutedEventArgs e)
+        {
+            dgFurniture.Visibility = Visibility.Collapsed;
+            dgFurnitureType.Visibility = Visibility.Collapsed;
+            dgSales.Visibility = Visibility.Collapsed;
+            dgUsers.Visibility = Visibility.Collapsed;
+            dgAdditionalService.Visibility = Visibility.Visible;
         }
 
         private void BtnAdd_Click(object sender, RoutedEventArgs e)
         {
-            var newFurniture = new Furniture();
-            FurnitureWindow furnitureWindow = new FurnitureWindow(newFurniture, FurnitureWindow.Operation.ADD);
-            furnitureWindow.Show();
+            if (dgFurniture.Visibility.Equals(Visibility.Visible))
+            {
+                var newFurniture = new Furniture();
+                var fw = new FurnitureWindow(newFurniture, FurnitureWindow.Operation.ADD);
+                fw.Show();
+            }
+            else if (dgFurnitureType.Visibility.Equals(Visibility.Visible))
+            {
+                var newFurnitureType = new FurnitureType();
+                var ftw = new FurnitureTypeWindow(newFurnitureType, FurnitureTypeWindow.Operation.ADD);
+                ftw.Show();
+            }
+            else if (dgSales.Visibility.Equals(Visibility.Visible))
+            {
+                var newSale = new Sale();
+                var sw = new SaleWindow(newSale, SaleWindow.Operation.ADD);
+                sw.Show();
+            }
+            else if (dgUsers.Visibility.Equals(Visibility.Visible))
+            {
+                var newUser = new User();
+                var uw = new UserWindow(newUser, UserWindow.Operation.ADD);
+                uw.Show();
+            }
+            else if (dgAdditionalService.Visibility.Equals(Visibility.Visible))
+            {
+                var newAdditionalService = new AdditionalService();
+                var asw = new AdditionalServiceWindow(newAdditionalService, AdditionalServiceWindow.Operation.ADD);
+                asw.Show();
+            }
+            
         }
         private void BtnExit_Click(object sender, RoutedEventArgs e)
         {
@@ -144,10 +145,68 @@ namespace POP54
         }
         private void BtnEdit_Click(object sender, RoutedEventArgs e)
         {
-            Furniture editFurniture = (Furniture)dgFurniture.SelectedItem;
-            FurnitureWindow furnitureWindow = new FurnitureWindow(editFurniture, FurnitureWindow.Operation.EDIT);
-            furnitureWindow.Show();
-            ShowTable(TableType.FURNITURE);
+            if (dgFurniture.Visibility.Equals(Visibility.Visible))
+            {
+                Furniture copy = (Furniture)SelectedFurniture.Clone();
+                FurnitureWindow furnitureWindow = new FurnitureWindow(copy, FurnitureWindow.Operation.EDIT);
+                furnitureWindow.Show();
+            }
+            else if (dgFurnitureType.Visibility.Equals(Visibility.Visible))
+            {
+                FurnitureType copy = (FurnitureType)SelectedFurnitureType.Clone();
+                FurnitureTypeWindow furnitureWindow = new FurnitureTypeWindow(copy, FurnitureTypeWindow.Operation.EDIT);
+                furnitureWindow.Show();
+            }
+            else if (dgSales.Visibility.Equals(Visibility.Visible))
+            {
+                Sale copy = (Sale)SelectedSale.Clone();
+                SaleWindow saleWindow = new SaleWindow(copy, SaleWindow.Operation.EDIT);
+                saleWindow.Show();
+            }
+            else if (dgUsers.Visibility.Equals(Visibility.Visible))
+            {
+                User copy = (User)SelectedUser.Clone();
+                UserWindow userWindow = new UserWindow(copy, UserWindow.Operation.EDIT);
+                userWindow.Show();
+            }
+            else if (dgAdditionalService.Visibility.Equals(Visibility.Visible))
+            {
+                AdditionalService copy = (AdditionalService)SelectedAdditionalService.Clone();
+                AdditionalServiceWindow additionalServiceWindow = new AdditionalServiceWindow(copy, AdditionalServiceWindow.Operation.EDIT);
+            }
+        }
+
+        private void BtnDelete_Click(object sender, RoutedEventArgs e)
+        {
+            if(MessageBox.Show($"Are you sure that you want to delete this?", "Delete", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
+            {
+                if (dgFurniture.Visibility.Equals(Visibility.Visible)){
+                    SelectedFurniture.Deleted = true;
+                    GenericSerializer.Serialize("furniture.xml", Project.Instance.FurnitureList);
+                }
+                else if (dgFurnitureType.Visibility.Equals(Visibility.Visible))
+                {
+                    SelectedFurnitureType.Deleted = true;
+                    GenericSerializer.Serialize("furniture_type.xml", Project.Instance.FurnitureTypesList);
+                }
+                else if (dgSales.Visibility.Equals(Visibility.Visible))
+                {
+                    SelectedSale.Deleted = true;
+                    GenericSerializer.Serialize("sales.xml", Project.Instance.SalesList);
+                }
+                else if (dgUsers.Visibility.Equals(Visibility.Visible))
+                {
+                    SelectedUser.Deleted = true;
+                    GenericSerializer.Serialize("users.xml", Project.Instance.UsersList);
+                }
+                
+            }
+        }
+
+        private void BtnAddSale_Click(object sender, RoutedEventArgs e)
+        {
+            SalesListWindow salesListWindow = new SalesListWindow(SelectedFurniture);
+            salesListWindow.Show();
         }
     }
 }

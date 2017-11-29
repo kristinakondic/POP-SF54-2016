@@ -1,4 +1,5 @@
 ﻿using POP54.Model;
+using POP54.Util;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,13 +16,8 @@ using System.Windows.Shapes;
 
 namespace POP54.GUI
 {
-    /// <summary>
-    /// Interaction logic for FurnitureWindow.xaml
-    /// </summary>
     public partial class FurnitureWindow : Window
     {
-
-       
         public enum Operation
         {
             ADD,
@@ -30,10 +26,28 @@ namespace POP54.GUI
 
         private Furniture furniture;
         private Operation operation;
+
         public FurnitureWindow(Furniture furniture, Operation operation)
         {
             InitializeComponent();
-            DataContext = new Project();
+            DataContext = this;
+
+            this.furniture = furniture;
+            this.operation = operation;
+
+            cbFurnitureType.ItemsSource = Project.Instance.FurnitureTypesList;
+            if (furniture.FurnitureType == null) //ovo prolazi samo ako je odabran ADD, za edit ce biti vrednost tipa tip selektovanog namestaja
+                foreach (var f in Project.Instance.FurnitureTypesList)
+                    if (!f.Deleted) 
+                    {
+                        furniture.FurnitureType = f;
+                        break;
+                    }
+            tbName.DataContext = furniture;
+            cbFurnitureType.DataContext = furniture;
+            tbCode.DataContext = furniture;
+            tbPrice.DataContext = furniture;
+            tbQuantity.DataContext = furniture;
         }
         private void BtnCancel_Click(object sender, RoutedEventArgs e)
         {
@@ -42,48 +56,36 @@ namespace POP54.GUI
 
         private void BtnSave_Click(object sender, RoutedEventArgs e)
         {
-            var lsFurniture = Project.Instance.FurnitureList;
-            var furType = (FurnitureType) cbFurnitureType.SelectedItem;
+
             switch (operation)
             {
                 case Operation.ADD:
-                        try
-                        {
-                            var newFurniture = new Furniture()
-                            {
-                                ID = lsFurniture.Count + 1,
-                                Name = this.tbName.Text,
-                                ProductCode = this.tbCode.Text,
-                                Price = double.Parse(this.tbPrice.Text),
-                                Quantity = int.Parse(this.tbQuantity.Text),
-                                FurnitureTypeId = furType.ID
-                            };
-                            ((MainWindow)Application.Current.MainWindow).Furnitures.Add(newFurniture);
-                            MessageBox.Show("Success!", "Success", MessageBoxButton.OK, MessageBoxImage.Information);
-                            this.Close();
-                        }
-                        catch (Exception ex)
-                        {
-                            lblWrongInput.Visibility = Visibility.Visible;
 
-                        }
-                    
+                    furniture.ID = Project.Instance.FurnitureList.Count + 1;
+                    Project.Instance.FurnitureList.Add(furniture);
+                    MessageBox.Show("Success!", "Congratulations", MessageBoxButton.OK, MessageBoxImage.Information);
                     break;
+
                 case Operation.EDIT:
-                    var editFurniture = Furniture.GetId(furniture.ID);
-                    foreach (var f in lsFurniture)
+
+                    foreach (var f in Project.Instance.FurnitureList)
                     {
-                        if (f.ID == editFurniture.ID)
+                        if (f.ID == furniture.ID)
                         {
-                            f.Name = this.tbName.Text;
+                            f.Name = furniture.Name;
+                            f.ProductCode = furniture.ProductCode;
+                            f.Price = furniture.Price;
+                            f.Quantity = furniture.Quantity;
+                            f.FurnitureType = furniture.FurnitureType;
+                            f.Deleted = furniture.Deleted;
                             break;
                         }
                     }
                     break;
             }
 
-            Project.Instance.FurnitureList = lsFurniture;
-          
+            GenericSerializer.Serialize("furniture.xml", Project.Instance.FurnitureList);
+            this.Close();
         }
     }
 }

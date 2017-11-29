@@ -1,0 +1,24 @@
+﻿<Window x:Class="POP54.GUI.FurnitureTypeWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:POP54.GUI"
+        mc:Ignorable="d"
+        Title="Furniture Type" Height="199" Width="291"
+        WindowStartupLocation="CenterScreen">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="121*"/>
+            <ColumnDefinition Width="171*"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="109*"/>
+            <RowDefinition Height="110*"/>
+        </Grid.RowDefinitions>
+        <Button Content="Save" HorizontalAlignment="Left" Margin="36,32,0,0" Grid.Row="1" VerticalAlignment="Top" Width="75" Click="Button_Click"/>
+        <Button Content="Cancel" HorizontalAlignment="Left" Margin="55,32,0,0" Grid.Row="1" VerticalAlignment="Top" Width="75" Grid.Column="1" Click="Button_Click_1"/>
+        <Label  Content="Name" HorizontalAlignment="Left" Margin="36,45,0,0" VerticalAlignment="Top" Width="59" RenderTransformOrigin="0.356,0.346"/>
+        <TextBox Name="tbName" HorizontalAlignment="Left" Text="{Binding Path=Name}" Height="23" Margin="10,45,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Grid.Column="1"/>
+    </Grid>
+</Window>

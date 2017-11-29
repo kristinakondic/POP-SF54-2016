@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ArrayOfAdditionalService xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <AdditionalService>
+    <Price>0</Price>
+    <Name>Sklapanje</Name>
+    <Deleted>false</Deleted>
+    <ID>1</ID>
+  </AdditionalService>
+  <AdditionalService>
+    <Price>0</Price>
+    <Name>bhbhb</Name>
+    <Deleted>false</Deleted>
+    <ID>2</ID>
+  </AdditionalService>
+</ArrayOfAdditionalService>

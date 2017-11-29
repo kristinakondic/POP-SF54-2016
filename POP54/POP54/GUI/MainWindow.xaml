@@ -20,73 +20,146 @@
                 <MenuItem Header="_Delete"/>
             </MenuItem>
         </Menu>
-        <StackPanel>
-            <Grid>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="Auto"/>
-                    <ColumnDefinition Width="Auto"/>
-                </Grid.ColumnDefinitions>
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" MinHeight="44"/>
+                <RowDefinition Height="85"/>
+                <RowDefinition Height="85"/>
+                <RowDefinition Height="85"/>
+                <RowDefinition Height="85"/>
+                <RowDefinition Height="85"/>
+                <RowDefinition Height="43"/>
+                <RowDefinition Height="42"/>
+                <RowDefinition Height="247"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="130"/>
+                <ColumnDefinition Width="130"/>
+                <ColumnDefinition Width="130"/>
+                <ColumnDefinition Width="274"/>
+                <ColumnDefinition Width="Auto"/>
+            </Grid.ColumnDefinitions>
 
-                <DataGrid Name="dgFurniture" Margin="10,43,10,-544" FontSize="12" AutoGenerateColumns="False" ItemsSource="{Binding Furnitures}">
-                    <DataGrid.Columns>
-                        <DataGridTextColumn Header="Id" Binding="{Binding ID}" />
-                        <DataGridTextColumn Header="Name" Binding="{Binding Name}" />
-                        <DataGridTextColumn Header="Product code" Binding="{Binding ProductCode}" />
-                        <DataGridTextColumn Header="Price" Binding="{Binding Price}" />
-                        <DataGridTextColumn Header="Quantity" Binding="{Binding Quantity}" />
-                        <DataGridTextColumn Header="Furniture type" Binding="{Binding FurnitureTypeId}" />
-                    </DataGrid.Columns>
-                </DataGrid>
+            <DataGrid Name="dgFurniture" Width="Auto" Margin="10" FontSize="12" SelectedItem="{Binding Path=SelectedFurniture}" AutoGenerateColumns="False" CanUserAddRows="False" IsReadOnly="True" Grid.Row="1" Grid.RowSpan="7" Grid.ColumnSpan="4" >
+                <DataGrid.RowStyle>
+                    <Style TargetType="DataGridRow">
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding Deleted}" Value="True">
+                                <Setter Property="Visibility" Value="Collapsed"/>
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </DataGrid.RowStyle>
+                
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header="Name" Binding="{Binding Name}" />
+                    <DataGridTextColumn Header="Product code" Binding="{Binding ProductCode}" />
+                    <DataGridTextColumn Header="Price" Binding="{Binding Price}">
+                    <DataGridTextColumn.CellStyle>
+                            <Style TargetType="DataGridCell">
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding Price}" Value='0'>
+                                    <Setter Property="Background" Value="Yellow"/>
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </DataGridTextColumn.CellStyle>
+                    </DataGridTextColumn>
+                    <DataGridTextColumn Header="Price on sale" Binding="{Binding PriceOnSale}" />
+                    <DataGridTextColumn Header="Quantity" Binding="{Binding Quantity}" />
+                    <DataGridTextColumn Header="Furniture type" Binding="{Binding FurnitureType.Name}" />
+                </DataGrid.Columns>
+            </DataGrid>
 
-                <DataGrid Name="dgFurnitureType" Margin="10,43,10,-544" FontSize="12" ItemsSource="{Binding FurnitureType}" Visibility="Collapsed">
-                    <DataGrid.Columns>
-                        <DataGridTextColumn Header="Id" Binding="{Binding ID}" />
-                        <DataGridTextColumn Header="Name" Binding="{Binding Name}" />
-                    </DataGrid.Columns>
-                </DataGrid>
+            <DataGrid Name="dgFurnitureType" Width="Auto" Margin="10,10,10,0" SelectedIndex="0" SelectedItem="{Binding SelectedFurnitureType}" FontSize="12" AutoGenerateColumns="False"  CanUserAddRows="False" IsReadOnly="True" Grid.Row="1" Visibility="Collapsed" Grid.RowSpan="7" Grid.ColumnSpan="4">
+                <DataGrid.RowStyle>
+                    <Style TargetType="DataGridRow">
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding Deleted}" Value="True">
+                                <Setter Property="Visibility" Value="Collapsed"/>
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </DataGrid.RowStyle>
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header="Name" Binding="{Binding Name}" />
+                </DataGrid.Columns>
+            </DataGrid>
 
-                <DataGrid Name="dgSales" Margin="10,43,10,-544" FontSize="12" ItemsSource="{Binding Sale}" Visibility="Collapsed">
-                    <DataGrid.Columns>
-                        <DataGridTextColumn Header="Id" Binding="{Binding ID}" />
-                        <DataGridTextColumn Header="Discount" Binding="{Binding Discount}" />
-                        <DataGridTextColumn Header="Start date" Binding="{Binding StartDate}" />
-                        <DataGridTextColumn Header="End date" Binding="{Binding EndDate}" />
-                        <DataGridTextColumn Header="Furniture on sale" Binding="{Binding FurnitureOnSale}" />
-                    </DataGrid.Columns>
-                </DataGrid>
+            <DataGrid Name="dgSales" Width="Auto" SelectedItem="{Binding SelectedSale}" Margin="10,10,10,0" FontSize="12" AutoGenerateColumns="False"  CanUserAddRows="False" IsReadOnly="True" Grid.Row="1" Visibility="Collapsed" Grid.RowSpan="7" Grid.ColumnSpan="4">
+                <DataGrid.RowStyle>
+                    <Style TargetType="DataGridRow">
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding Deleted}" Value="True">
+                                <Setter Property="Visibility" Value="Collapsed"/>
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </DataGrid.RowStyle>
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header="Discount" Binding="{Binding Discount}" />
+                    <DataGridTextColumn Header="Start date" Binding="{Binding StartDate}" />
+                    <DataGridTextColumn Header="End date" Binding="{Binding EndDate}" />
 
-                <DataGrid Name="dgUsers" Margin="10,43,10,-544" FontSize="12" ItemsSource="{Binding User}" Visibility="Collapsed">
-                    <DataGrid.Columns>
-                        <DataGridTextColumn Header="Id" Binding="{Binding ID}" />
-                        <DataGridTextColumn Header="Name" Binding="{Binding Name}" />
-                        <DataGridTextColumn Header="Surname" Binding="{Binding Surname}" />
-                        <DataGridTextColumn Header="Username" Binding="{Binding Username}" />
-                        <DataGridTextColumn Header="Password" Binding="{Binding Password}" />
-                        <DataGridTextColumn Header="User type" Binding="{Binding UserType}" />
+                </DataGrid.Columns>
+            </DataGrid>
 
-                    </DataGrid.Columns>
-                </DataGrid>
+            <DataGrid Name="dgUsers" Width="Auto" SelectedItem="{Binding SelectedUser}" Margin="10,10,10,0" FontSize="12" AutoGenerateColumns="False"  CanUserAddRows="False" IsReadOnly="True" Grid.Row="1" Visibility="Collapsed" Grid.RowSpan="7" Grid.ColumnSpan="4">
+                <DataGrid.RowStyle>
+                    <Style TargetType="DataGridRow">
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding Deleted}" Value="True">
+                                <Setter Property="Visibility" Value="Collapsed"/>
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </DataGrid.RowStyle>
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header="Name" Binding="{Binding Name}" />
+                    <DataGridTextColumn Header="Surname" Binding="{Binding Surname}" />
+                    <DataGridTextColumn Header="Username" Binding="{Binding Username}" />
+                    <DataGridTextColumn Header="Password" Binding="{Binding Password}" />
+                    <DataGridTextColumn Header="User type" Binding="{Binding UserType}" />
+                </DataGrid.Columns>
+            </DataGrid>
 
-                <Label Content="Sort:" Margin="434,8,147,1"/>
-                <StackPanel Margin="479,10,10,10" Grid.Column="0">
-                    <ComboBox>
-                        <ComboBoxItem>ComboBox Item #1</ComboBoxItem>
-                        <ComboBoxItem IsSelected="True">ComboBox Item #2</ComboBoxItem>
-                        <ComboBoxItem>ComboBox Item #3</ComboBoxItem>
-                    </ComboBox>
-                </StackPanel>
+            <DataGrid Name="dgAdditionalService" Width="Auto" Margin="10" FontSize="12" SelectedItem="{Binding SelectedAdditionalService}" Visibility="Collapsed" AutoGenerateColumns="False" CanUserAddRows="False" IsReadOnly="True" Grid.Row="1" Grid.RowSpan="7" Grid.ColumnSpan="4" >
+                <DataGrid.RowStyle>
+                    <Style TargetType="DataGridRow">
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding Deleted}" Value="True">
+                                <Setter Property="Visibility" Value="Collapsed"/>
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </DataGrid.RowStyle>
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header="Name" Binding="{Binding Name}" />
+                    <DataGridTextColumn Header="Price" Binding="{Binding Price}" />
+                </DataGrid.Columns>
+            </DataGrid>
 
-                <Button Name="btnFurniture" Content="Furniture" Grid.Column="1" Margin="19,43,32,-60" Click="BtnFurniture_Click" />
-                <Button Name="btnFurnitureType" Content="FurnitureType" Margin="19,142,32,-160" Grid.Column="1" Click="BtnFurnitureType_Click"/>
-                <Button Name="btnSales" Content="Sales" Grid.Column="1" Margin="19,242,32,-260" Click="BtnSales_Click"  />
-                <Button Name="btnUsers" Content="Users" Grid.Column="1" Margin="19,343,32,-361" Click="BtnUsers_Click"/>
+            <Label Content="Sort:" Margin="10,10,214,12" Grid.Column="3"/>
+            <ComboBox Margin="65,8,16,12" Grid.Column="3">
+                <ComboBoxItem>ComboBox Item #1</ComboBoxItem>
+                <ComboBoxItem IsSelected="True">ComboBox Item #2</ComboBoxItem>
+                <ComboBoxItem>ComboBox Item #3</ComboBoxItem>
+            </ComboBox>
 
-                <Button Name="btnAdd" Content="Add" Margin="20,602,520,-590" Click="BtnAdd_Click" />
-                <Button Name="btnEdit" Content="Edit" Margin="140,602,400,-590" Click="BtnEdit_Click"/>
-                <Button Name="btnDelete" Content="Delete" Margin="261,602,279,-590"/>
-                <Button Name="btnExit" Content="Exit" Margin="530,602,10,-590" Click="BtnExit_Click"/>
-            </Grid>
-        </StackPanel>
+
+            <Button Name="btnFurniture" Content="Furniture" Grid.Column="4" Margin="19,10,32,25" Click="BtnFurniture_Click" Grid.Row="1" />
+            <Button Name="btnFurnitureType" Content="FurnitureType" Margin="19,10,32,25" Grid.Column="4" Click="BtnFurnitureType_Click" Grid.Row="2"/>
+            <Button Name="btnSales" Content="Sales" Grid.Column="4" Margin="19,10,32,25" Click="BtnSales_Click" Grid.Row="3"  />
+            <Button Name="btnUsers" Content="Users" Grid.Column="4" Margin="19,11,32,24" Click="BtnUsers_Click" Grid.Row="4"/>
+            <Button Content="Additional &#xD;&#xA;   service" Grid.Column="4" HorizontalAlignment="Left" Margin="19,10,0,0" Grid.Row="5" VerticalAlignment="Top" Width="77" Height="50" Click="BtnAditionalService_Click"/>
+
+            <Button Name="btnAdd" Content="Add" Margin="29,30,23,169" Click="BtnAdd_Click" Grid.Row="8" />
+            <Button Name="btnEdit" Content="Edit" Margin="29,30,23,169" Click="BtnEdit_Click" Grid.Row="8" Grid.Column="1"/>
+            <Button Name="btnDelete" Content="Delete" Margin="29,30,23,169" Grid.Row="8" Click="BtnDelete_Click" Grid.Column="2"/>
+            <Button Name="btnExit" Content="Exit" Margin="29,30,23,169" Click="BtnExit_Click" Grid.Row="8" Grid.Column="4"/>
+            <Button Name="btnAddSale" Content="Add sale" Grid.Column="4" HorizontalAlignment="Left" Margin="19,9,0,0" Grid.Row="6" VerticalAlignment="Top" Width="77" Height="24" Click="BtnAddSale_Click" />
+            <Button Content="Bill" Grid.Column="3" HorizontalAlignment="Left" Margin="65,30,0,0" Grid.Row="8" VerticalAlignment="Top" Width="142" Height="48"/>
+        </Grid>
     </DockPanel>
 
 

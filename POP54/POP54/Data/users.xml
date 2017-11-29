@@ -1,21 +1,49 @@
-﻿<?xml version="1.0" encoding="utf-8" ?> 
+<?xml version="1.0" encoding="utf-8"?>
 <ArrayOfUser xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <User>
-    <ID>1</ID>
-    <Name>Aleksa</Name>
-    <Surname>Bulajic</Surname>
-    <Username>m</Username>
-    <Password>m</Password>
-    <UserType>SALESMAN</UserType>
     <Deleted>false</Deleted>
+    <UserType>SALESMAN</UserType>
+    <Password>m</Password>
+    <Username>Bulajic</Username>
+    <Surname>Bulajic</Surname>
+    <Name>Aleksa</Name>
+    <ID>1</ID>
   </User>
   <User>
-    <ID>2</ID>
-    <Name>Sasa</Name>
-    <Surname>Simeunovic</Surname>
-    <Username>a</Username>
-    <Password>a</Password>
-    <UserType>ADMIN</UserType>
     <Deleted>false</Deleted>
+    <UserType>ADMIN</UserType>
+    <Password>a</Password>
+    <Username>a</Username>
+    <Surname>Simeunovic</Surname>
+    <Name>Sasa</Name>
+    <ID>2</ID>
+  </User>
+  <User>
+    <Deleted>true</Deleted>
+    <UserType>ADMIN</UserType>
+    <ID>3</ID>
+  </User>
+  <User>
+    <Deleted>true</Deleted>
+    <UserType>ADMIN</UserType>
+    <Password>re</Password>
+    <Username>re</Username>
+    <Surname>rfe</Surname>
+    <Name>thg</Name>
+    <ID>4</ID>
+  </User>
+  <User>
+    <Deleted>true</Deleted>
+    <UserType>ADMIN</UserType>
+    <Password>tert</Password>
+    <Username>etrr</Username>
+    <Surname>thye</Surname>
+    <Name>aerty</Name>
+    <ID>5</ID>
+  </User>
+  <User>
+    <Deleted>true</Deleted>
+    <UserType>ADMIN</UserType>
+    <ID>6</ID>
   </User>
 </ArrayOfUser>
