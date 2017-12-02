@@ -21,7 +21,7 @@ namespace POP54
 {
     public enum TableType
     {
-        FURNITURE, FURNITURE_TYPE, SALES, USERS
+        FURNITURE, FURNITURE_TYPE, SALES, USERS, ADDITIONAL
     }
 
     public partial class MainWindow : Window
@@ -42,24 +42,60 @@ namespace POP54
             dgFurniture.ColumnWidth = new DataGridLength(1, DataGridLengthUnitType.Star);
             dgFurniture.IsSynchronizedWithCurrentItem = true;
             dgFurniture.DataContext = this;
+            int i = getFirstItemIndex(TableType.FURNITURE);     // vraca indeks prvog elementa koji nije obrisan
+            if(i != -1) SelectedFurniture = Project.Instance.FurnitureList[i];
 
             dgFurnitureType.ItemsSource = Project.Instance.FurnitureTypesList;
             dgFurnitureType.IsSynchronizedWithCurrentItem = true;
             dgFurnitureType.DataContext = this;
+            i = getFirstItemIndex(TableType.FURNITURE_TYPE);
+            if (i != -1) SelectedFurnitureType = Project.Instance.FurnitureTypesList[i];
 
             dgUsers.ItemsSource = Project.Instance.UsersList;
             dgUsers.IsSynchronizedWithCurrentItem = true;
             dgUsers.DataContext = this;
+            i = getFirstItemIndex(TableType.USERS);
+            if (i != -1) SelectedUser = Project.Instance.UsersList[i];
 
             dgSales.ItemsSource = Project.Instance.SalesList;
             dgSales.IsSynchronizedWithCurrentItem = true;
             dgSales.DataContext = this;
+            i = getFirstItemIndex(TableType.SALES);
+            if (i != -1) SelectedSale = Project.Instance.SalesList[i];
 
             dgAdditionalService.ItemsSource = Project.Instance.AdditionalServicesList;
             dgAdditionalService.IsSynchronizedWithCurrentItem = true;
             dgAdditionalService.DataContext = this;
+            i = getFirstItemIndex(TableType.ADDITIONAL);
+            if (i != -1) SelectedAdditionalService = Project.Instance.AdditionalServicesList[i];
+
+            checkSaleDate();
+           
         }
        
+       
+        public static void checkSaleDate()
+        {
+            foreach (var sale in Project.Instance.SalesList)
+            {
+                int dateCompare = DateTime.Compare(sale.EndDate, DateTime.Now);
+                if (dateCompare < 0)
+                {
+                    GenericSerializer.Serialize("sales.xml", Project.Instance.SalesList);
+                    sale.Deleted = true;
+                    foreach (var fur in Project.Instance.FurnitureList)
+                    {
+                        if (fur.SaleId == sale.ID)
+                        {
+                           
+                            fur.SaleId = 0;
+                            fur.PriceOnSale = 0;
+                            GenericSerializer.Serialize("furniture.xml", Project.Instance.FurnitureList);
+                        }
+                    }
+                }
+            }
+        }
         private void BtnFurniture_Click(object sender, RoutedEventArgs e)
         {
             dgFurniture.Visibility = Visibility.Visible;
@@ -192,6 +228,15 @@ namespace POP54
                 else if (dgSales.Visibility.Equals(Visibility.Visible))
                 {
                     SelectedSale.Deleted = true;
+                    foreach (var fur in Project.Instance.FurnitureList)
+                    {
+                        if (fur.SaleId == SelectedSale.ID)
+                        {
+                            fur.SaleId = 0;
+                            fur.PriceOnSale = 0;
+                            GenericSerializer.Serialize("furniture.xml", Project.Instance.FurnitureList);
+                        }
+                    }
                     GenericSerializer.Serialize("sales.xml", Project.Instance.SalesList);
                 }
                 else if (dgUsers.Visibility.Equals(Visibility.Visible))
@@ -207,6 +252,69 @@ namespace POP54
         {
             SalesListWindow salesListWindow = new SalesListWindow(SelectedFurniture);
             salesListWindow.Show();
+        }
+
+        private int getFirstItemIndex(TableType tt)
+        {
+            int i = 0;
+            if (tt == TableType.FURNITURE)
+            {
+                foreach (var f in Project.Instance.FurnitureList)
+                {
+                    if (f.Deleted == false)
+                    {
+                        return i;
+                    }
+                    i++;
+                }
+            }
+            else if (tt == TableType.FURNITURE_TYPE)
+            {
+                foreach (var f in Project.Instance.FurnitureTypesList)
+                {
+                    if (f.Deleted == false)
+                    {
+                        return i;
+                    }
+                    i++;
+                }
+            }
+            else if (tt == TableType.USERS)
+            {
+                foreach (var f in Project.Instance.UsersList)
+                {
+                    if (f.Deleted == false)
+                    {
+                        return i;
+                    }
+                    i++;
+                }
+            }
+            else if (tt == TableType.SALES)
+            {
+                foreach (var f in Project.Instance.SalesList)
+                {
+                    if (f.Deleted == false)
+                    {
+                        return i;
+                    }
+                    i++;
+                }
+            }
+            else if (tt == TableType.ADDITIONAL)
+            {
+                foreach (var f in Project.Instance.AdditionalServicesList)
+                {
+                    if (f.Deleted == false)
+                    {
+                        return i;
+                    }
+                    i++;
+                }
+            }
+
+            return -1;
+
         }
     }
 }

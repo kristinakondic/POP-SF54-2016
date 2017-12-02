@@ -25,4 +25,9 @@
     <Deleted>true</Deleted>
     <ID>5</ID>
   </FurnitureType>
+  <FurnitureType>
+    <Name>Predsoblje</Name>
+    <Deleted>false</Deleted>
+    <ID>6</ID>
+  </FurnitureType>
 </ArrayOfFurnitureType>

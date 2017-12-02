@@ -63,6 +63,27 @@ namespace POP54.Model
             }
         }
 
+        private Sale sale;
+
+        [XmlIgnore]
+        public Sale Sale        // dodato zbog promene akcijske cene kada se edituje prava cena
+        {
+            get
+            {
+                if (sale == null)
+                {
+                    sale = GetSaleById(saleId);
+                }
+                return sale;
+            }
+            set
+            {
+                sale = value;
+                saleId = sale.ID;
+                OnPropertyChanged("Sale");
+            }
+        }
+
 
         public bool Deleted
         {
@@ -97,6 +118,7 @@ namespace POP54.Model
             set
             {
                 price = value;
+                
                 OnPropertyChanged("Price");
             }
         }
@@ -143,6 +165,18 @@ namespace POP54.Model
                 if (furniture.ID == Id)
                 {
                     return furniture;
+                }
+            }
+            return null;
+        }
+
+        public static Sale GetSaleById(int Id)
+        {
+            foreach (var sale in Project.Instance.SalesList)
+            {
+                if (sale.ID == Id)
+                {
+                    return sale;
                 }
             }
             return null;

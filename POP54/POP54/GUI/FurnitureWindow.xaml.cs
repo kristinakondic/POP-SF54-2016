@@ -75,6 +75,10 @@ namespace POP54.GUI
                             f.Name = furniture.Name;
                             f.ProductCode = furniture.ProductCode;
                             f.Price = furniture.Price;
+                            if (f.Sale != null)
+                            {
+                                f.PriceOnSale = furniture.Price - (furniture.Price / 100 * f.Sale.Discount);    // akcijska cena se mora promeniti kada se edituje prava cena
+                            }
                             f.Quantity = furniture.Quantity;
                             f.FurnitureType = furniture.FurnitureType;
                             f.Deleted = furniture.Deleted;

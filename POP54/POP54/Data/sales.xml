@@ -2,44 +2,37 @@
 <ArrayOfSale xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <Sale>
     <Deleted>false</Deleted>
-    <EndDate>2019-01-25T00:00:00</EndDate>
-    <StartDate>2017-12-08T17:49:09.8790856+01:00</StartDate>
-    <Discount>1230</Discount>
+    <EndDate>2018-03-14T00:00:00</EndDate>
+    <StartDate>2017-12-08T00:00:00</StartDate>
+    <Discount>90</Discount>
     <ID>1</ID>
   </Sale>
   <Sale>
     <Deleted>false</Deleted>
-    <EndDate>2019-01-25T00:00:00</EndDate>
+    <EndDate>2018-11-29T19:30:00</EndDate>
     <StartDate>2017-12-08T17:49:09.8790856+01:00</StartDate>
     <Discount>45</Discount>
     <ID>2</ID>
   </Sale>
   <Sale>
     <Deleted>true</Deleted>
-    <EndDate>2019-01-25T00:00:00</EndDate>
+    <EndDate>2014-11-29T00:00:00</EndDate>
     <StartDate>2017-12-08T17:49:09.8790856+01:00</StartDate>
-    <Discount>1230</Discount>
+    <Discount>20</Discount>
     <ID>3</ID>
   </Sale>
   <Sale>
-    <Deleted>true</Deleted>
-    <EndDate>2019-01-25T00:00:00</EndDate>
+    <Deleted>false</Deleted>
+    <EndDate>2018-01-25T00:00:00</EndDate>
     <StartDate>2017-12-08T17:49:09.8790856+01:00</StartDate>
-    <Discount>1230</Discount>
+    <Discount>10</Discount>
     <ID>4</ID>
   </Sale>
   <Sale>
     <Deleted>false</Deleted>
-    <EndDate>0001-01-01T00:00:00</EndDate>
-    <StartDate>0001-01-01T00:00:00</StartDate>
-    <Discount>0</Discount>
+    <EndDate>2015-11-29T00:00:00</EndDate>
+    <StartDate>2018-11-29T00:00:00</StartDate>
+    <Discount>33</Discount>
     <ID>5</ID>
-  </Sale>
-  <Sale>
-    <Deleted>true</Deleted>
-    <EndDate>2017-11-28T00:00:00+01:00</EndDate>
-    <StartDate>2017-11-28T00:00:00</StartDate>
-    <Discount>0</Discount>
-    <ID>6</ID>
   </Sale>
 </ArrayOfSale>

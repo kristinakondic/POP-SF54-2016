@@ -72,10 +72,12 @@ namespace POP54.GUI
                     {
                         if (s.ID == sale.ID)
                         {
+                            
                             s.Discount = sale.Discount;
-                            s.StartDate = sale.StartDate;
-                            s.EndDate = sale.EndDate;
+                            s.StartDate = (DateTime)dpStartDate.SelectedDate;
+                            s.EndDate = (DateTime)dpEndDate.SelectedDate;
                             s.Deleted = sale.Deleted;
+                            MainWindow.checkSaleDate();
                             break;
                         }
                     }

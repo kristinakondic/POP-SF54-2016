@@ -54,20 +54,22 @@
                 <DataGrid.Columns>
                     <DataGridTextColumn Header="Name" Binding="{Binding Name}" />
                     <DataGridTextColumn Header="Product code" Binding="{Binding ProductCode}" />
-                    <DataGridTextColumn Header="Price" Binding="{Binding Price}">
-                    <DataGridTextColumn.CellStyle>
-                            <Style TargetType="DataGridCell">
-                                <Style.Triggers>
-                                    <DataTrigger Binding="{Binding Price}" Value='0'>
-                                    <Setter Property="Background" Value="Yellow"/>
-                                </DataTrigger>
-                            </Style.Triggers>
-                        </Style>
-                    </DataGridTextColumn.CellStyle>
-                    </DataGridTextColumn>
-                    <DataGridTextColumn Header="Price on sale" Binding="{Binding PriceOnSale}" />
                     <DataGridTextColumn Header="Quantity" Binding="{Binding Quantity}" />
                     <DataGridTextColumn Header="Furniture type" Binding="{Binding FurnitureType.Name}" />
+                    <DataGridTextColumn Header="Price" Binding="{Binding Price}"/>
+                    <DataGridTextColumn Header="Sale Price" Binding="{Binding PriceOnSale}">
+                        <DataGridTextColumn.CellStyle>
+                            <Style TargetType="DataGridCell">
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding PriceOnSale}" Value='0'>
+                                        <Setter Property="Foreground" Value="WhiteSmoke"/>
+                                        <Setter Property="IsEnabled" Value="False"/>
+                                        <Setter Property="Background" Value="WhiteSmoke"/>
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </DataGridTextColumn.CellStyle>
+                    </DataGridTextColumn>
                 </DataGrid.Columns>
             </DataGrid>
 
