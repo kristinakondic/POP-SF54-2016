@@ -21,7 +21,7 @@ namespace POP54
 {
     public enum TableType
     {
-        FURNITURE, FURNITURE_TYPE, SALES, USERS, ADDITIONAL
+        FURNITURE, FURNITURE_TYPE, SALES, USERS, ADDITIONAL, BILL
     }
 
     public partial class MainWindow : Window
@@ -31,6 +31,7 @@ namespace POP54
         public User SelectedUser { get; set; }
         public Sale SelectedSale { get; set; }
         public AdditionalService SelectedAdditionalService { get; set; }
+        public Bill SelectedBill { get; set; }
 
         public ObservableCollection<Furniture> Furnitures { get; set; }
 
@@ -69,6 +70,12 @@ namespace POP54
             i = getFirstItemIndex(TableType.ADDITIONAL);
             if (i != -1) SelectedAdditionalService = Project.Instance.AdditionalServicesList[i];
 
+            dgBill.ItemsSource = Project.Instance.BillsList;
+            dgBill.IsSynchronizedWithCurrentItem = true;
+            dgBill.DataContext = this;
+            i = getFirstItemIndex(TableType.BILL);
+            if (i != -1) SelectedBill = Project.Instance.BillsList[i];
+
             CheckSaleDate();
            
         }
@@ -102,6 +109,7 @@ namespace POP54
             dgSales.Visibility = Visibility.Collapsed;
             dgUsers.Visibility = Visibility.Collapsed;
             dgAdditionalService.Visibility = Visibility.Collapsed;
+            dgBill.Visibility = Visibility.Collapsed;
         }
 
         private void BtnFurnitureType_Click(object sender, RoutedEventArgs e)
@@ -111,6 +119,7 @@ namespace POP54
             dgSales.Visibility = Visibility.Collapsed;
             dgUsers.Visibility = Visibility.Collapsed;
             dgAdditionalService.Visibility = Visibility.Collapsed;
+            dgBill.Visibility = Visibility.Collapsed;
         }
 
         private void BtnSales_Click(object sender, RoutedEventArgs e)
@@ -120,6 +129,7 @@ namespace POP54
             dgSales.Visibility = Visibility.Visible;
             dgUsers.Visibility = Visibility.Collapsed;
             dgAdditionalService.Visibility = Visibility.Collapsed;
+            dgBill.Visibility = Visibility.Collapsed;
         }
 
         private void BtnUsers_Click(object sender, RoutedEventArgs e)
@@ -129,6 +139,7 @@ namespace POP54
             dgSales.Visibility = Visibility.Collapsed;
             dgUsers.Visibility = Visibility.Visible;
             dgAdditionalService.Visibility = Visibility.Collapsed;
+            dgBill.Visibility = Visibility.Collapsed;
         }
 
         private void BtnAditionalService_Click(object sender, RoutedEventArgs e)
@@ -138,6 +149,17 @@ namespace POP54
             dgSales.Visibility = Visibility.Collapsed;
             dgUsers.Visibility = Visibility.Collapsed;
             dgAdditionalService.Visibility = Visibility.Visible;
+            dgBill.Visibility = Visibility.Collapsed;
+        }
+
+        private void BtnBills_Click(object sender, RoutedEventArgs e)
+        {
+            dgFurniture.Visibility = Visibility.Collapsed;
+            dgFurnitureType.Visibility = Visibility.Collapsed;
+            dgSales.Visibility = Visibility.Collapsed;
+            dgUsers.Visibility = Visibility.Collapsed;
+            dgAdditionalService.Visibility = Visibility.Collapsed;
+            dgBill.Visibility = Visibility.Visible;
         }
 
         private void BtnAdd_Click(object sender, RoutedEventArgs e)
@@ -172,7 +194,13 @@ namespace POP54
                 var asw = new AdditionalServiceWindow(newAdditionalService, AdditionalServiceWindow.Operation.ADD);
                 asw.Show();
             }
-            
+            else if (dgAdditionalService.Visibility.Equals(Visibility.Visible))
+            {
+                var newBill = new Bill();
+                BillWindow bw = new BillWindow();
+                bw.Show();
+            }
+
         }
         private void BtnExit_Click(object sender, RoutedEventArgs e)
         {
@@ -243,6 +271,16 @@ namespace POP54
                     SelectedUser.Deleted = true;
                     GenericSerializer.Serialize("users.xml", Project.Instance.UsersList);
                 }
+                else if (dgAdditionalService.Visibility.Equals(Visibility.Visible))
+                {
+                    SelectedAdditionalService.Deleted = true;
+                    GenericSerializer.Serialize("additional_service.xml", Project.Instance.AdditionalServicesList);
+                }
+                else if (dgBill.Visibility.Equals(Visibility.Visible))
+                {
+                    SelectedBill.Deleted = true;
+                    GenericSerializer.Serialize("bills_list.xml", Project.Instance.BillsList);
+                }
                 
             }
         }
@@ -309,11 +347,9 @@ namespace POP54
                     i++;
                 }
             }
-
             return -1;
 
         }
-
         private void About_Click(object sender, RoutedEventArgs e)
         {
             FurnitureStore fs = new FurnitureStore();
@@ -333,6 +369,47 @@ namespace POP54
             Console.WriteLine(fs);
             StoreWindow sw = new StoreWindow(fs);
             sw.Show();
+        }
+
+        private void AddOnBill_Click(object sender, RoutedEventArgs e)
+        {
+            if(dgFurniture.Visibility == Visibility.Visible)
+            {
+                AddOnBillWindow ab = new AddOnBillWindow(SelectedFurniture);
+                ab.Show();
+            }
+            else if(dgAdditionalService.Visibility == Visibility.Visible)
+            {
+                bool added = false;
+
+                foreach(var ads in Project.Instance.Bill.AdditionalServiceList)
+                {
+                    if (SelectedAdditionalService.ID == ads.ID)
+                    {
+                        added = true;
+                        MessageBox.Show("This additional service is already added on the bill!", "Oops!!!", MessageBoxButton.OK, MessageBoxImage.Error);
+                    }
+                }
+                if (!added)
+                {
+                    MessageBox.Show("Additional service is added on the bill.", "Congratulations", MessageBoxButton.OK, MessageBoxImage.Information);
+                    Project.Instance.Bill.AdditionalServiceList.Add(SelectedAdditionalService);
+                    Project.Instance.Bill.FullPrice += SelectedAdditionalService.Price;
+                }
+                   
+            }
+            
+        }
+
+        private void Bill_Click(object sender, RoutedEventArgs e)
+        {
+            BillWindow bw = new BillWindow();
+            bw.Show();
+        }
+        private void ShowItems(object sender, RoutedEventArgs e)
+        {
+            ViewBills vb = new ViewBills(SelectedBill);
+            vb.Show();
         }
     }
 }

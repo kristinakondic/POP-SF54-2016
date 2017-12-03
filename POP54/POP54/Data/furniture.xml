@@ -66,4 +66,51 @@
     <Name>Cipelarnik</Name>
     <ID>6</ID>
   </Furniture>
+  <Furniture>
+    <PriceOnSale>0</PriceOnSale>
+    <SaleId>0</SaleId>
+    <Deleted>true</Deleted>
+    <FurnitureTypeId>1</FurnitureTypeId>
+    <Quantity>0</Quantity>
+    <Price>0</Price>
+    <ID>7</ID>
+  </Furniture>
+  <Furniture>
+    <PriceOnSale>0</PriceOnSale>
+    <SaleId>0</SaleId>
+    <Deleted>true</Deleted>
+    <FurnitureTypeId>1</FurnitureTypeId>
+    <Quantity>0</Quantity>
+    <Price>0</Price>
+    <ID>8</ID>
+  </Furniture>
+  <Furniture>
+    <PriceOnSale>0</PriceOnSale>
+    <SaleId>0</SaleId>
+    <Deleted>false</Deleted>
+    <FurnitureTypeId>1</FurnitureTypeId>
+    <Quantity>54</Quantity>
+    <Price>0</Price>
+    <ID>9</ID>
+  </Furniture>
+  <Furniture>
+    <PriceOnSale>0</PriceOnSale>
+    <SaleId>0</SaleId>
+    <Deleted>false</Deleted>
+    <FurnitureTypeId>1</FurnitureTypeId>
+    <Quantity>86</Quantity>
+    <Price>0</Price>
+    <Name>hy</Name>
+    <ID>10</ID>
+  </Furniture>
+  <Furniture>
+    <PriceOnSale>0</PriceOnSale>
+    <SaleId>0</SaleId>
+    <Deleted>false</Deleted>
+    <FurnitureTypeId>1</FurnitureTypeId>
+    <Quantity>562</Quantity>
+    <Price>0</Price>
+    <Name>sdf</Name>
+    <ID>11</ID>
+  </Furniture>
 </ArrayOfFurniture>

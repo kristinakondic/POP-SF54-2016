@@ -61,6 +61,12 @@
     <Compile Include="GUI\AdditionalServiceWindow.xaml.cs">
       <DependentUpon>AdditionalServiceWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="GUI\AddOnBillWindow.xaml.cs">
+      <DependentUpon>AddOnBillWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="GUI\BillWindow.xaml.cs">
+      <DependentUpon>BillWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="GUI\FurnitureTypeWindow.xaml.cs">
       <DependentUpon>FurnitureTypeWindow.xaml</DependentUpon>
     </Compile>
@@ -82,10 +88,21 @@
     <Compile Include="GUI\UserWindow.xaml.cs">
       <DependentUpon>UserWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="GUI\ViewBills.xaml.cs">
+      <DependentUpon>ViewBills.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Model\FurnitureStore.cs" />
     <Compile Include="Model\Sale.cs" />
     <Compile Include="Util\GenericSerializer.cs" />
     <Page Include="GUI\AdditionalServiceWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="GUI\AddOnBillWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="GUI\BillWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -129,13 +146,17 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="GUI\ViewBills.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Model\AdditionalService.cs" />
     <Compile Include="Model\Furniture.cs" />
     <Compile Include="Model\FurnitureType.cs" />
     <Compile Include="Model\Project.cs" />
-    <Compile Include="Model\FurnitureSelling.cs" />
+    <Compile Include="Model\Bill.cs" />
     <Compile Include="Model\User.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
@@ -188,7 +209,7 @@
     <Resource Include="Data\additional_service.xml" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Data\furniture_selling.xml" />
+    <Resource Include="Data\bills_list.xml" />
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Data\store.xml" />

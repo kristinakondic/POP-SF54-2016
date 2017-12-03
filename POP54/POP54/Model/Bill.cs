@@ -8,24 +8,52 @@ using System.Threading.Tasks;
 namespace POP54.Model
 {
     [Serializable]
-    public class FurnitureSelling : INotifyPropertyChanged
+    public class Bill : INotifyPropertyChanged
     {
         private int id;
         private DateTime dateOfSale;
         private int billNo;
-        private int buyer;
+        private string buyer;
         private double pdv;
-        private int idAdditionalServices;
-        private double fullPrice;
-        private int idFurnitureForSale;
+        private List<AdditionalService> additionalServiceList;
+        private double fullPrice = 0;
+        private List<Furniture> furnitureForSaleList;
+        private bool deleted;
 
-        public int IdFurnitureForSale
+        public bool Deleted
         {
-            get { return idFurnitureForSale; }
+            get { return deleted; }
             set
             {
-                idFurnitureForSale = value;
-                OnPropertyChanged("IdFurnitureForSale");
+                deleted = value;
+                OnPropertyChanged("Deleted");
+            }
+        }
+
+
+        public Bill()
+        {
+            furnitureForSaleList = new List<Furniture>();
+            additionalServiceList = new List<AdditionalService>();
+        }
+        public List<Furniture> FurnitureForSaleList
+        {
+            get { return furnitureForSaleList; }
+            set
+            {
+                furnitureForSaleList = value;
+                OnPropertyChanged("FurnitureForSaleList");
+            }
+        }
+
+
+        public List<AdditionalService> AdditionalServiceList
+        {
+            get { return additionalServiceList; }
+            set
+            {
+                additionalServiceList = value;
+                OnPropertyChanged("AdditionalServiceList");
             }
         }
 
@@ -35,16 +63,6 @@ namespace POP54.Model
             set {
                 fullPrice = value;
                 OnPropertyChanged("FullPrice");
-            }
-        }
-
-        public int IdAdditionalServices
-        {
-            get { return idAdditionalServices; }
-            set
-            {
-                idAdditionalServices = value;
-                OnPropertyChanged("IdAdditionalServices");
             }
         }
 
@@ -58,7 +76,7 @@ namespace POP54.Model
             }
         }
 
-        public int Buyer
+        public string Buyer
         {
             get { return buyer; }
             set

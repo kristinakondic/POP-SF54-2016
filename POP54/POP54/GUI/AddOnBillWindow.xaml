@@ -1,0 +1,16 @@
+﻿<Window x:Class="POP54.GUI.AddOnBillWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:POP54.GUI"
+        mc:Ignorable="d"
+        Title="AddOnBillWindow" Height="300" Width="300">
+    <Grid>
+        <Label Content="Quantity" FontSize="16" HorizontalAlignment="Left" Margin="104,42,0,0" VerticalAlignment="Top" Width="92" Height="38"/>
+        <ComboBox Name="cbQuantity" HorizontalAlignment="Left" Margin="117,104,0,0" VerticalAlignment="Top" Width="60"/>
+        <Button Content="Add" HorizontalAlignment="Left" Margin="47,193,0,0" VerticalAlignment="Top" Width="75" Height="29" Click="Add_Click"/>
+        <Button Content="Cancel" HorizontalAlignment="Left" Margin="172,193,0,0" VerticalAlignment="Top" Width="75" Height="29" Click="Cancel_Click"/>
+
+    </Grid>
+</Window>

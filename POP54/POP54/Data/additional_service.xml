@@ -12,4 +12,15 @@
     <Deleted>false</Deleted>
     <ID>2</ID>
   </AdditionalService>
+  <AdditionalService>
+    <Price>453</Price>
+    <Deleted>true</Deleted>
+    <ID>3</ID>
+  </AdditionalService>
+  <AdditionalService>
+    <Price>250</Price>
+    <Name>Rasklapanje</Name>
+    <Deleted>false</Deleted>
+    <ID>4</ID>
+  </AdditionalService>
 </ArrayOfAdditionalService>

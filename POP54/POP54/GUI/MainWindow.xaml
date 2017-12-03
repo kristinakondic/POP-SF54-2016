@@ -30,20 +30,21 @@
                 <RowDefinition Height="85"/>
                 <RowDefinition Height="85"/>
                 <RowDefinition Height="85"/>
-                <RowDefinition Height="85"/>
-                <RowDefinition Height="43"/>
-                <RowDefinition Height="42"/>
-                <RowDefinition Height="247"/>
+                <RowDefinition Height="67"/>
+                <RowDefinition Height="61"/>
+                <RowDefinition Height="52.5"/>
+                <RowDefinition Height="171.5"/>
             </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="130"/>
                 <ColumnDefinition Width="130"/>
                 <ColumnDefinition Width="130"/>
-                <ColumnDefinition Width="274"/>
+                <ColumnDefinition Width="111.5"/>
+                <ColumnDefinition Width="162.5"/>
                 <ColumnDefinition Width="Auto"/>
             </Grid.ColumnDefinitions>
 
-            <DataGrid Name="dgFurniture" Width="Auto" Margin="10" FontSize="12" SelectedItem="{Binding Path=SelectedFurniture}" AutoGenerateColumns="False" CanUserAddRows="False" IsReadOnly="True" Grid.Row="1" Grid.RowSpan="7" Grid.ColumnSpan="4" >
+            <DataGrid Name="dgFurniture" Width="Auto" Margin="10,10,10,9" FontSize="12" SelectedItem="{Binding Path=SelectedFurniture}" AutoGenerateColumns="False" CanUserAddRows="False" IsReadOnly="True" Grid.Row="1" Grid.RowSpan="6" Grid.ColumnSpan="5" >
                 <DataGrid.RowStyle>
                     <Style TargetType="DataGridRow">
                         <Style.Triggers>
@@ -76,7 +77,7 @@
                 </DataGrid.Columns>
             </DataGrid>
 
-            <DataGrid Name="dgFurnitureType" Width="Auto" Margin="10,10,10,0" SelectedIndex="0" SelectedItem="{Binding SelectedFurnitureType}" FontSize="12" AutoGenerateColumns="False"  CanUserAddRows="False" IsReadOnly="True" Grid.Row="1" Visibility="Collapsed" Grid.RowSpan="7" Grid.ColumnSpan="4">
+            <DataGrid Name="dgFurnitureType" Width="Auto" Margin="10,10,10,9" SelectedIndex="0" SelectedItem="{Binding SelectedFurnitureType}" FontSize="12" AutoGenerateColumns="False"  CanUserAddRows="False" IsReadOnly="True" Grid.Row="1" Visibility="Collapsed" Grid.RowSpan="6" Grid.ColumnSpan="5">
                 <DataGrid.RowStyle>
                     <Style TargetType="DataGridRow">
                         <Style.Triggers>
@@ -91,7 +92,7 @@
                 </DataGrid.Columns>
             </DataGrid>
 
-            <DataGrid Name="dgSales" Width="Auto" SelectedItem="{Binding SelectedSale}" Margin="10,10,10,0" FontSize="12" AutoGenerateColumns="False"  CanUserAddRows="False" IsReadOnly="True" Grid.Row="1" Visibility="Collapsed" Grid.RowSpan="7" Grid.ColumnSpan="4">
+            <DataGrid Name="dgSales" Width="Auto" SelectedItem="{Binding SelectedSale}" Margin="10" FontSize="12" AutoGenerateColumns="False"  CanUserAddRows="False" IsReadOnly="True" Grid.Row="1" Visibility="Collapsed" Grid.RowSpan="6" Grid.ColumnSpan="5">
                 <DataGrid.RowStyle>
                     <Style TargetType="DataGridRow">
                         <Style.Triggers>
@@ -109,7 +110,7 @@
                 </DataGrid.Columns>
             </DataGrid>
 
-            <DataGrid Name="dgUsers" Width="Auto" SelectedItem="{Binding SelectedUser}" Margin="10,10,10,0" FontSize="12" AutoGenerateColumns="False"  CanUserAddRows="False" IsReadOnly="True" Grid.Row="1" Visibility="Collapsed" Grid.RowSpan="7" Grid.ColumnSpan="4">
+            <DataGrid Name="dgUsers" Width="Auto" SelectedItem="{Binding SelectedUser}" Margin="10,10,10,9" FontSize="12" AutoGenerateColumns="False"  CanUserAddRows="False" IsReadOnly="True" Grid.Row="1" Visibility="Collapsed" Grid.RowSpan="6" Grid.ColumnSpan="5">
                 <DataGrid.RowStyle>
                     <Style TargetType="DataGridRow">
                         <Style.Triggers>
@@ -128,7 +129,7 @@
                 </DataGrid.Columns>
             </DataGrid>
 
-            <DataGrid Name="dgAdditionalService" Width="Auto" Margin="10" FontSize="12" SelectedItem="{Binding SelectedAdditionalService}" Visibility="Collapsed" AutoGenerateColumns="False" CanUserAddRows="False" IsReadOnly="True" Grid.Row="1" Grid.RowSpan="7" Grid.ColumnSpan="4" >
+            <DataGrid Name="dgAdditionalService" Width="Auto" Margin="10" FontSize="12" SelectedItem="{Binding SelectedAdditionalService}" Visibility="Collapsed" AutoGenerateColumns="False" CanUserAddRows="False" IsReadOnly="True" Grid.Row="1" Grid.RowSpan="6" Grid.ColumnSpan="5" >
                 <DataGrid.RowStyle>
                     <Style TargetType="DataGridRow">
                         <Style.Triggers>
@@ -144,26 +145,52 @@
                 </DataGrid.Columns>
             </DataGrid>
 
-            <Label Content="Sort:" Margin="10,10,214,12" Grid.Column="3"/>
-            <ComboBox Margin="65,8,16,12" Grid.Column="3">
+            <DataGrid Name="dgBill" Width="Auto" SelectedItem="{Binding SelectedBill}" Margin="10,10,10,9" FontSize="12" AutoGenerateColumns="False"  CanUserAddRows="False" IsReadOnly="True" Grid.Row="1" Visibility="Collapsed" Grid.RowSpan="6" Grid.ColumnSpan="5">
+                <DataGrid.RowStyle>
+                    <Style TargetType="DataGridRow">
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding Deleted}" Value="True">
+                                <Setter Property="Visibility" Value="Collapsed"/>
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </DataGrid.RowStyle>
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header="Bill no" Binding="{Binding BillNo}" />
+                    <DataGridTextColumn Header="Customer" Binding="{Binding Buyer}" />
+                    <DataGridTextColumn Header="Price" Binding="{Binding FullPrice}" />
+                    <DataGridTemplateColumn>
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <Button Click="ShowItems">Details</Button>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+                </DataGrid.Columns>
+            </DataGrid>
+
+            <Label Content="Sort:" Margin="10,10,52,12" Grid.Column="3"/>
+            <ComboBox Margin="65,8,16,12" Grid.Column="3" Grid.ColumnSpan="2">
                 <ComboBoxItem>ComboBox Item #1</ComboBoxItem>
                 <ComboBoxItem IsSelected="True">ComboBox Item #2</ComboBoxItem>
                 <ComboBoxItem>ComboBox Item #3</ComboBoxItem>
             </ComboBox>
 
 
-            <Button Name="btnFurniture" Content="Furniture" Grid.Column="4" Margin="19,10,32,25" Click="BtnFurniture_Click" Grid.Row="1" />
-            <Button Name="btnFurnitureType" Content="FurnitureType" Margin="19,10,32,25" Grid.Column="4" Click="BtnFurnitureType_Click" Grid.Row="2"/>
-            <Button Name="btnSales" Content="Sales" Grid.Column="4" Margin="19,10,32,25" Click="BtnSales_Click" Grid.Row="3"  />
-            <Button Name="btnUsers" Content="Users" Grid.Column="4" Margin="19,11,32,24" Click="BtnUsers_Click" Grid.Row="4"/>
-            <Button Content="Additional &#xD;&#xA;   service" Grid.Column="4" HorizontalAlignment="Left" Margin="19,10,0,0" Grid.Row="5" VerticalAlignment="Top" Width="77" Height="50" Click="BtnAditionalService_Click"/>
+            <Button Name="btnFurniture" Content="Furniture" Grid.Column="5" Margin="19,10,32,25" Click="BtnFurniture_Click" Grid.Row="1" />
+            <Button Name="btnFurnitureType" Content="FurnitureType" Margin="19,10,32,25" Grid.Column="5" Click="BtnFurnitureType_Click" Grid.Row="2"/>
+            <Button Name="btnSales" Content="Sales" Grid.Column="5" Margin="19,10,32,25" Click="BtnSales_Click" Grid.Row="3"  />
+            <Button Name="btnUsers" Content="Users" Grid.Column="5" Margin="19,11,32,24" Click="BtnUsers_Click" Grid.Row="4"/>
+            <Button Content="Additional &#xD;&#xA;   service" Grid.Column="5" HorizontalAlignment="Left" Margin="19,0,0,0" Grid.Row="5" VerticalAlignment="Top" Width="77" Height="50" Click="BtnAditionalService_Click"/>
 
-            <Button Name="btnAdd" Content="Add" Margin="29,30,23,169" Click="BtnAdd_Click" Grid.Row="8" />
-            <Button Name="btnEdit" Content="Edit" Margin="29,30,23,169" Click="BtnEdit_Click" Grid.Row="8" Grid.Column="1"/>
-            <Button Name="btnDelete" Content="Delete" Margin="29,30,23,169" Grid.Row="8" Click="BtnDelete_Click" Grid.Column="2"/>
-            <Button Name="btnExit" Content="Exit" Margin="29,30,23,169" Click="BtnExit_Click" Grid.Row="8" Grid.Column="4"/>
-            <Button Name="btnAddSale" Content="Add sale" Grid.Column="4" HorizontalAlignment="Left" Margin="19,9,0,0" Grid.Row="6" VerticalAlignment="Top" Width="77" Height="24" Click="BtnAddSale_Click" />
-            <Button Content="Bill" Grid.Column="3" HorizontalAlignment="Left" Margin="65,30,0,0" Grid.Row="8" VerticalAlignment="Top" Width="142" Height="48"/>
+            <Button Name="btnAdd" Content="Add" Margin="10,12,42,114" Click="BtnAdd_Click" Grid.Row="8" />
+            <Button Name="btnEdit" Content="Edit" Margin="22,12,30,114" Click="BtnEdit_Click" Grid.Row="8" Grid.Column="1"/>
+            <Button Name="btnDelete" Content="Delete" Margin="26,12,26,114" Grid.Row="8" Click="BtnDelete_Click" Grid.Column="2"/>
+            <Button Name="btnExit" Content="Exit" Margin="19,38,32,114" Click="BtnExit_Click" Grid.Row="8" Grid.Column="5"/>
+            <Button Name="btnAddSale" Content="Add sale" Grid.Column="5" HorizontalAlignment="Left" Margin="19,10,0,0" Grid.Row="7" VerticalAlignment="Top" Width="77" Height="32" Click="BtnAddSale_Click" />
+            <Button Content="Bill" Grid.Column="4" HorizontalAlignment="Left" Margin="10,12,0,0" Grid.Row="8" VerticalAlignment="Top" Width="142" Height="48" Click="Bill_Click"/>
+            <Button Content="Add on bill" Grid.Column="3" HorizontalAlignment="Left" Margin="10,10,0,0" Grid.Row="7" VerticalAlignment="Top" Width="99" Height="32" Click="AddOnBill_Click"/>
+            <Button Content="Bils list" Grid.Column="5" HorizontalAlignment="Left" Margin="19,10,0,0" Grid.Row="6" VerticalAlignment="Top" Width="77" Height="50" Click="BtnBills_Click"/>
         </Grid>
     </DockPanel>
 
