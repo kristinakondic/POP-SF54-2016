@@ -17,6 +17,7 @@ namespace POP54.Model
         public ObservableCollection<Furniture> FurnitureList { get; set; }
         public ObservableCollection<AdditionalService> AdditionalServicesList { get; set; }
         public ObservableCollection<Sale> SalesList { get; set; }
+        public ObservableCollection<FurnitureStore> Store{ get; set; }
 
         private Project()
         {
@@ -26,6 +27,7 @@ namespace POP54.Model
             FurnitureTypesList = GenericSerializer.Deserialize<FurnitureType>("furniture_type.xml");
             AdditionalServicesList = GenericSerializer.Deserialize<AdditionalService>("additional_service.xml");
             SalesList = GenericSerializer.Deserialize<Sale>("sales.xml");
+            Store = GenericSerializer.Deserialize<FurnitureStore>("store.xml");
         }
     }
 }

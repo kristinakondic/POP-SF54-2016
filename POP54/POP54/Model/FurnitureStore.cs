@@ -7,7 +7,8 @@ using System.Threading.Tasks;
 
 namespace POP54.Model
 {
-    public class Store : INotifyPropertyChanged
+    [Serializable]
+    public class FurnitureStore : INotifyPropertyChanged
     {
         private int id;
         private string name;
@@ -18,20 +19,8 @@ namespace POP54.Model
         private int companyNo;
         private string accountNo;
         private int pib;
-        private bool deleted;
 
-        public bool Deleted
-        {
-            get { return deleted; }
-            set
-            {
-                deleted = value;
-                OnPropertyChanged("Deleted");
-            }
-        }
-
-
-        public int PIB
+        public int Pib
         {
             get { return pib; }
             set
@@ -128,6 +117,12 @@ namespace POP54.Model
                 OnPropertyChanged("ID");
             }
         }
+
+        public override string ToString()
+        {
+            return String.Format("{0,-5}{1,-15}{2,-15}{3,-15}{4,-20}{5,-20}{6,-10}{7,-15}{8,-10}", ID, Name, Address, Phone, Email, Website, CompanyNo, AccountNo, Pib);
+        }
+
         public event PropertyChangedEventHandler PropertyChanged;
 
         protected void OnPropertyChanged(string propertyName)

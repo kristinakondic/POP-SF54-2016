@@ -76,9 +76,13 @@
     <Compile Include="GUI\SaleWindow.xaml.cs">
       <DependentUpon>SaleWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="GUI\StoreWindow.xaml.cs">
+      <DependentUpon>StoreWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="GUI\UserWindow.xaml.cs">
       <DependentUpon>UserWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Model\FurnitureStore.cs" />
     <Compile Include="Model\Sale.cs" />
     <Compile Include="Util\GenericSerializer.cs" />
     <Page Include="GUI\AdditionalServiceWindow.xaml">
@@ -117,6 +121,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="GUI\StoreWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="GUI\UserWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -128,7 +136,6 @@
     <Compile Include="Model\FurnitureType.cs" />
     <Compile Include="Model\Project.cs" />
     <Compile Include="Model\FurnitureSelling.cs" />
-    <Compile Include="Model\Store.cs" />
     <Compile Include="Model\User.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
@@ -182,6 +189,9 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Data\furniture_selling.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Data\store.xml" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

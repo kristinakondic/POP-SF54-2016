@@ -69,12 +69,12 @@ namespace POP54
             i = getFirstItemIndex(TableType.ADDITIONAL);
             if (i != -1) SelectedAdditionalService = Project.Instance.AdditionalServicesList[i];
 
-            checkSaleDate();
+            CheckSaleDate();
            
         }
        
        
-        public static void checkSaleDate()
+        public static void CheckSaleDate()
         {
             foreach (var sale in Project.Instance.SalesList)
             {
@@ -87,7 +87,6 @@ namespace POP54
                     {
                         if (fur.SaleId == sale.ID)
                         {
-                           
                             fur.SaleId = 0;
                             fur.PriceOnSale = 0;
                             GenericSerializer.Serialize("furniture.xml", Project.Instance.FurnitureList);
@@ -247,13 +246,11 @@ namespace POP54
                 
             }
         }
-
         private void BtnAddSale_Click(object sender, RoutedEventArgs e)
         {
             SalesListWindow salesListWindow = new SalesListWindow(SelectedFurniture);
             salesListWindow.Show();
         }
-
         private int getFirstItemIndex(TableType tt)
         {
             int i = 0;
@@ -315,6 +312,27 @@ namespace POP54
 
             return -1;
 
+        }
+
+        private void About_Click(object sender, RoutedEventArgs e)
+        {
+            FurnitureStore fs = new FurnitureStore();
+            foreach(var s in Project.Instance.Store)
+            {
+                fs.ID = s.ID;
+                fs.Name = s.Name;
+                fs.Phone = s.Phone;
+                fs.Address = s.Address;
+                fs.Email = s.Email;
+                fs.Website = s.Website;
+                fs.CompanyNo = s.CompanyNo;
+                fs.AccountNo = s.AccountNo;
+                fs.Pib = s.Pib;
+                break;
+            }
+            Console.WriteLine(fs);
+            StoreWindow sw = new StoreWindow(fs);
+            sw.Show();
         }
     }
 }

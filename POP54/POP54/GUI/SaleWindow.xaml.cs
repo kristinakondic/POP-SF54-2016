@@ -77,7 +77,7 @@ namespace POP54.GUI
                             s.StartDate = (DateTime)dpStartDate.SelectedDate;
                             s.EndDate = (DateTime)dpEndDate.SelectedDate;
                             s.Deleted = sale.Deleted;
-                            MainWindow.checkSaleDate();
+                            MainWindow.CheckSaleDate();
                             break;
                         }
                     }

@@ -1,0 +1,14 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ArrayOfFurnitureStore xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <FurnitureStore>
+    <Pib>15</Pib>
+    <AccountNo>25625</AccountNo>
+    <CompanyNo>22</CompanyNo>
+    <Website>www.fur_store.com</Website>
+    <Email>fur_strore@gp.com</Email>
+    <Phone>041/325-968-96</Phone>
+    <Address>Jelisejska 1</Address>
+    <Name>FormaIdeale</Name>
+    <ID>1</ID>
+  </FurnitureStore>
+</ArrayOfFurnitureStore>
