@@ -44,7 +44,7 @@
                 <ColumnDefinition Width="Auto"/>
             </Grid.ColumnDefinitions>
 
-            <DataGrid Name="dgFurniture" Width="Auto" Margin="10,10,10,9" FontSize="12" SelectedItem="{Binding Path=SelectedFurniture}" AutoGenerateColumns="False" CanUserAddRows="False" IsReadOnly="True" Grid.Row="1" Grid.RowSpan="6" Grid.ColumnSpan="5" >
+            <DataGrid Name="dgFurniture" ColumnWidth="*" Width="Auto" Margin="10,10,10,9" FontSize="12" SelectedItem="{Binding Path=SelectedFurniture}" AutoGenerateColumns="False" CanUserAddRows="False" IsReadOnly="True" Grid.Row="1" Grid.RowSpan="6" Grid.ColumnSpan="5" >
                 <DataGrid.RowStyle>
                     <Style TargetType="DataGridRow">
                         <Style.Triggers>

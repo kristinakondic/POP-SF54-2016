@@ -23,4 +23,10 @@
     <Deleted>false</Deleted>
     <ID>4</ID>
   </AdditionalService>
+  <AdditionalService>
+    <Price>1200</Price>
+    <Name>prevoz</Name>
+    <Deleted>false</Deleted>
+    <ID>5</ID>
+  </AdditionalService>
 </ArrayOfAdditionalService>

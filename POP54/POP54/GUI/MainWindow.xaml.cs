@@ -1,9 +1,11 @@
-﻿using POP54.GUI;
+﻿using POP54.DAO;
+using POP54.GUI;
 using POP54.Model;
 using POP54.Util;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -34,19 +36,22 @@ namespace POP54
         public Bill SelectedBill { get; set; }
 
         public ObservableCollection<Furniture> Furnitures { get; set; }
+        ICollectionView view;
 
         public MainWindow()
         {
             
             InitializeComponent();
-            dgFurniture.ItemsSource = Project.Instance.FurnitureList;
+            view = CollectionViewSource.GetDefaultView(FurnitureDAO.GetAll());
+            dgFurniture.ItemsSource = view;
             dgFurniture.ColumnWidth = new DataGridLength(1, DataGridLengthUnitType.Star);
             dgFurniture.IsSynchronizedWithCurrentItem = true;
             dgFurniture.DataContext = this;
             int i = getFirstItemIndex(TableType.FURNITURE);     // vraca indeks prvog elementa koji nije obrisan
             if(i != -1) SelectedFurniture = Project.Instance.FurnitureList[i];
 
-            dgFurnitureType.ItemsSource = Project.Instance.FurnitureTypesList;
+            view = CollectionViewSource.GetDefaultView(FurnitureTypeDAO.GetAll());
+            dgFurnitureType.ItemsSource = view;
             dgFurnitureType.IsSynchronizedWithCurrentItem = true;
             dgFurnitureType.DataContext = this;
             i = getFirstItemIndex(TableType.FURNITURE_TYPE);
@@ -77,7 +82,6 @@ namespace POP54
             if (i != -1) SelectedBill = Project.Instance.BillsList[i];
 
             CheckSaleDate();
-           
         }
        
        

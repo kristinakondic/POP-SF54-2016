@@ -16,9 +16,6 @@ using System.Windows.Shapes;
 
 namespace POP54.GUI
 {
-    /// <summary>
-    /// Interaction logic for SalesListWindow.xaml
-    /// </summary>
     public partial class SalesListWindow : Window
     {
         public Sale SelectedSale { get; set; }

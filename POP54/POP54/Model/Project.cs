@@ -25,7 +25,7 @@ namespace POP54.Model
             FurnitureList = GenericSerializer.Deserialize<Furniture>("furniture.xml");
             UsersList = GenericSerializer.Deserialize<User>("users.xml");
             BillsList = GenericSerializer.Deserialize<Bill>("bills_list.xml");
-            FurnitureTypesList = GenericSerializer.Deserialize<FurnitureType>("furniture_type.xml");
+            FurnitureTypesList = DAO.FurnitureTypeDAO.GetAll();
             AdditionalServicesList = GenericSerializer.Deserialize<AdditionalService>("additional_service.xml");
             SalesList = GenericSerializer.Deserialize<Sale>("sales.xml");
             Store = GenericSerializer.Deserialize<FurnitureStore>("store.xml");

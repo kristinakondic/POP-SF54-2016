@@ -5,7 +5,7 @@
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{70431BEA-A233-4C64-8AFD-033700F29B1F}</ProjectGuid>
-    <OutputType>Exe</OutputType>
+    <OutputType>WinExe</OutputType>
     <RootNamespace>POP54</RootNamespace>
     <AssemblyName>POP54</AssemblyName>
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
@@ -39,6 +39,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
+    <Reference Include="System.Configuration" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
     <Reference Include="Microsoft.CSharp" />
@@ -58,6 +59,12 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="DAO\AdditionalServiceDAO.cs" />
+    <Compile Include="DAO\BillDAO.cs" />
+    <Compile Include="DAO\FurnitureDAO.cs" />
+    <Compile Include="DAO\FurnitureTypeDAO.cs" />
+    <Compile Include="DAO\SaleDAO.cs" />
+    <Compile Include="DAO\UserDAO.cs" />
     <Compile Include="GUI\AdditionalServiceWindow.xaml.cs">
       <DependentUpon>AdditionalServiceWindow.xaml</DependentUpon>
     </Compile>

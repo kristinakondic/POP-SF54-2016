@@ -29,10 +29,17 @@
     <ID>4</ID>
   </Sale>
   <Sale>
-    <Deleted>false</Deleted>
+    <Deleted>true</Deleted>
     <EndDate>2015-11-29T00:00:00</EndDate>
     <StartDate>2018-11-29T00:00:00</StartDate>
     <Discount>33</Discount>
     <ID>5</ID>
+  </Sale>
+  <Sale>
+    <Deleted>false</Deleted>
+    <EndDate>2017-12-04T00:00:00+01:00</EndDate>
+    <StartDate>2017-12-04T00:00:00</StartDate>
+    <Discount>10</Discount>
+    <ID>6</ID>
   </Sale>
 </ArrayOfSale>

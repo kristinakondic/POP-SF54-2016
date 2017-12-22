@@ -23,8 +23,8 @@
     <ID>2</ID>
   </Furniture>
   <Furniture>
-    <PriceOnSale>0</PriceOnSale>
-    <SaleId>0</SaleId>
+    <PriceOnSale>180</PriceOnSale>
+    <SaleId>4</SaleId>
     <Deleted>false</Deleted>
     <FurnitureTypeId>1</FurnitureTypeId>
     <Quantity>40</Quantity>
@@ -112,5 +112,16 @@
     <Price>0</Price>
     <Name>sdf</Name>
     <ID>11</ID>
+  </Furniture>
+  <Furniture>
+    <PriceOnSale>0</PriceOnSale>
+    <SaleId>0</SaleId>
+    <Deleted>false</Deleted>
+    <FurnitureTypeId>8</FurnitureTypeId>
+    <Quantity>0</Quantity>
+    <Price>0</Price>
+    <ProductCode>fdf</ProductCode>
+    <Name>dffhg</Name>
+    <ID>12</ID>
   </Furniture>
 </ArrayOfFurniture>
