@@ -1,4 +1,5 @@
-﻿using POP54.Model;
+﻿using POP54.DAO;
+using POP54.Model;
 using POP54.Util;
 using System;
 using System.Collections.Generic;
@@ -60,9 +61,8 @@ namespace POP54.GUI
             switch (operation)
             {
                 case Operation.ADD:
-
-                    furniture.ID = Project.Instance.FurnitureList.Count + 1;
-                    Project.Instance.FurnitureList.Add(furniture);
+                    
+                    FurnitureDAO.Create(furniture);
                     MessageBox.Show("Success!", "Congratulations", MessageBoxButton.OK, MessageBoxImage.Information);
                     break;
 
@@ -72,23 +72,27 @@ namespace POP54.GUI
                     {
                         if (f.ID == furniture.ID)
                         {
+                            var pricePrim = furniture.Price;
                             f.Name = furniture.Name;
                             f.ProductCode = furniture.ProductCode;
                             f.Price = furniture.Price;
-                            if (f.Sale != null)
+                            if (f.Sales != null)
                             {
-                                f.PriceOnSale = furniture.Price - (furniture.Price / 100 * f.Sale.Discount);    // akcijska cena se mora promeniti kada se edituje prava cena
+                                foreach(var s in f.Sales)
+                                {
+                                    f.PriceOnSale = pricePrim - (pricePrim / 100 * s.Discount);
+                                    pricePrim = f.PriceOnSale;
+                                }
                             }
                             f.Quantity = furniture.Quantity;
                             f.FurnitureType = furniture.FurnitureType;
                             f.Deleted = furniture.Deleted;
                             break;
                         }
+                        FurnitureDAO.Update(furniture);
                     }
                     break;
             }
-
-            GenericSerializer.Serialize("furniture.xml", Project.Instance.FurnitureList);
             this.Close();
         }
     }

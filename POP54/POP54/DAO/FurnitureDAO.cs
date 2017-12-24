@@ -16,6 +16,7 @@ namespace POP54.DAO
         public static ObservableCollection<Furniture> GetAll()
         {
             var furniture = new ObservableCollection<Furniture>();
+            string commandText = "SELECT * FROM Sale WHERE ID in (SELECT SaleId FROM FurnitureSales WHERE FurnitureId = @id) AND Deleted=0;";
 
             using (var con = new SqlConnection(ConfigurationManager.ConnectionStrings["POP"].ConnectionString))
             {
@@ -28,20 +29,41 @@ namespace POP54.DAO
                 cmd.CommandText = "SELECT * FROM Furniture WHERE Deleted = 0;";
                 da.SelectCommand = cmd;
                 da.Fill(ds, "Furniture");
+                List<Sale> ls = new List<Sale>();
 
                 foreach (DataRow row in ds.Tables["Furniture"].Rows)
                 {
                     var f = new Furniture();
                     f.ID = Convert.ToInt32(row["ID"]);
                     f.Name = row["Name"].ToString();
-                    f.FurnitureTypeId = Convert.ToInt32(row["FurniturTypeId"]);
+                    f.FurnitureTypeId = Convert.ToInt32(row["FurnitureTypeId"]);
                     f.ProductCode = row["ProductCode"].ToString();
                     f.Quantity = Convert.ToInt32(row["Quantity"]);
                     f.Price = Convert.ToDouble(row["Price"]);
-                    f.SaleId = Convert.ToInt32(row["SaleId"]);
-                    f.PriceOnSale = Convert.ToInt32(row["PriceOnSale"]);
+                    f.PriceOnSale = Convert.ToDouble(row["PriceOnSale"]);
                     f.Deleted = bool.Parse(row["Deleted"].ToString());
 
+                    SqlCommand command = new SqlCommand(commandText, con);
+                    command.Parameters.Add("@id", SqlDbType.Int);
+                    command.Parameters["@id"].Value = f.ID;
+                    da.SelectCommand = command;
+                    da.Fill(ds, "Sale");
+                    
+                    foreach (DataRow roww in ds.Tables["Sale"].Rows)
+                    {
+                        var s = new Sale();
+                        s.ID = Convert.ToInt32(roww["ID"]);
+                        s.StartDate = (DateTime)roww["StartDate"];
+                        s.EndDate = (DateTime)roww["EndDate"];
+                        s.Discount = Convert.ToInt32(roww["Discount"]);
+                        
+                        ls.Add(s);
+                        
+                    }
+                    if (ls.Count != 0)
+                        f.Sales = ls;
+                    else
+                        f.Sales = null;
                     furniture.Add(f);
                 }
             }
@@ -57,14 +79,13 @@ namespace POP54.DAO
 
                 SqlCommand cmd = con.CreateCommand();
 
-                cmd.CommandText = "INSERT INTO Furniture(Name, FurnitureTypeId, ProductCode, Quantity, Price, SaleId, PriceOnSale, Deleted) VALUES (@Name, @FurnitureTypeId, @ProductCode, @Quantity, @Price, @SaleId, @PriceOnSale, @Deleted);";
+                cmd.CommandText = "INSERT INTO Furniture(Name, FurnitureTypeId, ProductCode, Quantity, Price, PriceOnSale, Deleted) VALUES (@Name, @FurnitureTypeId, @ProductCode, @Quantity, @Price, @PriceOnSale, @Deleted);";
                 cmd.CommandText += "SELECT SCOPE_IDENTITY();";
                 cmd.Parameters.AddWithValue("Name", f.Name);
                 cmd.Parameters.AddWithValue("FurnitureTypeId", f.FurnitureTypeId);
                 cmd.Parameters.AddWithValue("ProductCode", f.ProductCode);
                 cmd.Parameters.AddWithValue("Quantity", f.Quantity);
                 cmd.Parameters.AddWithValue("Price", f.Price);
-                cmd.Parameters.AddWithValue("SaleId", f.SaleId);
                 cmd.Parameters.AddWithValue("PriceOnSale", f.PriceOnSale);
                 cmd.Parameters.AddWithValue("Deleted", f.Deleted);
 
@@ -86,7 +107,7 @@ namespace POP54.DAO
 
                 SqlCommand cmd = con.CreateCommand();
 
-                cmd.CommandText = "UPDATE Furniture SET Name=@Name, Name, FurnitureTypeId, ProductCode, Quantity, Price, SaleId, PriceOnSale, Deleted) VALUES (Name = @Name, FurnitureTypeId = @FurnitureTypeId, ProductCode = @ProductCode, Quantity = @Quantity, Price = @Price, SaleId = @SaleId, PriceOnSale = @PriceOnSale, Delete=@Delete WHERE ID = @ID;";
+                cmd.CommandText = "UPDATE Furniture SET Name = @Name, FurnitureTypeId = @FurnitureTypeId, ProductCode = @ProductCode, Quantity = @Quantity, Price = @Price, PriceOnSale = @PriceOnSale, Deleted=@Deleted WHERE ID = @ID;";
                 cmd.CommandText += "SELECT SCOPE_IDENTITY();";
                 cmd.Parameters.AddWithValue("ID", f.ID);
                 cmd.Parameters.AddWithValue("Name", f.Name);
@@ -94,7 +115,6 @@ namespace POP54.DAO
                 cmd.Parameters.AddWithValue("ProductCode", f.ProductCode);
                 cmd.Parameters.AddWithValue("Quantity", f.Quantity);
                 cmd.Parameters.AddWithValue("Price", f.Price);
-                cmd.Parameters.AddWithValue("SaleId", f.SaleId);
                 cmd.Parameters.AddWithValue("PriceOnSale", f.PriceOnSale);
                 cmd.Parameters.AddWithValue("Deleted", f.Deleted);
 
@@ -109,7 +129,6 @@ namespace POP54.DAO
                         fur.ProductCode = f.ProductCode;
                         fur.Quantity = f.Quantity;
                         fur.Price = f.Price;
-                        fur.SaleId = f.SaleId;
                         fur.PriceOnSale = f.PriceOnSale;
                         fur.Deleted = f.Deleted;
                     }

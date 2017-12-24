@@ -106,7 +106,7 @@ namespace POP54.DAO
                     }
                 }
             }
-            return bill;
+            return bills;
         }
 
         public static void Delete(Bill bill)

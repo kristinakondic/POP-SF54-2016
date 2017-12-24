@@ -18,7 +18,7 @@ namespace POP54.Model
         private int quantity;
         private int furnitureTypeId;
         private bool deleted;
-        private int saleId;
+        private List<Sale> sales;
         private double priceOnSale = 0;
 
         public double PriceOnSale
@@ -32,13 +32,13 @@ namespace POP54.Model
         }
 
 
-        public int SaleId
+        public List<Sale> Sales
         {
-            get { return saleId; }
+            get { return sales; }
             set
             {
-                saleId = value;
-                OnPropertyChanged("SaleId");
+                sales = value;
+                OnPropertyChanged("Sales");
             }
         }
 
@@ -62,29 +62,7 @@ namespace POP54.Model
                 OnPropertyChanged("FurnitureType");
             }
         }
-
-        private Sale sale;
-
-        [XmlIgnore]
-        public Sale Sale        // dodato zbog promene akcijske cene kada se edituje prava cena
-        {
-            get
-            {
-                if (sale == null)
-                {
-                    sale = GetSaleById(saleId);
-                }
-                return sale;
-            }
-            set
-            {
-                sale = value;
-                saleId = sale.ID;
-                OnPropertyChanged("Sale");
-            }
-        }
-
-
+        
         public bool Deleted
         {
             get { return deleted; }

@@ -1,4 +1,5 @@
-﻿using POP54.Model;
+﻿using POP54.DAO;
+using POP54.Model;
 using POP54.Util;
 using System;
 using System.Collections.Generic;
@@ -39,10 +40,19 @@ namespace POP54.GUI
 
         private void BtnAddSale_Click(object sender, RoutedEventArgs e)
         {
-            furniture.SaleId = SelectedSale.ID;
-            furniture.PriceOnSale = furniture.Price - (furniture.Price / 100 * SelectedSale.Discount);
+            SaleDAO.AddFurnitureSale(SelectedSale, furniture);
+            var pricePrim = furniture.Price;
+            if (furniture.Sales != null)
+            {
+                foreach (var s in furniture.Sales)
+                {
+                    furniture.PriceOnSale = pricePrim - (pricePrim / 100 * s.Discount);
+                    pricePrim = furniture.PriceOnSale;
+                }
+            }
+           
+            FurnitureDAO.Update(furniture);
             MessageBox.Show("Success!", "Congratulations", MessageBoxButton.OK, MessageBoxImage.Information);
-            GenericSerializer.Serialize("furniture.xml", Project.Instance.FurnitureList);
             this.Close();
         }
     }

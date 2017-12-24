@@ -12,7 +12,7 @@ namespace POP54.Model
     public class Sale : INotifyPropertyChanged, ICloneable
     {
         private int id;
-        private double discount;
+        private int discount;
         private DateTime startDate;
         private DateTime endDate;
         private bool deleted;
@@ -51,7 +51,7 @@ namespace POP54.Model
 
         
 
-        public double Discount
+        public int Discount
         {
             get { return discount; }
             set

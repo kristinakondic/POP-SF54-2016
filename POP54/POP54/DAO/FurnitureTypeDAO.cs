@@ -91,7 +91,7 @@ namespace POP54.DAO
                     }
                 }
             }
-            return ft;
+            return furnitureTypes;
         }
 
         public static void Delete(FurnitureType ft)

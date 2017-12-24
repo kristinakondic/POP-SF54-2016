@@ -22,13 +22,13 @@ namespace POP54.Model
 
         private Project()
         {
-            FurnitureList = GenericSerializer.Deserialize<Furniture>("furniture.xml");
-            UsersList = GenericSerializer.Deserialize<User>("users.xml");
-            BillsList = GenericSerializer.Deserialize<Bill>("bills_list.xml");
+            FurnitureList = DAO.FurnitureDAO.GetAll();
+            UsersList = DAO.UserDAO.GetAll();
+            BillsList = DAO.BillDAO.GetAll();
             FurnitureTypesList = DAO.FurnitureTypeDAO.GetAll();
-            AdditionalServicesList = GenericSerializer.Deserialize<AdditionalService>("additional_service.xml");
-            SalesList = GenericSerializer.Deserialize<Sale>("sales.xml");
-            Store = GenericSerializer.Deserialize<FurnitureStore>("store.xml");
+            AdditionalServicesList = DAO.AdditionalServiceDAO.GetAll();
+            SalesList = DAO.SaleDAO.GetAll();
+            //Store = DAO.fu.GetAll();
             Bill = new Bill();
         }
     }

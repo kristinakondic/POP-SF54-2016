@@ -5,7 +5,7 @@
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{70431BEA-A233-4C64-8AFD-033700F29B1F}</ProjectGuid>
-    <OutputType>WinExe</OutputType>
+    <OutputType>Exe</OutputType>
     <RootNamespace>POP54</RootNamespace>
     <AssemblyName>POP54</AssemblyName>
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
@@ -220,6 +220,10 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Data\store.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Db_scripts\crebas.sql" />
+    <Content Include="Db_scripts\seed.sql" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

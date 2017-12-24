@@ -16,17 +16,16 @@ namespace POP54.DAO
         public static ObservableCollection<User> GetAll()
         {
             var users = new ObservableCollection<User>();
-
+            string commandText = "SELECT * FROM dbo.[User] WHERE Deleted = 0;";
             using (var con = new SqlConnection(ConfigurationManager.ConnectionStrings["POP"].ConnectionString))
             {
                 con.Open();
-
-                SqlCommand cmd = con.CreateCommand();
+                
                 SqlDataAdapter da = new SqlDataAdapter();
                 DataSet ds = new DataSet();
 
-                cmd.CommandText = "SELECT * FROM User WHERE Deleted = 0;";
-                da.SelectCommand = cmd;
+                SqlCommand command = new SqlCommand(commandText, con);
+                da.SelectCommand = command;
                 da.Fill(ds, "User");
 
                 foreach (DataRow row in ds.Tables["User"].Rows)
@@ -37,7 +36,7 @@ namespace POP54.DAO
                     user.Surname = row["Surname"].ToString();
                     user.Username = row["Username"].ToString();
                     user.Password = row["Password"].ToString();
-                    user.UserType = (TypeOfUser)(row["UserType"]);
+                    user.UserType =(TypeOfUser) Convert.ToInt32(row["UserType"]);
                     user.Deleted = bool.Parse(row["Deleted"].ToString());
 
                     users.Add(user);
@@ -106,13 +105,13 @@ namespace POP54.DAO
                     }
                 }
             }
-            return user;
+            return users;
         }
 
-        public static void Delete(Sale sale)
+        public static void Delete(User user)
         {
-            sale.Deleted = true;
-            Update(sale);
+            user.Deleted = true;
+            Update(user);
         }
     }
 }

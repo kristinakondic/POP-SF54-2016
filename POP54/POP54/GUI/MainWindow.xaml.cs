@@ -36,22 +36,19 @@ namespace POP54
         public Bill SelectedBill { get; set; }
 
         public ObservableCollection<Furniture> Furnitures { get; set; }
-        ICollectionView view;
 
         public MainWindow()
         {
             
             InitializeComponent();
-            view = CollectionViewSource.GetDefaultView(FurnitureDAO.GetAll());
-            dgFurniture.ItemsSource = view;
+            dgFurniture.ItemsSource = Project.Instance.FurnitureList;
             dgFurniture.ColumnWidth = new DataGridLength(1, DataGridLengthUnitType.Star);
             dgFurniture.IsSynchronizedWithCurrentItem = true;
             dgFurniture.DataContext = this;
             int i = getFirstItemIndex(TableType.FURNITURE);     // vraca indeks prvog elementa koji nije obrisan
             if(i != -1) SelectedFurniture = Project.Instance.FurnitureList[i];
 
-            view = CollectionViewSource.GetDefaultView(FurnitureTypeDAO.GetAll());
-            dgFurnitureType.ItemsSource = view;
+            dgFurnitureType.ItemsSource = Project.Instance.FurnitureTypesList;
             dgFurnitureType.IsSynchronizedWithCurrentItem = true;
             dgFurnitureType.DataContext = this;
             i = getFirstItemIndex(TableType.FURNITURE_TYPE);
@@ -92,17 +89,8 @@ namespace POP54
                 int dateCompare = DateTime.Compare(sale.EndDate, DateTime.Now);
                 if (dateCompare < 0)
                 {
-                    GenericSerializer.Serialize("sales.xml", Project.Instance.SalesList);
-                    sale.Deleted = true;
-                    foreach (var fur in Project.Instance.FurnitureList)
-                    {
-                        if (fur.SaleId == sale.ID)
-                        {
-                            fur.SaleId = 0;
-                            fur.PriceOnSale = 0;
-                            GenericSerializer.Serialize("furniture.xml", Project.Instance.FurnitureList);
-                        }
-                    }
+                    SaleDAO.Delete(sale);
+                    SaleDAO.DeleteFurnitureSale(sale);
                 }
             }
         }
@@ -249,41 +237,33 @@ namespace POP54
             {
                 if (dgFurniture.Visibility.Equals(Visibility.Visible)){
                     SelectedFurniture.Deleted = true;
-                    GenericSerializer.Serialize("furniture.xml", Project.Instance.FurnitureList);
+                    FurnitureDAO.Update(SelectedFurniture);
                 }
                 else if (dgFurnitureType.Visibility.Equals(Visibility.Visible))
                 {
                     SelectedFurnitureType.Deleted = true;
-                    GenericSerializer.Serialize("furniture_type.xml", Project.Instance.FurnitureTypesList);
+                    FurnitureTypeDAO.Update(SelectedFurnitureType);
                 }
                 else if (dgSales.Visibility.Equals(Visibility.Visible))
                 {
                     SelectedSale.Deleted = true;
-                    foreach (var fur in Project.Instance.FurnitureList)
-                    {
-                        if (fur.SaleId == SelectedSale.ID)
-                        {
-                            fur.SaleId = 0;
-                            fur.PriceOnSale = 0;
-                            GenericSerializer.Serialize("furniture.xml", Project.Instance.FurnitureList);
-                        }
-                    }
-                    GenericSerializer.Serialize("sales.xml", Project.Instance.SalesList);
+                    SaleDAO.Delete(SelectedSale);
+                    SaleDAO.DeleteFurnitureSale(SelectedSale);
                 }
                 else if (dgUsers.Visibility.Equals(Visibility.Visible))
                 {
                     SelectedUser.Deleted = true;
-                    GenericSerializer.Serialize("users.xml", Project.Instance.UsersList);
+                    UserDAO.Delete(SelectedUser);
                 }
                 else if (dgAdditionalService.Visibility.Equals(Visibility.Visible))
                 {
                     SelectedAdditionalService.Deleted = true;
-                    GenericSerializer.Serialize("additional_service.xml", Project.Instance.AdditionalServicesList);
+                    AdditionalServiceDAO.Delete(SelectedAdditionalService);
                 }
                 else if (dgBill.Visibility.Equals(Visibility.Visible))
                 {
                     SelectedBill.Deleted = true;
-                    GenericSerializer.Serialize("bills_list.xml", Project.Instance.BillsList);
+                    BillDAO.Delete(SelectedBill);
                 }
                 
             }

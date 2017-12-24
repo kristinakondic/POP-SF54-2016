@@ -25,7 +25,7 @@ namespace POP54.DAO
                 SqlDataAdapter da = new SqlDataAdapter();
                 DataSet ds = new DataSet();
 
-                cmd.CommandText = "SELECT * FROM Sale WHERE Deleted = 0;";
+                cmd.CommandText = "SELECT * FROM dbo.[Sale] WHERE Deleted = 0;";
                 da.SelectCommand = cmd;
                 da.Fill(ds, "Sale");
 
@@ -33,7 +33,7 @@ namespace POP54.DAO
                 {
                     var sale = new Sale();
                     sale.ID = Convert.ToInt32(row["ID"]);
-                    sale.Discount = Convert.ToDouble(row["Discount"]);
+                    sale.Discount = Convert.ToInt32(row["Discount"]);
                     sale.StartDate = (DateTime)row["StartDate"];
                     sale.EndDate = (DateTime)row["EndDate"];
                     sale.Deleted = bool.Parse(row["Deleted"].ToString());
@@ -98,13 +98,42 @@ namespace POP54.DAO
                     }
                 }
             }
-            return sale;
+            return sales;
         }
 
         public static void Delete(Sale sale)
         {
             sale.Deleted = true;
             Update(sale);
+        }
+
+        public static void DeleteFurnitureSale(Sale sale)
+        {
+            using (var con = new SqlConnection(ConfigurationManager.ConnectionStrings["POP"].ConnectionString))
+            {
+                con.Open();
+
+                SqlCommand cmd = con.CreateCommand();
+
+                cmd.CommandText = "DELETE FROM FurnitureSales WHERE SaleId = @id";
+                cmd.Parameters.Add(new SqlParameter("SaleId", sale.ID));
+
+            } 
+        }
+
+        public static void AddFurnitureSale(Sale sale, Furniture furniture)
+        {
+            using (var con = new SqlConnection(ConfigurationManager.ConnectionStrings["POP"].ConnectionString))
+            {
+                con.Open();
+
+                SqlCommand cmd = con.CreateCommand();
+
+                cmd.CommandText = "INSERT INTO FurnitureSales(FurniturId, SaleId) VALUES (@FurnitureId, @SaleId);";
+                cmd.CommandText += "SELECT SCOPE_IDENTITY();";
+                cmd.Parameters.AddWithValue("FurniturId", furniture.ID);
+                cmd.Parameters.AddWithValue("SaleId", sale.ID);
+            }
         }
     }
 }

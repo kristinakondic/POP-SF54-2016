@@ -9,8 +9,8 @@ namespace POP54.Model
 {
     public enum TypeOfUser
     {
-        ADMIN,
-        SALESMAN
+        ADMIN=1,
+        SALESMAN=0
     }
 
     [Serializable]
