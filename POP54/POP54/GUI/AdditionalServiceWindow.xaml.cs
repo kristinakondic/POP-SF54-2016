@@ -1,4 +1,5 @@
-﻿using POP54.Model;
+﻿using POP54.DAO;
+using POP54.Model;
 using POP54.Util;
 using System;
 using System.Collections.Generic;
@@ -47,9 +48,7 @@ namespace POP54.GUI
             {
                 case Operation.ADD:
 
-                    additionalService.ID = Project.Instance.AdditionalServicesList.Count + 1;
-                    Project.Instance.AdditionalServicesList.Add(additionalService);
-                    MessageBox.Show("Success!", "Congratulations", MessageBoxButton.OK, MessageBoxImage.Information);
+                    AdditionalServiceDAO.Create(additionalService);
                     break;
 
                 case Operation.EDIT:
@@ -64,9 +63,9 @@ namespace POP54.GUI
                         }
                             
                     }
+                    AdditionalServiceDAO.Update(additionalService);
                     break;
             }
-            GenericSerializer.Serialize("additional_service.xml", Project.Instance.AdditionalServicesList);
             this.Close();
         }
     }

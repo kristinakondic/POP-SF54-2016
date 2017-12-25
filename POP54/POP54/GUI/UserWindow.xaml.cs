@@ -1,4 +1,5 @@
-﻿using POP54.Model;
+﻿using POP54.DAO;
+using POP54.Model;
 using POP54.Util;
 using System;
 using System.Collections.Generic;
@@ -26,10 +27,10 @@ namespace POP54.GUI
             ADD,
             EDIT
         };
-
-
+        
         private User user;
         private Operation operation;
+
         public UserWindow(User user, Operation operation)
         {
             InitializeComponent();
@@ -44,8 +45,6 @@ namespace POP54.GUI
             tbUsername.DataContext = user;
             tbPassword.DataContext = user;
             cbUserType.DataContext = user;
-
-
         }
 
         private void BtnSave_Click(object sender, RoutedEventArgs e)
@@ -54,9 +53,7 @@ namespace POP54.GUI
             {
                 case Operation.ADD:
 
-                    user.ID = Project.Instance.UsersList.Count + 1;
-                    Project.Instance.UsersList.Add(user);
-                    MessageBox.Show("Success!", "Congratulations", MessageBoxButton.OK, MessageBoxImage.Information);
+                    UserDAO.Create(user);
                     break;
 
                 case Operation.EDIT:
@@ -73,10 +70,10 @@ namespace POP54.GUI
                             u.Deleted = user.Deleted;
                             break;
                         }
+                        UserDAO.Update(user);
                     }
                     break;
             }
-            GenericSerializer.Serialize("users.xml", Project.Instance.UsersList);
             this.Close();
         }
 

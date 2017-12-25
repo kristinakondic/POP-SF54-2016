@@ -2,48 +2,38 @@
 <ArrayOfUser xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <User>
     <Deleted>false</Deleted>
-    <UserType>SALESMAN</UserType>
-    <Password>m</Password>
-    <Username>Bulajic</Username>
-    <Surname>Bulajic</Surname>
-    <Name>Aleksa</Name>
+    <UserType>ADMIN</UserType>
+    <Password>a         </Password>
+    <Username>a         </Username>
+    <Surname>Bulajic   </Surname>
+    <Name>Aleksa    </Name>
     <ID>1</ID>
   </User>
   <User>
     <Deleted>false</Deleted>
-    <UserType>ADMIN</UserType>
-    <Password>a</Password>
-    <Username>a</Username>
-    <Surname>Simeunovic</Surname>
-    <Name>Sasa</Name>
-    <ID>2</ID>
+    <UserType>SALESMAN</UserType>
+    <Password>s         </Password>
+    <Username>s         </Username>
+    <Surname>Petrovic  </Surname>
+    <Name>Petar     </Name>
+    <ID>11</ID>
   </User>
   <User>
-    <Deleted>true</Deleted>
-    <UserType>ADMIN</UserType>
-    <ID>3</ID>
+    <Deleted>false</Deleted>
+    <UserType>SALESMAN</UserType>
+    <Password>k         </Password>
+    <Username>k         </Username>
+    <Surname>Savic     </Surname>
+    <Name>Kristina  </Name>
+    <ID>12</ID>
   </User>
   <User>
-    <Deleted>true</Deleted>
-    <UserType>ADMIN</UserType>
-    <Password>re</Password>
-    <Username>re</Username>
-    <Surname>rfe</Surname>
-    <Name>thg</Name>
+    <Deleted>false</Deleted>
+    <UserType>SALESMAN</UserType>
+    <Password>b</Password>
+    <Username>b</Username>
+    <Surname>Stevanovic</Surname>
+    <Name>Stevan</Name>
     <ID>4</ID>
-  </User>
-  <User>
-    <Deleted>true</Deleted>
-    <UserType>ADMIN</UserType>
-    <Password>tert</Password>
-    <Username>etrr</Username>
-    <Surname>thye</Surname>
-    <Name>aerty</Name>
-    <ID>5</ID>
-  </User>
-  <User>
-    <Deleted>true</Deleted>
-    <UserType>ADMIN</UserType>
-    <ID>6</ID>
   </User>
 </ArrayOfUser>

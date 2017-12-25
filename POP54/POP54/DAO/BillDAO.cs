@@ -72,10 +72,8 @@ namespace POP54.DAO
             return bill;
         }
 
-        public static ObservableCollection<Bill> Update(Bill bill)
+        public static void Update(Bill bill)
         {
-            var bills = new ObservableCollection<Bill>();
-
             using (var con = new SqlConnection(ConfigurationManager.ConnectionStrings["POP"].ConnectionString))
             {
                 con.Open();
@@ -106,7 +104,6 @@ namespace POP54.DAO
                     }
                 }
             }
-            return bills;
         }
 
         public static void Delete(Bill bill)

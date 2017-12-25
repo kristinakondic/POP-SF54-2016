@@ -16,7 +16,7 @@ namespace POP54.DAO
         public static ObservableCollection<Furniture> GetAll()
         {
             var furniture = new ObservableCollection<Furniture>();
-            string commandText = "SELECT * FROM Sale WHERE ID in (SELECT SaleId FROM FurnitureSales WHERE FurnitureId = @id) AND Deleted=0;";
+            string commandText = "SELECT * FROM dbo.Sale JOIN dbo.FurnitureSales ON FurnitureSales.SaleId = Sale.Id WHERE Deleted = 0 AND FurnitureId = @id";
 
             using (var con = new SqlConnection(ConfigurationManager.ConnectionStrings["POP"].ConnectionString))
             {
@@ -29,11 +29,13 @@ namespace POP54.DAO
                 cmd.CommandText = "SELECT * FROM Furniture WHERE Deleted = 0;";
                 da.SelectCommand = cmd;
                 da.Fill(ds, "Furniture");
-                List<Sale> ls = new List<Sale>();
+                
 
                 foreach (DataRow row in ds.Tables["Furniture"].Rows)
                 {
+                   
                     var f = new Furniture();
+                    f.Sales = new List<Sale>();
                     f.ID = Convert.ToInt32(row["ID"]);
                     f.Name = row["Name"].ToString();
                     f.FurnitureTypeId = Convert.ToInt32(row["FurnitureTypeId"]);
@@ -57,14 +59,13 @@ namespace POP54.DAO
                         s.EndDate = (DateTime)roww["EndDate"];
                         s.Discount = Convert.ToInt32(roww["Discount"]);
                         
-                        ls.Add(s);
+                        f.Sales.Add(s);
                         
                     }
-                    if (ls.Count != 0)
-                        f.Sales = ls;
-                    else
-                        f.Sales = null;
+                    
+                    
                     furniture.Add(f);
+                    ds.Tables["Sale"].Clear();
                 }
             }
             return furniture;
@@ -97,10 +98,8 @@ namespace POP54.DAO
             return f;
         }
 
-        public static ObservableCollection<Furniture> Update(Furniture f)
+        public static void Update(Furniture f)
         {
-            var furniture = new ObservableCollection<Furniture>();
-
             using (var con = new SqlConnection(ConfigurationManager.ConnectionStrings["POP"].ConnectionString))
             {
                 con.Open();
@@ -134,7 +133,6 @@ namespace POP54.DAO
                     }
                 }
             }
-            return furniture;
         }
 
         public static void Delete(Furniture f)

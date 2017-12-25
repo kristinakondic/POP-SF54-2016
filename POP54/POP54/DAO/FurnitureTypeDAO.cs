@@ -64,17 +64,15 @@ namespace POP54.DAO
             return ft;
         }
 
-        public static ObservableCollection<FurnitureType> Update(FurnitureType ft)
+        public static void Update(FurnitureType ft)
         {
-            var furnitureTypes = new ObservableCollection<FurnitureType>();
-
             using (var con = new SqlConnection(ConfigurationManager.ConnectionStrings["POP"].ConnectionString))
             {
                 con.Open();
 
                 SqlCommand cmd = con.CreateCommand();
 
-                cmd.CommandText = "UPDATE FurnitureType SET Name=@Namee, Delete=@Delete WHERE ID = @ID;";
+                cmd.CommandText = "UPDATE FurnitureType SET Name=@Name, Deleted=@Deleted WHERE ID = @ID;";
                 cmd.CommandText += "SELECT SCOPE_IDENTITY();";
                 cmd.Parameters.AddWithValue("ID", ft.ID);
                 cmd.Parameters.AddWithValue("Name", ft.Name);
@@ -91,7 +89,6 @@ namespace POP54.DAO
                     }
                 }
             }
-            return furnitureTypes;
         }
 
         public static void Delete(FurnitureType ft)

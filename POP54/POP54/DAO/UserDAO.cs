@@ -54,7 +54,7 @@ namespace POP54.DAO
 
                 SqlCommand cmd = con.CreateCommand();
 
-                cmd.CommandText = "INSERT INTO User(Name, Surname, Username, Password, UserType, Deleted) VALUES (@Name, @Surname, @Username, @Password, @UserType, @Deleted);";
+                cmd.CommandText = "INSERT INTO dbo.[User](Name, Surname, Username, Password, UserType, Deleted) VALUES (@Name, @Surname, @Username, @Password, @UserType, @Deleted);";
                 cmd.CommandText += "SELECT SCOPE_IDENTITY();";
                 cmd.Parameters.AddWithValue("Name", user.Name);
                 cmd.Parameters.AddWithValue("Surname", user.Surname);
@@ -71,17 +71,15 @@ namespace POP54.DAO
             return user;
         }
 
-        public static ObservableCollection<User> Update(User user)
+        public static void Update(User user)
         {
-            var users = new ObservableCollection<User>();
-
             using (var con = new SqlConnection(ConfigurationManager.ConnectionStrings["POP"].ConnectionString))
             {
                 con.Open();
 
                 SqlCommand cmd = con.CreateCommand();
 
-                cmd.CommandText = "UPDATE User SET Name = @Name, Surname = @Surname, Username = @Username, Password = @Password, UserType = @UserType, Deleted = @Deleted;";
+                cmd.CommandText = "UPDATE dbo.[User] SET Name = @Name, Surname = @Surname, Username = @Username, Password = @Password, UserType = @UserType, Deleted = @Deleted;";
                 cmd.CommandText += "SELECT SCOPE_IDENTITY();";
                 cmd.Parameters.AddWithValue("Name", user.Name);
                 cmd.Parameters.AddWithValue("Surname", user.Surname);
@@ -105,7 +103,6 @@ namespace POP54.DAO
                     }
                 }
             }
-            return users;
         }
 
         public static void Delete(User user)

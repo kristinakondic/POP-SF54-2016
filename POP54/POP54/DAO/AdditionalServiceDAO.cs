@@ -66,10 +66,8 @@ namespace POP54.DAO
             return ads;
         }
 
-        public static ObservableCollection<AdditionalService> Update(AdditionalService ads)
+        public static void Update(AdditionalService ads)
         {
-            var additionalServices = new ObservableCollection<AdditionalService>();
-
             using (var con = new SqlConnection(ConfigurationManager.ConnectionStrings["POP"].ConnectionString))
             {
                 con.Open();
@@ -94,7 +92,6 @@ namespace POP54.DAO
                     }
                 }
             }
-            return additionalServices;
         }
 
         public static void Delete(AdditionalService ads)

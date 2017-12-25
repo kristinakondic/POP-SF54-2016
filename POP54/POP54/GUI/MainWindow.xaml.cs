@@ -235,37 +235,25 @@ namespace POP54
         {
             if(MessageBox.Show($"Are you sure that you want to delete this?", "Delete", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
             {
-                if (dgFurniture.Visibility.Equals(Visibility.Visible)){
-                    SelectedFurniture.Deleted = true;
-                    FurnitureDAO.Update(SelectedFurniture);
-                }
+                if (dgFurniture.Visibility.Equals(Visibility.Visible))
+                    FurnitureDAO.Delete(SelectedFurniture);
+                
                 else if (dgFurnitureType.Visibility.Equals(Visibility.Visible))
-                {
-                    SelectedFurnitureType.Deleted = true;
-                    FurnitureTypeDAO.Update(SelectedFurnitureType);
-                }
+                    FurnitureTypeDAO.Delete(SelectedFurnitureType);
+                
                 else if (dgSales.Visibility.Equals(Visibility.Visible))
                 {
-                    SelectedSale.Deleted = true;
                     SaleDAO.Delete(SelectedSale);
                     SaleDAO.DeleteFurnitureSale(SelectedSale);
                 }
                 else if (dgUsers.Visibility.Equals(Visibility.Visible))
-                {
-                    SelectedUser.Deleted = true;
                     UserDAO.Delete(SelectedUser);
-                }
-                else if (dgAdditionalService.Visibility.Equals(Visibility.Visible))
-                {
-                    SelectedAdditionalService.Deleted = true;
-                    AdditionalServiceDAO.Delete(SelectedAdditionalService);
-                }
-                else if (dgBill.Visibility.Equals(Visibility.Visible))
-                {
-                    SelectedBill.Deleted = true;
-                    BillDAO.Delete(SelectedBill);
-                }
                 
+                else if (dgAdditionalService.Visibility.Equals(Visibility.Visible))
+                    AdditionalServiceDAO.Delete(SelectedAdditionalService);
+                
+                else if (dgBill.Visibility.Equals(Visibility.Visible))
+                    BillDAO.Delete(SelectedBill);
             }
         }
         private void BtnAddSale_Click(object sender, RoutedEventArgs e)

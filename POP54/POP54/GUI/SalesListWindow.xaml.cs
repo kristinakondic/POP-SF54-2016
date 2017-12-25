@@ -41,6 +41,8 @@ namespace POP54.GUI
         private void BtnAddSale_Click(object sender, RoutedEventArgs e)
         {
             SaleDAO.AddFurnitureSale(SelectedSale, furniture);
+
+            furniture.Sales.Add(SelectedSale);
             var pricePrim = furniture.Price;
             if (furniture.Sales != null)
             {

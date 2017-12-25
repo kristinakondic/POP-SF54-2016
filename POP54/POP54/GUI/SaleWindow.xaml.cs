@@ -1,4 +1,5 @@
-﻿using POP54.Model;
+﻿using POP54.DAO;
+using POP54.Model;
 using POP54.Util;
 using System;
 using System.Collections.Generic;
@@ -59,12 +60,10 @@ namespace POP54.GUI
             switch (operation)
             {
                 case Operation.ADD:
-
-                    sale.ID = Project.Instance.SalesList.Count + 1;
+                    
                     sale.StartDate =(DateTime) dpStartDate.SelectedDate;
                     sale.EndDate = (DateTime)dpEndDate.SelectedDate;
-                    Project.Instance.SalesList.Add(sale);
-                    MessageBox.Show("Success!", "Congratulations", MessageBoxButton.OK, MessageBoxImage.Information);
+                    SaleDAO.Create(sale);
                     break;
 
                 case Operation.EDIT:
@@ -83,7 +82,7 @@ namespace POP54.GUI
                     }
                     break;
             }
-            GenericSerializer.Serialize("sales.xml", Project.Instance.SalesList);
+            SaleDAO.Update(sale);
             this.Close();
         }
 

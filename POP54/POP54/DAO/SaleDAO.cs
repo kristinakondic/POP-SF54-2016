@@ -68,18 +68,17 @@ namespace POP54.DAO
             return sale;
         }
 
-        public static ObservableCollection<Sale> Update(Sale sale)
+        public static void Update(Sale sale)
         {
-            var sales = new ObservableCollection<Sale>();
-
             using (var con = new SqlConnection(ConfigurationManager.ConnectionStrings["POP"].ConnectionString))
             {
                 con.Open();
 
                 SqlCommand cmd = con.CreateCommand();
 
-                cmd.CommandText = "UPDATE Sale SET Discount = Discount, StartDate = @StartDate, EndDate = @EndDate, Deleted = @Deleted;";
+                cmd.CommandText = "UPDATE Sale SET Discount = Discount, StartDate = @StartDate, EndDate = @EndDate, Deleted = @Deleted WHERE ID = @ID;";
                 cmd.CommandText += "SELECT SCOPE_IDENTITY();";
+                cmd.Parameters.AddWithValue("ID", sale.ID);
                 cmd.Parameters.AddWithValue("Discount", sale.Discount);
                 cmd.Parameters.AddWithValue("StartDate", sale.StartDate);
                 cmd.Parameters.AddWithValue("EndDate", sale.EndDate);
@@ -98,7 +97,6 @@ namespace POP54.DAO
                     }
                 }
             }
-            return sales;
         }
 
         public static void Delete(Sale sale)
@@ -129,10 +127,12 @@ namespace POP54.DAO
 
                 SqlCommand cmd = con.CreateCommand();
 
-                cmd.CommandText = "INSERT INTO FurnitureSales(FurniturId, SaleId) VALUES (@FurnitureId, @SaleId);";
+                cmd.CommandText = "INSERT INTO FurnitureSales(FurnitureId, SaleId) VALUES (@FurnitureId, @SaleId);";
                 cmd.CommandText += "SELECT SCOPE_IDENTITY();";
-                cmd.Parameters.AddWithValue("FurniturId", furniture.ID);
+                cmd.Parameters.AddWithValue("FurnitureId", furniture.ID);
                 cmd.Parameters.AddWithValue("SaleId", sale.ID);
+                cmd.ExecuteNonQuery();
+
             }
         }
     }

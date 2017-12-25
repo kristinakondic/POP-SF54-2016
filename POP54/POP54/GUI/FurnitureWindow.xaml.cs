@@ -63,7 +63,6 @@ namespace POP54.GUI
                 case Operation.ADD:
                     
                     FurnitureDAO.Create(furniture);
-                    MessageBox.Show("Success!", "Congratulations", MessageBoxButton.OK, MessageBoxImage.Information);
                     break;
 
                 case Operation.EDIT:

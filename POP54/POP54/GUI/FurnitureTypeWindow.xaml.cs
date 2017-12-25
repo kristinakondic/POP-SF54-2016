@@ -1,4 +1,5 @@
-﻿using POP54.Model;
+﻿using POP54.DAO;
+using POP54.Model;
 using POP54.Util;
 using System;
 using System.Collections.Generic;
@@ -45,9 +46,7 @@ namespace POP54.GUI
             {
                 case Operation.ADD:
 
-                    furnitureType.ID = Project.Instance.FurnitureTypesList.Count + 1;
-                    Project.Instance.FurnitureTypesList.Add(furnitureType);
-                    MessageBox.Show("Success!", "Congratulations", MessageBoxButton.OK, MessageBoxImage.Information);
+                    FurnitureTypeDAO.Create(furnitureType);
                     break;
 
                 case Operation.EDIT:
@@ -60,7 +59,7 @@ namespace POP54.GUI
                     }
                     break;
             }
-            GenericSerializer.Serialize("furniture_type.xml", Project.Instance.FurnitureTypesList);
+            FurnitureTypeDAO.Update(furnitureType);
             this.Close();
         }
 
