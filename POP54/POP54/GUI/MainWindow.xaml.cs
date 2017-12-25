@@ -41,41 +41,44 @@ namespace POP54
         {
             
             InitializeComponent();
+
+            
+
             dgFurniture.ItemsSource = Project.Instance.FurnitureList;
             dgFurniture.ColumnWidth = new DataGridLength(1, DataGridLengthUnitType.Star);
             dgFurniture.IsSynchronizedWithCurrentItem = true;
             dgFurniture.DataContext = this;
-            int i = getFirstItemIndex(TableType.FURNITURE);     // vraca indeks prvog elementa koji nije obrisan
+            int i = GetFirstItemIndex(TableType.FURNITURE);     // vraca indeks prvog elementa koji nije obrisan
             if(i != -1) SelectedFurniture = Project.Instance.FurnitureList[i];
 
             dgFurnitureType.ItemsSource = Project.Instance.FurnitureTypesList;
             dgFurnitureType.IsSynchronizedWithCurrentItem = true;
             dgFurnitureType.DataContext = this;
-            i = getFirstItemIndex(TableType.FURNITURE_TYPE);
+            i = GetFirstItemIndex(TableType.FURNITURE_TYPE);
             if (i != -1) SelectedFurnitureType = Project.Instance.FurnitureTypesList[i];
 
             dgUsers.ItemsSource = Project.Instance.UsersList;
             dgUsers.IsSynchronizedWithCurrentItem = true;
             dgUsers.DataContext = this;
-            i = getFirstItemIndex(TableType.USERS);
+            i = GetFirstItemIndex(TableType.USERS);
             if (i != -1) SelectedUser = Project.Instance.UsersList[i];
 
             dgSales.ItemsSource = Project.Instance.SalesList;
             dgSales.IsSynchronizedWithCurrentItem = true;
             dgSales.DataContext = this;
-            i = getFirstItemIndex(TableType.SALES);
+            i = GetFirstItemIndex(TableType.SALES);
             if (i != -1) SelectedSale = Project.Instance.SalesList[i];
 
             dgAdditionalService.ItemsSource = Project.Instance.AdditionalServicesList;
             dgAdditionalService.IsSynchronizedWithCurrentItem = true;
             dgAdditionalService.DataContext = this;
-            i = getFirstItemIndex(TableType.ADDITIONAL);
+            i = GetFirstItemIndex(TableType.ADDITIONAL);
             if (i != -1) SelectedAdditionalService = Project.Instance.AdditionalServicesList[i];
 
             dgBill.ItemsSource = Project.Instance.BillsList;
             dgBill.IsSynchronizedWithCurrentItem = true;
             dgBill.DataContext = this;
-            i = getFirstItemIndex(TableType.BILL);
+            i = GetFirstItemIndex(TableType.BILL);
             if (i != -1) SelectedBill = Project.Instance.BillsList[i];
 
             CheckSaleDate();
@@ -102,6 +105,7 @@ namespace POP54
             dgUsers.Visibility = Visibility.Collapsed;
             dgAdditionalService.Visibility = Visibility.Collapsed;
             dgBill.Visibility = Visibility.Collapsed;
+            btnAddSale.Visibility = Visibility.Visible;
         }
 
         private void BtnFurnitureType_Click(object sender, RoutedEventArgs e)
@@ -112,6 +116,7 @@ namespace POP54
             dgUsers.Visibility = Visibility.Collapsed;
             dgAdditionalService.Visibility = Visibility.Collapsed;
             dgBill.Visibility = Visibility.Collapsed;
+            btnAddSale.Visibility = Visibility.Hidden;
         }
 
         private void BtnSales_Click(object sender, RoutedEventArgs e)
@@ -122,6 +127,7 @@ namespace POP54
             dgUsers.Visibility = Visibility.Collapsed;
             dgAdditionalService.Visibility = Visibility.Collapsed;
             dgBill.Visibility = Visibility.Collapsed;
+            btnAddSale.Visibility = Visibility.Hidden;
         }
 
         private void BtnUsers_Click(object sender, RoutedEventArgs e)
@@ -132,6 +138,7 @@ namespace POP54
             dgUsers.Visibility = Visibility.Visible;
             dgAdditionalService.Visibility = Visibility.Collapsed;
             dgBill.Visibility = Visibility.Collapsed;
+            btnAddSale.Visibility = Visibility.Hidden;
         }
 
         private void BtnAditionalService_Click(object sender, RoutedEventArgs e)
@@ -142,6 +149,7 @@ namespace POP54
             dgUsers.Visibility = Visibility.Collapsed;
             dgAdditionalService.Visibility = Visibility.Visible;
             dgBill.Visibility = Visibility.Collapsed;
+            btnAddSale.Visibility = Visibility.Hidden;
         }
 
         private void BtnBills_Click(object sender, RoutedEventArgs e)
@@ -152,6 +160,7 @@ namespace POP54
             dgUsers.Visibility = Visibility.Collapsed;
             dgAdditionalService.Visibility = Visibility.Collapsed;
             dgBill.Visibility = Visibility.Visible;
+            btnAddSale.Visibility = Visibility.Hidden;
         }
 
         private void BtnAdd_Click(object sender, RoutedEventArgs e)
@@ -228,6 +237,7 @@ namespace POP54
             {
                 AdditionalService copy = (AdditionalService)SelectedAdditionalService.Clone();
                 AdditionalServiceWindow additionalServiceWindow = new AdditionalServiceWindow(copy, AdditionalServiceWindow.Operation.EDIT);
+                additionalServiceWindow.Show();
             }
         }
 
@@ -258,10 +268,13 @@ namespace POP54
         }
         private void BtnAddSale_Click(object sender, RoutedEventArgs e)
         {
-            SalesListWindow salesListWindow = new SalesListWindow(SelectedFurniture);
-            salesListWindow.Show();
+            if (dgFurniture.Visibility.Equals(Visibility.Visible))
+            {
+                SalesListWindow salesListWindow = new SalesListWindow(SelectedFurniture);
+                salesListWindow.Show();
+            }
         }
-        private int getFirstItemIndex(TableType tt)
+        private int GetFirstItemIndex(TableType tt)
         {
             int i = 0;
             if (tt == TableType.FURNITURE)
@@ -382,6 +395,14 @@ namespace POP54
         {
             ViewBills vb = new ViewBills(SelectedBill);
             vb.Show();
+        }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            ICollectionView dataView = CollectionViewSource.GetDefaultView(dgFurniture.ItemsSource);
+            dataView.SortDescriptions.Clear();
+            dataView.SortDescriptions.Add(new SortDescription("Name", ListSortDirection.Ascending));
+            dataView.Refresh();
         }
     }
 }

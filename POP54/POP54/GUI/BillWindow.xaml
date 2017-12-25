@@ -5,7 +5,8 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:POP54.GUI"
         mc:Ignorable="d"
-        Title="BillWindow" Height="400" Width="400">
+        Title="BillWindow" Height="400" Width="400"
+        WindowStartupLocation="CenterScreen">
     <Grid>
         <ScrollViewer Margin="10,0,0,199" >
             <TextBlock Name="tbBill" HorizontalAlignment="Left" TextWrapping="Wrap" VerticalAlignment="Top" Width="373" />

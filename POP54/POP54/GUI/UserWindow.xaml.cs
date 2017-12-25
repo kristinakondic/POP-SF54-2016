@@ -64,7 +64,7 @@ namespace POP54.GUI
                         {
                             u.Name = user.Name;
                             u.Surname = user.Surname;
-                            u.Username = user.Surname;
+                            u.Username = user.Username;
                             u.Password = user.Password;
                             u.UserType = user.UserType;
                             u.Deleted = user.Deleted;

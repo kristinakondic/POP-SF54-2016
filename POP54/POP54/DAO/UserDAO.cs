@@ -79,8 +79,9 @@ namespace POP54.DAO
 
                 SqlCommand cmd = con.CreateCommand();
 
-                cmd.CommandText = "UPDATE dbo.[User] SET Name = @Name, Surname = @Surname, Username = @Username, Password = @Password, UserType = @UserType, Deleted = @Deleted;";
+                cmd.CommandText = "UPDATE dbo.[User] SET Name = @Name, Surname = @Surname, Username = @Username, Password = @Password, UserType = @UserType, Deleted = @Deleted WHERE ID = @ID;";
                 cmd.CommandText += "SELECT SCOPE_IDENTITY();";
+                cmd.Parameters.AddWithValue("ID", user.ID);
                 cmd.Parameters.AddWithValue("Name", user.Name);
                 cmd.Parameters.AddWithValue("Surname", user.Surname);
                 cmd.Parameters.AddWithValue("Username", user.Username);

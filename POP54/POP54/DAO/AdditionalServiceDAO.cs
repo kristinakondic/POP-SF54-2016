@@ -74,7 +74,7 @@ namespace POP54.DAO
 
                 SqlCommand cmd = con.CreateCommand();
 
-                cmd.CommandText = "UPDATE AdditionalService SET Namee=@Namee, Price=@Price, Delete=@Delete WHERE ID = @ID;";
+                cmd.CommandText = "UPDATE AdditionalService SET Name=@Name, Price=@Price, Deleted=@Deleted WHERE ID = @ID;";
                 cmd.CommandText += "SELECT SCOPE_IDENTITY();";
                 cmd.Parameters.AddWithValue("ID", ads.ID);
                 cmd.Parameters.AddWithValue("Name", ads.Name);

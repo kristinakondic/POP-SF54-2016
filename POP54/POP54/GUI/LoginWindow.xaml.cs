@@ -1,4 +1,5 @@
-﻿using POP54.Model;
+﻿using POP54.DAO;
+using POP54.Model;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -30,7 +31,7 @@ namespace POP54.GUI
             var username = tbUsername.Text;
             var password = tbPassword.Text;
 
-            var users = Project.Instance.UsersList;
+            var users = UserDAO.GetAll();
             var ok = false;
 
             foreach (var user in users)

@@ -191,6 +191,7 @@
             <Button Content="Bill" Grid.Column="4" HorizontalAlignment="Left" Margin="10,12,0,0" Grid.Row="8" VerticalAlignment="Top" Width="142" Height="48" Click="Bill_Click"/>
             <Button Content="Add on bill" Grid.Column="3" HorizontalAlignment="Left" Margin="10,10,0,0" Grid.Row="7" VerticalAlignment="Top" Width="99" Height="32" Click="AddOnBill_Click"/>
             <Button Content="Bils list" Grid.Column="5" HorizontalAlignment="Left" Margin="19,10,0,0" Grid.Row="6" VerticalAlignment="Top" Width="77" Height="50" Click="BtnBills_Click"/>
+            <Button Content="sort" Grid.Column="2" HorizontalAlignment="Left" Margin="38,21,0,0" VerticalAlignment="Top" Width="74" Click="Button_Click"/>
         </Grid>
     </DockPanel>
 
