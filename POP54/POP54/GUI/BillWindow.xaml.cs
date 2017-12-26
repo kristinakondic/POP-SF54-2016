@@ -1,4 +1,5 @@
-﻿using POP54.Model;
+﻿using POP54.DAO;
+using POP54.Model;
 using POP54.Util;
 using System;
 using System.Collections.Generic;
@@ -39,12 +40,29 @@ namespace POP54.GUI
 
         private void PrintBill_Click(object sender, RoutedEventArgs e)
         {
-            Project.Instance.Bill.ID = Project.Instance.BillsList.Count + 1;
             Project.Instance.Bill.DateOfSale = DateTime.Now;
             Project.Instance.Bill.BillNo = DateTime.Now.Millisecond;
-            Project.Instance.BillsList.Add(Project.Instance.Bill);
+            BillDAO.Create(Project.Instance.Bill);
+            foreach (var b in Project.Instance.Bill.FurnitureForSaleList)
+            {
+                foreach (var f in Project.Instance.FurnitureList)
+                {
+                    if (f.ID == b.ID)
+                    {
+                        BillDAO.AddFurnitureOnBill(Project.Instance.Bill, f);
+                        f.Quantity -= b.Quantity;
+                        FurnitureDAO.Update(f);
+                    }
+                }
+            }
+            foreach (var b in Project.Instance.Bill.AdditionalServiceList)
+            {
+                foreach (var a in Project.Instance.AdditionalServicesList)
+                {
+                    BillDAO.AddAdditionalServiceOnBill(Project.Instance.Bill, a);
+                }
+            }
             MessageBox.Show("Success!", "Congratulations", MessageBoxButton.OK, MessageBoxImage.Information);
-            GenericSerializer.Serialize("bills_list.xml", Project.Instance.BillsList);
             Project.Instance.Bill = new Bill();
             this.Close();
         }

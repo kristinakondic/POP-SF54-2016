@@ -29,19 +29,29 @@
         <PriceOnSale>9720</PriceOnSale>
         <Deleted>false</Deleted>
         <FurnitureTypeId>1</FurnitureTypeId>
-        <Quantity>3</Quantity>
+        <Quantity>1</Quantity>
         <Price>12000</Price>
         <ProductCode>PC001</ProductCode>
         <Name>Polica Caca</Name>
         <ID>1</ID>
       </Furniture>
+      <Furniture>
+        <PriceOnSale>0</PriceOnSale>
+        <Deleted>false</Deleted>
+        <FurnitureTypeId>4</FurnitureTypeId>
+        <Quantity>1</Quantity>
+        <Price>5000</Price>
+        <ProductCode>GM020</ProductCode>
+        <Name>Garnitura Mika</Name>
+        <ID>2</ID>
+      </Furniture>
     </FurnitureForSaleList>
     <AdditionalServiceList />
-    <FullPrice>36000</FullPrice>
+    <FullPrice>17000</FullPrice>
     <PDV>0</PDV>
-    <Buyer>dasd</Buyer>
-    <BillNo>34</BillNo>
-    <DateOfSale>2017-12-25T19:50:46.03475+01:00</DateOfSale>
+    <Buyer>Marko</Buyer>
+    <BillNo>676</BillNo>
+    <DateOfSale>2017-12-26T00:45:14.676307+01:00</DateOfSale>
     <ID>3</ID>
   </Bill>
 </ArrayOfBill>

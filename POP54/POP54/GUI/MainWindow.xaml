@@ -44,7 +44,7 @@
                 <ColumnDefinition Width="Auto"/>
             </Grid.ColumnDefinitions>
 
-            <DataGrid Name="dgFurniture" ColumnWidth="*" Width="Auto" Margin="10,10,10,9" FontSize="12" SelectedItem="{Binding Path=SelectedFurniture}" AutoGenerateColumns="False" CanUserAddRows="False" IsReadOnly="True" Grid.Row="1" Grid.RowSpan="6" Grid.ColumnSpan="5" >
+            <DataGrid Name="dgFurniture" CanUserSortColumns="False" ColumnWidth="*" Width="Auto" Margin="10,10,10,9" FontSize="12" SelectedItem="{Binding Path=SelectedFurniture}" AutoGenerateColumns="False" CanUserAddRows="False" IsReadOnly="True" Grid.Row="1" Grid.RowSpan="6" Grid.ColumnSpan="5" >
                 <DataGrid.RowStyle>
                     <Style TargetType="DataGridRow">
                         <Style.Triggers>
@@ -157,6 +157,7 @@
                 </DataGrid.RowStyle>
                 <DataGrid.Columns>
                     <DataGridTextColumn Header="Bill no" Binding="{Binding BillNo}" />
+                    <DataGridTextColumn Header="Date" Binding="{Binding DateOfSale}" />
                     <DataGridTextColumn Header="Customer" Binding="{Binding Buyer}" />
                     <DataGridTextColumn Header="Price" Binding="{Binding FullPrice}" />
                     <DataGridTemplateColumn>
@@ -169,11 +170,9 @@
                 </DataGrid.Columns>
             </DataGrid>
 
-            <Label Content="Sort:" Margin="10,10,52,12" Grid.Column="3"/>
-            <ComboBox Margin="65,8,16,12" Grid.Column="3" Grid.ColumnSpan="2">
-                <ComboBoxItem>ComboBox Item #1</ComboBoxItem>
-                <ComboBoxItem IsSelected="True">ComboBox Item #2</ComboBoxItem>
-                <ComboBoxItem>ComboBox Item #3</ComboBoxItem>
+            <Label Content="Sort by:" Margin="10,10,52,12" Grid.Column="3"/>
+            <ComboBox Name="cbSort" Margin="65,8,16,12" SelectedIndex="0" Grid.Column="3" Grid.ColumnSpan="2" Loaded="ComboboxLoaded" SelectionChanged="ComboBox_SelectionChanged">
+            
             </ComboBox>
 
 
@@ -191,7 +190,6 @@
             <Button Content="Bill" Grid.Column="4" HorizontalAlignment="Left" Margin="10,12,0,0" Grid.Row="8" VerticalAlignment="Top" Width="142" Height="48" Click="Bill_Click"/>
             <Button Content="Add on bill" Grid.Column="3" HorizontalAlignment="Left" Margin="10,10,0,0" Grid.Row="7" VerticalAlignment="Top" Width="99" Height="32" Click="AddOnBill_Click"/>
             <Button Content="Bils list" Grid.Column="5" HorizontalAlignment="Left" Margin="19,10,0,0" Grid.Row="6" VerticalAlignment="Top" Width="77" Height="50" Click="BtnBills_Click"/>
-            <Button Content="sort" Grid.Column="2" HorizontalAlignment="Left" Margin="38,21,0,0" VerticalAlignment="Top" Width="74" Click="Button_Click"/>
         </Grid>
     </DockPanel>
 

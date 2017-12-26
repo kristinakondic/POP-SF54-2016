@@ -42,7 +42,16 @@ namespace POP54
             
             InitializeComponent();
 
-            
+            string[] cbItems =
+                {
+                    "Name",
+                    "Product code",
+                    "Quantity",
+                    "Furniture type",
+                    "Price",
+                    "Sale price"
+                };
+            cbSort.ItemsSource = cbItems;
 
             dgFurniture.ItemsSource = Project.Instance.FurnitureList;
             dgFurniture.ColumnWidth = new DataGridLength(1, DataGridLengthUnitType.Star);
@@ -106,6 +115,18 @@ namespace POP54
             dgAdditionalService.Visibility = Visibility.Collapsed;
             dgBill.Visibility = Visibility.Collapsed;
             btnAddSale.Visibility = Visibility.Visible;
+            
+            string[] cbItems =
+                {
+                    "Name",
+                    "Product code",
+                    "Quantity",
+                    "Furniture type",
+                    "Price",
+                    "Sale price"
+                };
+            cbSort.ItemsSource = cbItems;
+            cbSort.SelectedItem = "Name";
         }
 
         private void BtnFurnitureType_Click(object sender, RoutedEventArgs e)
@@ -117,6 +138,13 @@ namespace POP54
             dgAdditionalService.Visibility = Visibility.Collapsed;
             dgBill.Visibility = Visibility.Collapsed;
             btnAddSale.Visibility = Visibility.Hidden;
+            
+            string[] cbItems =
+                {
+                    "Name"
+                };
+            cbSort.ItemsSource = cbItems;
+            cbSort.SelectedItem = "Name";
         }
 
         private void BtnSales_Click(object sender, RoutedEventArgs e)
@@ -128,6 +156,15 @@ namespace POP54
             dgAdditionalService.Visibility = Visibility.Collapsed;
             dgBill.Visibility = Visibility.Collapsed;
             btnAddSale.Visibility = Visibility.Hidden;
+            
+            string[] cbItems =
+                {
+                    "Discount",
+                    "Start date",
+                    "End date"
+                };
+            cbSort.ItemsSource = cbItems;
+            cbSort.SelectedItem = "Discount";
         }
 
         private void BtnUsers_Click(object sender, RoutedEventArgs e)
@@ -139,6 +176,17 @@ namespace POP54
             dgAdditionalService.Visibility = Visibility.Collapsed;
             dgBill.Visibility = Visibility.Collapsed;
             btnAddSale.Visibility = Visibility.Hidden;
+
+            string[] cbItems =
+                {
+                    "Name",
+                    "Surname",
+                    "Username",
+                    "Password",
+                    "User type"
+                };
+            cbSort.ItemsSource = cbItems;
+            cbSort.SelectedItem = "Name";
         }
 
         private void BtnAditionalService_Click(object sender, RoutedEventArgs e)
@@ -150,6 +198,14 @@ namespace POP54
             dgAdditionalService.Visibility = Visibility.Visible;
             dgBill.Visibility = Visibility.Collapsed;
             btnAddSale.Visibility = Visibility.Hidden;
+
+            string[] cbItems =
+                {
+                    "Name",
+                    "Price"
+                };
+            cbSort.ItemsSource = cbItems;
+            cbSort.SelectedItem = "Name";
         }
 
         private void BtnBills_Click(object sender, RoutedEventArgs e)
@@ -161,6 +217,16 @@ namespace POP54
             dgAdditionalService.Visibility = Visibility.Collapsed;
             dgBill.Visibility = Visibility.Visible;
             btnAddSale.Visibility = Visibility.Hidden;
+
+            string[] cbItems =
+                {
+                    "Bill no",
+                    "Date",
+                    "Customer",
+                    "Price"
+                };
+            cbSort.ItemsSource = cbItems;
+            cbSort.SelectedItem = "Bill no";
         }
 
         private void BtnAdd_Click(object sender, RoutedEventArgs e)
@@ -397,7 +463,64 @@ namespace POP54
             vb.Show();
         }
 
-        private void Button_Click(object sender, RoutedEventArgs e)
+        
+        private void ComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (!IsLoaded)
+                return;
+            ICollectionView dataView = CollectionViewSource.GetDefaultView(dgFurniture.ItemsSource); 
+            var cb = sender as ComboBox;
+            string sortBy = cb.SelectedItem as string;
+            if (sortBy == null)
+                return;
+
+            if (dgFurniture.Visibility.Equals(Visibility.Visible))
+            {
+                if (sortBy == "Product code")
+                    sortBy = "ProductCode";
+                else if (sortBy == "Sale price")
+                    sortBy = "PriceOnSale";
+                else if (sortBy == "Furniture type")
+                    sortBy = "FurnitureType.Name";
+                 dataView = CollectionViewSource.GetDefaultView(dgFurniture.ItemsSource);
+            }
+            else if (dgFurnitureType.Visibility.Equals(Visibility.Visible))
+            {
+                dataView = CollectionViewSource.GetDefaultView(dgFurnitureType.ItemsSource);
+            }
+            else if (dgSales.Visibility.Equals(Visibility.Visible)){
+                if (sortBy == "Start date")
+                    sortBy = "StartDate";
+                else if (sortBy == "End date")
+                    sortBy = "EndDate";
+               dataView = CollectionViewSource.GetDefaultView(dgSales.ItemsSource);
+            }
+            else if (dgUsers.Visibility.Equals(Visibility.Visible))
+            {
+                if (sortBy == "User type")
+                    sortBy = "UserType";
+                dataView = CollectionViewSource.GetDefaultView(dgUsers.ItemsSource);
+            }
+            else if (dgAdditionalService.Visibility.Equals(Visibility.Visible))
+            {
+                dataView = CollectionViewSource.GetDefaultView(dgAdditionalService.ItemsSource);
+            }
+            else if (dgBill.Visibility.Equals(Visibility.Visible))
+            {
+                if (sortBy == "Bill no")
+                    sortBy = "BillNo";
+                else if (sortBy == "Customer")
+                    sortBy = "Buyer";
+                else if (sortBy == "Date")
+                    sortBy = "DateOfSale";
+                dataView = CollectionViewSource.GetDefaultView(dgBill.ItemsSource);
+            }
+
+            dataView.SortDescriptions.Clear();
+            dataView.SortDescriptions.Add(new SortDescription(sortBy, ListSortDirection.Ascending));
+            dataView.Refresh();
+        }
+        private void ComboboxLoaded(object sender, RoutedEventArgs e)
         {
             ICollectionView dataView = CollectionViewSource.GetDefaultView(dgFurniture.ItemsSource);
             dataView.SortDescriptions.Clear();

@@ -62,8 +62,6 @@ namespace POP54.DAO
                         f.Sales.Add(s);
                         
                     }
-                    
-                    
                     furniture.Add(f);
                     ds.Tables["Sale"].Clear();
                 }
