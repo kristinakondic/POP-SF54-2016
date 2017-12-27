@@ -15,7 +15,7 @@ namespace POP54.DAO
     {
         public static ObservableCollection<AdditionalService> GetAll()
         {
-            var additionalService = new ObservableCollection<AdditionalService>();
+            var additionalServices = new ObservableCollection<AdditionalService>();
 
             using (var con = new SqlConnection(ConfigurationManager.ConnectionStrings["POP"].ConnectionString))
             {
@@ -37,10 +37,10 @@ namespace POP54.DAO
                     ads.Price = Convert.ToDouble(row["Price"]);
                     ads.Deleted = bool.Parse(row["Deleted"].ToString());
 
-                    additionalService.Add(ads);
+                    additionalServices.Add(ads);
                 }
             }
-            return additionalService;
+            return additionalServices;
         }
 
         public static AdditionalService Create(AdditionalService ads)

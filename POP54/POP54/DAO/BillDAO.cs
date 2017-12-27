@@ -16,7 +16,9 @@ namespace POP54.DAO
         public static ObservableCollection<Bill> GetAll()
         {
             var bills = new ObservableCollection<Bill>();
-            string commandText = "SELECT * FROM dbo.AdditionalService JOIN dbo.BillAdditionalServices ON BillAdditionalServices.BillId = AdditionalService.ID WHERE Deleted = 0 AND BillId = @id";
+            string commandTextA = "SELECT * FROM dbo.AdditionalService JOIN dbo.BillAdditionalServices ON AdditionalService.ID = BillAdditionalServices.AdditionalServiceId WHERE Deleted = 0 AND BillId = @id";
+            string commandTextF = "SELECT * FROM dbo.Furniture JOIN dbo.BillFurniture ON Furniture.ID = BillFurniture.FurnitureId WHERE Deleted = 0 AND BillId = @id";
+
 
             using (var con = new SqlConnection(ConfigurationManager.ConnectionStrings["POP"].ConnectionString))
             {
@@ -34,6 +36,7 @@ namespace POP54.DAO
                 {
                     var bill = new Bill();
                     bill.AdditionalServiceList = new List<AdditionalService>();
+                    bill.FurnitureForSaleList = new List<Furniture>();
                     bill.ID = Convert.ToInt32(row["ID"]);
                     bill.DateOfSale = (DateTime)row["DateOfSale"];
                     bill.BillNo = Convert.ToInt32(row["BillNo"]);
@@ -42,24 +45,46 @@ namespace POP54.DAO
                     bill.FullPrice = Convert.ToDouble(row["FUllPrice"]);
                     bill.Deleted = bool.Parse(row["Deleted"].ToString());
 
-                    /*SqlCommand command = new SqlCommand(commandText, con);
-                    command.Parameters.Add("@id", SqlDbType.Int);
-                    command.Parameters["@id"].Value = bill.ID;
-                    da.SelectCommand = command;
-                    da.Fill(ds, "Bill");
+                    SqlCommand commandA = new SqlCommand(commandTextA, con);
+                    commandA.Parameters.Add("@id", SqlDbType.Int);
+                    commandA.Parameters["@id"].Value = bill.ID;
+                    da.SelectCommand = commandA;
+                    da.Fill(ds, "AdditionalService");
 
-                    foreach (DataRow roww in ds.Tables["Bill"].Rows)
+                    foreach (DataRow roww in ds.Tables["AdditionalService"].Rows)
                     {
-                        var b = new Bill();
-                        b.ID = Convert.ToInt32(roww["ID"]);
-                        b.DateOfSale = (DateTime)roww["StartDate"];
-                        b.BillNo = Convert.ToInt32(roww["EndDate"]);
-                        b.Discount = Convert.ToInt32(roww["Discount"]);
+                        var ads = new AdditionalService();
+                        ads.ID = Convert.ToInt32(roww["ID"]);
+                        ads.Name = roww["Name"].ToString();
+                        ads.Price = Convert.ToDouble(roww["Price"]);
+                        ads.Deleted = bool.Parse(roww["Deleted"].ToString());
 
-                        bill.AdditionalServiceList.Add(b);
+                        bill.AdditionalServiceList.Add(ads);
+                    }
+                    ds.Tables["AdditionalService"].Clear();
 
-                    }*/
+                    SqlCommand commandF = new SqlCommand(commandTextF, con);
+                    commandF.Parameters.Add("@id", SqlDbType.Int);
+                    commandF.Parameters["@id"].Value = bill.ID;
+                    da.SelectCommand = commandF;
+                    da.Fill(ds, "Furniture");
 
+                    foreach (DataRow rowww in ds.Tables["Furniture"].Rows)
+                    {
+                        var f = new Furniture();
+                        f.Sales = new List<Sale>();
+                        f.ID = Convert.ToInt32(rowww["ID"]);
+                        f.Name = rowww["Name"].ToString();
+                        f.FurnitureTypeId = Convert.ToInt32(rowww["FurnitureTypeId"]);
+                        f.ProductCode = rowww["ProductCode"].ToString();
+                        f.Quantity = Convert.ToInt32(rowww["Quantity"]);
+                        f.Price = Convert.ToDouble(rowww["Price"]);
+                        f.PriceOnSale = Convert.ToDouble(rowww["PriceOnSale"]);
+                        f.Deleted = bool.Parse(rowww["Deleted"].ToString());
+
+                        bill.FurnitureForSaleList.Add(f);
+                    }
+                    ds.Tables["Furniture"].Clear();
                     bills.Add(bill);
                 }
             }

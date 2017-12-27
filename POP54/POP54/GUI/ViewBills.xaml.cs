@@ -24,11 +24,21 @@ namespace POP54.GUI
         {
             InitializeComponent();
             DataContext = this;
-            foreach(var f in bill.FurnitureForSaleList)
-                tbBill.Text += "\n" + "Name: " + f.Name + "  Price: " + f.Price + "  Quantity: " + f.Quantity;
-
+            var store = Project.Instance.Store;
+            tbBill.Text = "============================" + "\n\t" + store.Name.ToUpper() + "\n\t   " + store.Address + "\n\t   " + store.Website + "\n\t      Tel:" + store.Phone + "\n";
+            tbBill.Text += "PIB:" + store.Pib +"\n" + "Company No.:" + store.CompanyNo + "\n";
+            tbBill.Text += "----------------------------------------------" + "\n";
+            tbBill.Text += "Furniture:";
+            foreach (var f in bill.FurnitureForSaleList)
+            {
+                tbBill.Text += "\n" + f.Name;
+                tbBill.Text += "\n" + f.Quantity + "x " + f.Price + "\t\t\t" + f.Price * f.Quantity + "rsd";
+            }
+            tbBill.Text += "\n\n" + "Additional services:";
             foreach (var a in bill.AdditionalServiceList)
-                tbBill.Text += "\n" + "Name: " + a.Name + "  Price: " + a.Price;
+            {
+                tbBill.Text += "\n" + a.Name + "\t\t" + a.Price + "rsd";
+            }
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)

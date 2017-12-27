@@ -1,4 +1,5 @@
-﻿using POP54.Model;
+﻿using POP54.DAO;
+using POP54.Model;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -40,23 +41,9 @@ namespace POP54.GUI
 
         private void Edit_Click(object sender, RoutedEventArgs e)
         {
-            foreach (var s in Project.Instance.Store)
-            {
-                if (s.ID == store.ID)
-                {
-                    s.Name = store.Name;
-                    s.Phone = store.Phone;
-                    s.Address = store.Address;
-                    s.Email = store.Email;
-                    s.Website = store.Website;
-                    s.CompanyNo = store.CompanyNo;
-                    s.AccountNo = store.AccountNo;
-                    s.Pib = store.Pib;
-                    break;
-                }
-            break;
-            }
-            
+            StoreDAO.Update(store);
+            MessageBox.Show("Successful edit", "Supeeer", MessageBoxButton.OK, MessageBoxImage.Information);
+            this.Close();
         }
     }
 }

@@ -64,6 +64,7 @@
     <Compile Include="DAO\FurnitureDAO.cs" />
     <Compile Include="DAO\FurnitureTypeDAO.cs" />
     <Compile Include="DAO\SaleDAO.cs" />
+    <Compile Include="DAO\StoreDAO.cs" />
     <Compile Include="DAO\UserDAO.cs" />
     <Compile Include="GUI\AdditionalServiceWindow.xaml.cs">
       <DependentUpon>AdditionalServiceWindow.xaml</DependentUpon>

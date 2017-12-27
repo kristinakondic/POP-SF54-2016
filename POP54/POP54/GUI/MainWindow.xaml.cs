@@ -404,20 +404,16 @@ namespace POP54
         private void About_Click(object sender, RoutedEventArgs e)
         {
             FurnitureStore fs = new FurnitureStore();
-            foreach(var s in Project.Instance.Store)
-            {
-                fs.ID = s.ID;
-                fs.Name = s.Name;
-                fs.Phone = s.Phone;
-                fs.Address = s.Address;
-                fs.Email = s.Email;
-                fs.Website = s.Website;
-                fs.CompanyNo = s.CompanyNo;
-                fs.AccountNo = s.AccountNo;
-                fs.Pib = s.Pib;
-                break;
-            }
-            Console.WriteLine(fs);
+            var s = Project.Instance.Store;
+            fs.ID = s.ID;
+            fs.Name = s.Name;
+            fs.Phone = s.Phone;
+            fs.Address = s.Address;
+            fs.Email = s.Email;
+            fs.Website = s.Website;
+            fs.CompanyNo = s.CompanyNo;
+            fs.AccountNo = s.AccountNo;
+            fs.Pib = s.Pib;
             StoreWindow sw = new StoreWindow(fs);
             sw.Show();
         }

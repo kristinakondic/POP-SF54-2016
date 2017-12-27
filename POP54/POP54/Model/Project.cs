@@ -17,7 +17,7 @@ namespace POP54.Model
         public ObservableCollection<Furniture> FurnitureList { get; set; }
         public ObservableCollection<AdditionalService> AdditionalServicesList { get; set; }
         public ObservableCollection<Sale> SalesList { get; set; }
-        public ObservableCollection<FurnitureStore> Store{ get; set; }
+        public FurnitureStore Store{ get; set; }
         public Bill Bill { get; set; }
 
         private Project()
@@ -28,7 +28,7 @@ namespace POP54.Model
             FurnitureTypesList = DAO.FurnitureTypeDAO.GetAll();
             AdditionalServicesList = DAO.AdditionalServiceDAO.GetAll();
             SalesList = DAO.SaleDAO.GetAll();
-            //Store = DAO.fu.GetAll();
+            Store = DAO.StoreDAO.GetStore();
             Bill = new Bill();
         }
     }

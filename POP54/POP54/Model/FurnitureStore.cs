@@ -16,11 +16,11 @@ namespace POP54.Model
         private string phone;
         private string email;
         private string website;
-        private int companyNo;
+        private string companyNo;
         private string accountNo;
-        private int pib;
+        private string pib;
 
-        public int Pib
+        public string Pib
         {
             get { return pib; }
             set
@@ -42,7 +42,7 @@ namespace POP54.Model
         }
 
 
-        public int CompanyNo
+        public string CompanyNo
         {
             get { return companyNo; }
             set
