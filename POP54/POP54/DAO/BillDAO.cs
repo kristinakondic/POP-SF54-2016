@@ -41,7 +41,6 @@ namespace POP54.DAO
                     bill.DateOfSale = (DateTime)row["DateOfSale"];
                     bill.BillNo = Convert.ToInt32(row["BillNo"]);
                     bill.Buyer = row["Buyer"].ToString();
-                    bill.PDV = Convert.ToDouble(row["PDV"]);
                     bill.FullPrice = Convert.ToDouble(row["FUllPrice"]);
                     bill.Deleted = bool.Parse(row["Deleted"].ToString());
 
@@ -100,12 +99,11 @@ namespace POP54.DAO
 
                 SqlCommand cmd = con.CreateCommand();
 
-                cmd.CommandText = "INSERT INTO Bill(DateOfSale, BillNo, Buyer, PDV, FullPrice, Deleted) VALUES (@DateOfSale, @BillNo, @Buyer, @PDV, @FullPrice, @Deleted);";
+                cmd.CommandText = "INSERT INTO Bill(DateOfSale, BillNo, Buyer, FullPrice, Deleted) VALUES (@DateOfSale, @BillNo, @Buyer, @FullPrice, @Deleted);";
                 cmd.CommandText += "SELECT SCOPE_IDENTITY();";
                 cmd.Parameters.AddWithValue("DateOfSale", bill.DateOfSale);
                 cmd.Parameters.AddWithValue("BillNo", bill.BillNo);
                 cmd.Parameters.AddWithValue("Buyer", bill.Buyer);
-                cmd.Parameters.AddWithValue("PDV", bill.PDV);
                 cmd.Parameters.AddWithValue("FullPrice", bill.FullPrice);
                 cmd.Parameters.AddWithValue("Deleted", bill.Deleted);
 
@@ -125,13 +123,12 @@ namespace POP54.DAO
 
                 SqlCommand cmd = con.CreateCommand();
 
-                cmd.CommandText = "UPDATE Bill SET DateOfSale = @DateOfSale, BillNo = @BillNo, Buyer = @Buyer, PDV = @PDV, FullPrice = @FullPrice, Deleted = @Deleted WHERE ID = @ID;";
+                cmd.CommandText = "UPDATE Bill SET DateOfSale = @DateOfSale, BillNo = @BillNo, Buyer = @Buyer, FullPrice = @FullPrice, Deleted = @Deleted WHERE ID = @ID;";
                 cmd.CommandText += "SELECT SCOPE_IDENTITY();";
                 cmd.Parameters.AddWithValue("ID", bill.ID);
                 cmd.Parameters.AddWithValue("DateOfSale", bill.DateOfSale);
                 cmd.Parameters.AddWithValue("BillNo", bill.BillNo);
                 cmd.Parameters.AddWithValue("Buyer", bill.Buyer);
-                cmd.Parameters.AddWithValue("PDV", bill.PDV);
                 cmd.Parameters.AddWithValue("FullPrice", bill.FullPrice);
                 cmd.Parameters.AddWithValue("Deleted", bill.Deleted);
 
@@ -144,17 +141,11 @@ namespace POP54.DAO
                         b.DateOfSale = bill.DateOfSale;
                         b.BillNo = bill.BillNo;
                         b.Buyer = bill.Buyer;
-                        b.PDV = bill.PDV;
                         b.FullPrice = bill.FullPrice;
                         b.Deleted = bill.Deleted;
                     }
                 }
             }
-        }
-        public static void Delete(Bill bill)
-        {
-            bill.Deleted = true;
-            Update(bill);
         }
         public static void AddFurnitureOnBill(Bill bill, Furniture furniture)
         {

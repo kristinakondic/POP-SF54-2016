@@ -24,17 +24,16 @@ namespace POP54.GUI
         public LoginWindow()
         {
             InitializeComponent();
-
+            
         }
         private void BtnLogin_Click(object sender, RoutedEventArgs e)
         {
             var username = tbUsername.Text;
             var password = tbPassword.Text;
-
-            var users = UserDAO.GetAll();
+            
             var ok = false;
 
-            foreach (var user in users)
+            foreach (var user in Project.Instance.UsersList)
             {
                 if (user.Username == username && user.Password == password)
                 {
@@ -42,6 +41,7 @@ namespace POP54.GUI
                     {
                         MainWindow mainWindow = new MainWindow();
                         mainWindow.Show();
+                        Project.Instance.User = user;
                         this.Close();
                         ok = true;
                     }
@@ -49,6 +49,7 @@ namespace POP54.GUI
                     {
                         MainWindow mainWindow = new MainWindow();
                         mainWindow.Show();
+                        Project.Instance.User = user;
                         this.Close();
                         ok = true;
                     }
@@ -56,9 +57,7 @@ namespace POP54.GUI
             }
 
             if (ok == false)
-            {
                 lblWrongLogin.Visibility = Visibility.Visible;
-            }
         }
 
     }

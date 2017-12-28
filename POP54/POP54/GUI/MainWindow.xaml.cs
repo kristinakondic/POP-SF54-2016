@@ -35,12 +35,12 @@ namespace POP54
         public AdditionalService SelectedAdditionalService { get; set; }
         public Bill SelectedBill { get; set; }
 
-        public ObservableCollection<Furniture> Furnitures { get; set; }
-
         public MainWindow()
         {
             
             InitializeComponent();
+
+            HideAdminButtons();
 
             string[] cbItems =
                 {
@@ -51,7 +51,14 @@ namespace POP54
                     "Price",
                     "Sale price"
                 };
+            string[] cbSearchItems =
+                {
+                    "Name",
+                    "Product code",
+                    "Furniture type"
+                };
             cbSort.ItemsSource = cbItems;
+            cbSearch.ItemsSource = cbSearchItems;
 
             dgFurniture.ItemsSource = Project.Instance.FurnitureList;
             dgFurniture.ColumnWidth = new DataGridLength(1, DataGridLengthUnitType.Star);
@@ -92,8 +99,18 @@ namespace POP54
 
             CheckSaleDate();
         }
-       
-       
+
+        private void HideAdminButtons()
+        {
+            if (Project.Instance.User.UserType == TypeOfUser.SALESMAN)
+            {
+                btnAdd.Visibility = Visibility.Hidden;
+                btnEdit.Visibility = Visibility.Hidden;
+                btnDelete.Visibility = Visibility.Hidden;
+                btnAddSale.Visibility = Visibility.Hidden;
+            }
+        }
+
         public static void CheckSaleDate()
         {
             foreach (var sale in Project.Instance.SalesList)
@@ -115,7 +132,16 @@ namespace POP54
             dgAdditionalService.Visibility = Visibility.Collapsed;
             dgBill.Visibility = Visibility.Collapsed;
             btnAddSale.Visibility = Visibility.Visible;
-            
+            btnAddOnBill.Visibility = Visibility.Visible;
+            btnDelete.Visibility = Visibility.Visible;
+            btnAdd.Visibility = Visibility.Visible;
+
+            cbSearch.Visibility = Visibility.Visible;
+            tbSearch.Visibility = Visibility.Visible;
+            btnSearch.Visibility = Visibility.Visible;
+            lblSearch.Visibility = Visibility.Visible;
+            HideAdminButtons();
+
             string[] cbItems =
                 {
                     "Name",
@@ -127,6 +153,15 @@ namespace POP54
                 };
             cbSort.ItemsSource = cbItems;
             cbSort.SelectedItem = "Name";
+
+            string[] cbSearchItems =
+                {
+                    "Name",
+                    "Product code",
+                    "Furniture type"
+                };
+            cbSearch.ItemsSource = cbSearchItems;
+            cbSearch.SelectedItem = "Name";
         }
 
         private void BtnFurnitureType_Click(object sender, RoutedEventArgs e)
@@ -138,7 +173,15 @@ namespace POP54
             dgAdditionalService.Visibility = Visibility.Collapsed;
             dgBill.Visibility = Visibility.Collapsed;
             btnAddSale.Visibility = Visibility.Hidden;
-            
+            btnAddOnBill.Visibility = Visibility.Hidden;
+            btnDelete.Visibility = Visibility.Visible;
+            btnAdd.Visibility = Visibility.Visible;
+
+            cbSearch.Visibility = Visibility.Hidden;
+            tbSearch.Visibility = Visibility.Hidden;
+            btnSearch.Visibility = Visibility.Hidden;
+            lblSearch.Visibility = Visibility.Hidden;
+            HideAdminButtons();
             string[] cbItems =
                 {
                     "Name"
@@ -156,7 +199,16 @@ namespace POP54
             dgAdditionalService.Visibility = Visibility.Collapsed;
             dgBill.Visibility = Visibility.Collapsed;
             btnAddSale.Visibility = Visibility.Hidden;
-            
+            btnAddOnBill.Visibility = Visibility.Hidden;
+            btnDelete.Visibility = Visibility.Visible;
+            btnAdd.Visibility = Visibility.Visible;
+
+            cbSearch.Visibility = Visibility.Hidden;
+            tbSearch.Visibility = Visibility.Hidden;
+            btnSearch.Visibility = Visibility.Hidden;
+            lblSearch.Visibility = Visibility.Hidden;
+            HideAdminButtons();
+
             string[] cbItems =
                 {
                     "Discount",
@@ -176,6 +228,15 @@ namespace POP54
             dgAdditionalService.Visibility = Visibility.Collapsed;
             dgBill.Visibility = Visibility.Collapsed;
             btnAddSale.Visibility = Visibility.Hidden;
+            btnAddOnBill.Visibility = Visibility.Hidden;
+            btnDelete.Visibility = Visibility.Visible;
+            btnAdd.Visibility = Visibility.Visible;
+
+            cbSearch.Visibility = Visibility.Visible;
+            tbSearch.Visibility = Visibility.Visible;
+            btnSearch.Visibility = Visibility.Visible;
+            lblSearch.Visibility = Visibility.Visible;
+            HideAdminButtons();
 
             string[] cbItems =
                 {
@@ -187,6 +248,15 @@ namespace POP54
                 };
             cbSort.ItemsSource = cbItems;
             cbSort.SelectedItem = "Name";
+
+            string[] cbSearchItems =
+                {
+                    "Name",
+                    "Surname",
+                    "Username"
+                };
+            cbSearch.ItemsSource = cbSearchItems;
+            cbSearch.SelectedItem = "Name";
         }
 
         private void BtnAditionalService_Click(object sender, RoutedEventArgs e)
@@ -198,6 +268,16 @@ namespace POP54
             dgAdditionalService.Visibility = Visibility.Visible;
             dgBill.Visibility = Visibility.Collapsed;
             btnAddSale.Visibility = Visibility.Hidden;
+            btnAddOnBill.Visibility = Visibility.Visible;
+            btnDelete.Visibility = Visibility.Visible;
+            btnAdd.Visibility = Visibility.Visible;
+
+            cbSearch.Visibility = Visibility.Hidden;
+            tbSearch.Visibility = Visibility.Hidden;
+            btnSearch.Visibility = Visibility.Hidden;
+            lblSearch.Visibility = Visibility.Hidden;
+            HideAdminButtons();
+
 
             string[] cbItems =
                 {
@@ -217,16 +297,35 @@ namespace POP54
             dgAdditionalService.Visibility = Visibility.Collapsed;
             dgBill.Visibility = Visibility.Visible;
             btnAddSale.Visibility = Visibility.Hidden;
+            btnAddOnBill.Visibility = Visibility.Hidden;
+            btnDelete.Visibility = Visibility.Hidden;
+            btnAdd.Visibility = Visibility.Hidden;
+
+            cbSearch.Visibility = Visibility.Visible;
+            tbSearch.Visibility = Visibility.Visible;
+            btnSearch.Visibility = Visibility.Visible;
+            lblSearch.Visibility = Visibility.Visible;
+            HideAdminButtons();
 
             string[] cbItems =
                 {
-                    "Bill no",
+                    "Bill No.",
                     "Date",
                     "Customer",
                     "Price"
                 };
             cbSort.ItemsSource = cbItems;
-            cbSort.SelectedItem = "Bill no";
+            cbSort.SelectedItem = "Bill No.";
+
+            string[] cbSearchItems =
+                {
+                    "Bill No.",
+                    "Customer",
+                    "Selled furniture",
+                    "Date"
+                };
+            cbSearch.ItemsSource = cbSearchItems;
+            cbSearch.SelectedItem = "Bill No.";
         }
 
         private void BtnAdd_Click(object sender, RoutedEventArgs e)
@@ -327,9 +426,6 @@ namespace POP54
                 
                 else if (dgAdditionalService.Visibility.Equals(Visibility.Visible))
                     AdditionalServiceDAO.Delete(SelectedAdditionalService);
-                
-                else if (dgBill.Visibility.Equals(Visibility.Visible))
-                    BillDAO.Delete(SelectedBill);
             }
         }
         private void BtnAddSale_Click(object sender, RoutedEventArgs e)
@@ -516,12 +612,111 @@ namespace POP54
             dataView.SortDescriptions.Add(new SortDescription(sortBy, ListSortDirection.Ascending));
             dataView.Refresh();
         }
-        private void ComboboxLoaded(object sender, RoutedEventArgs e)
+        private void ComboboxSortLoaded(object sender, RoutedEventArgs e)
         {
             ICollectionView dataView = CollectionViewSource.GetDefaultView(dgFurniture.ItemsSource);
             dataView.SortDescriptions.Clear();
             dataView.SortDescriptions.Add(new SortDescription("Name", ListSortDirection.Ascending));
             dataView.Refresh();
+        }
+
+        private void BtnSearch(object sender, RoutedEventArgs e)
+        {
+            string searchText = tbSearch.Text.Trim().ToLower();
+
+            if (dgFurniture.Visibility.Equals(Visibility.Visible))
+            {
+                dgFurniture.ItemsSource = Project.Instance.FurnitureList;
+                var dataView = new CollectionViewSource() { Source = dgFurniture.ItemsSource };
+                ICollectionView ItemsList = dataView.View;
+
+                if (cbSearch.SelectedItem.ToString() == "Name")
+                {
+                    var yourFilter = new Predicate<object>(item => ((Furniture)item).Name.ToLower().Contains(searchText));
+                    ItemsList.Filter = yourFilter;
+                    dgFurniture.ItemsSource = ItemsList;
+                }
+                else if (cbSearch.SelectedItem.ToString() == "Product code")
+                {
+                    var yourFilter = new Predicate<object>(item => ((Furniture)item).ProductCode.ToLower().Contains(searchText));
+                    ItemsList.Filter = yourFilter;
+                    dgFurniture.ItemsSource = ItemsList;
+                }
+                else if (cbSearch.SelectedItem.ToString() == "Furniture type")
+                {
+                    var yourFilter = new Predicate<object>(item => ((Furniture)item).FurnitureType.Name.ToLower().Contains(searchText));
+                    ItemsList.Filter = yourFilter;
+                    dgFurniture.ItemsSource = ItemsList;
+                }
+            }
+            else if (dgUsers.Visibility.Equals(Visibility.Visible))
+            {
+                dgUsers.ItemsSource = Project.Instance.UsersList;
+                var dataView = new CollectionViewSource() { Source = dgUsers.ItemsSource };
+                ICollectionView ItemsList = dataView.View;
+
+                if (cbSearch.SelectedItem.ToString() == "Name")
+                {
+                    var yourFilter = new Predicate<object>(item => ((User)item).Name.ToLower().Contains(searchText));
+                    ItemsList.Filter = yourFilter;
+                    dgUsers.ItemsSource = ItemsList;
+                }
+                else if (cbSearch.SelectedItem.ToString() == "Surname")
+                {
+                    var yourFilter = new Predicate<object>(item => ((User)item).Surname.ToLower().Contains(searchText));
+                    ItemsList.Filter = yourFilter;
+                    dgUsers.ItemsSource = ItemsList;
+                }
+                else if (cbSearch.SelectedItem.ToString() == "Username")
+                {
+                    var yourFilter = new Predicate<object>(item => ((User)item).Username.ToLower().Contains(searchText));
+                    ItemsList.Filter = yourFilter;
+                    dgUsers.ItemsSource = ItemsList;
+                }
+            }
+            else if (dgBill.Visibility.Equals(Visibility.Visible))
+            {
+                /* "Bill no",
+                    "Customer",
+                    "Selled furniture",
+                    "Date"
+                */
+                dgBill.ItemsSource = Project.Instance.BillsList;
+                var dataView = new CollectionViewSource() { Source = dgBill.ItemsSource };
+                ICollectionView ItemsList = dataView.View;
+
+                if (cbSearch.SelectedItem.ToString() == "Bill No.")
+                {
+                    var yourFilter = new Predicate<object>(item => ((Bill)item).BillNo.ToString().ToLower().Contains(searchText));
+                    ItemsList.Filter = yourFilter;
+                    dgBill.ItemsSource = ItemsList;
+                }
+                else if (cbSearch.SelectedItem.ToString() == "Customer")
+                {
+                    var yourFilter = new Predicate<object>(item => ((Bill)item).Buyer.ToLower().Contains(searchText));
+                    ItemsList.Filter = yourFilter;
+                    dgBill.ItemsSource = ItemsList;
+                }
+                else if (cbSearch.SelectedItem.ToString() == "Selled furniture")
+                {
+                    ObservableCollection<Bill> ls = new ObservableCollection<Bill>();
+                    foreach (var b in Project.Instance.BillsList)
+                    {
+                        foreach (var f in b.FurnitureForSaleList)
+                        {
+                            if (f.Name.ToLower().Contains(searchText))
+                                ls.Add(b);
+                        }
+                    }
+                    dgBill.ItemsSource = ls;
+                }
+                else if (cbSearch.SelectedItem.ToString() == "Date")
+                {
+                    var yourFilter = new Predicate<object>(item => ((Bill)item).DateOfSale.ToString().ToLower().Contains(searchText));
+                    ItemsList.Filter = yourFilter;
+                    dgBill.ItemsSource = ItemsList;
+                }
+            }
         }
     }
 }

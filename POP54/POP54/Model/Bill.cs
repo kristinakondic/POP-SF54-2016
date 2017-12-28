@@ -14,7 +14,6 @@ namespace POP54.Model
         private DateTime dateOfSale;
         private int billNo;
         private string buyer;
-        private double pdv;
         private List<AdditionalService> additionalServiceList;
         private double fullPrice = 0;
         private List<Furniture> furnitureForSaleList;
@@ -63,16 +62,6 @@ namespace POP54.Model
             set {
                 fullPrice = value;
                 OnPropertyChanged("FullPrice");
-            }
-        }
-
-        public double PDV
-        {
-            get { return pdv; }
-            set
-            {
-                pdv = value;
-                OnPropertyChanged("PDV");
             }
         }
 

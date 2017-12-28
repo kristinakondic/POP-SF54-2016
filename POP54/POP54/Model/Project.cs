@@ -19,6 +19,7 @@ namespace POP54.Model
         public ObservableCollection<Sale> SalesList { get; set; }
         public FurnitureStore Store{ get; set; }
         public Bill Bill { get; set; }
+        public User User { get; set; }
 
         private Project()
         {
@@ -30,6 +31,7 @@ namespace POP54.Model
             SalesList = DAO.SaleDAO.GetAll();
             Store = DAO.StoreDAO.GetStore();
             Bill = new Bill();
+            User = new User();
         }
     }
 }

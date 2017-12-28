@@ -28,17 +28,24 @@ namespace POP54.GUI
             tbBill.Text = "============================" + "\n\t" + store.Name.ToUpper() + "\n\t   " + store.Address + "\n\t   " + store.Website + "\n\t      Tel:" + store.Phone + "\n";
             tbBill.Text += "PIB:" + store.Pib +"\n" + "Company No.:" + store.CompanyNo + "\n";
             tbBill.Text += "----------------------------------------------" + "\n";
+
             tbBill.Text += "Furniture:";
             foreach (var f in bill.FurnitureForSaleList)
             {
                 tbBill.Text += "\n" + f.Name;
-                tbBill.Text += "\n" + f.Quantity + "x " + f.Price + "\t\t\t" + f.Price * f.Quantity + "rsd";
+                tbBill.Text += "\n" + f.Quantity + "x " + f.Price + "\t\t\t" + f.Price * f.Quantity + " RSD";
             }
+
             tbBill.Text += "\n\n" + "Additional services:";
             foreach (var a in bill.AdditionalServiceList)
             {
-                tbBill.Text += "\n" + a.Name + "\t\t" + a.Price + "rsd";
+                tbBill.Text += "\n" + a.Name + "\t\t" + a.Price + " RSD";
             }
+
+            tbBill.Text += "\n"+"----------------------------------------------" + "\n";
+            tbBill.Text += "Price: " + bill.FullPrice + " RSD\n" + "PDV: " + bill.FullPrice * 0.2 + " RSD\n" + "Full price: " + bill.FullPrice * 1.2 + " RSD\n";
+            tbBill.Text += "============================";
+            tbBill.Text += bill.DateOfSale + "\nBill No.: " + bill.BillNo + "\nCustomer: " + bill.Buyer + "\n";
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)

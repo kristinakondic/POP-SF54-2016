@@ -5,11 +5,12 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:POP54.GUI"
         mc:Ignorable="d"
-        Title="ViewBills" Height="400" Width="250">
+        Title="ViewBills" Height="450" Width="260"
+        WindowStartupLocation="CenterScreen">
     <Grid>
         <ScrollViewer Margin="10,0,0,57" >
             <TextBlock Name="tbBill" HorizontalAlignment="Left" TextWrapping="Wrap" VerticalAlignment="Top" Width="232" />
         </ScrollViewer>
-        <Button Content="Close" HorizontalAlignment="Left" Margin="86,339,0,0" VerticalAlignment="Top" Width="74" Click="Button_Click"/>
+        <Button Content="Close" HorizontalAlignment="Left" Margin="90,389,0,0" VerticalAlignment="Top" Width="74" Click="Button_Click"/>
     </Grid>
 </Window>
