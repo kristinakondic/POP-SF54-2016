@@ -1,83 +1,47 @@
 ﻿-- seed.sql
-INSERT INTO FurnitureType (Namee, Deleted) VALUES ('Polica', 0)
-INSERT INTO FurnitureType (Namee, Deleted) VALUES ('Garnitura', 0)
-INSERT INTO FurnitureType (Namee, Deleted) VALUES ('Stolica', 0)
-INSERT INTO FurnitureType (Namee, Deleted) VALUES ('Krevet', 0)
+SET IDENTITY_INSERT [dbo].[FurnitureType] ON
+INSERT INTO [dbo].[FurnitureType] ([ID], [Name], [Deleted]) VALUES (1, N'Polica', 0)
+INSERT INTO [dbo].[FurnitureType] ([ID], [Name], [Deleted]) VALUES (2, N'Garnitura', 0)
+INSERT INTO [dbo].[FurnitureType] ([ID], [Name], [Deleted]) VALUES (3, N'Stolica', 0)
+INSERT INTO [dbo].[FurnitureType] ([ID], [Name], [Deleted]) VALUES (4, N'Krevet', 0)
+SET IDENTITY_INSERT [dbo].[FurnitureType] OFF
 
-INSERT INTO Furniture (FurnitureTypeId, Namee, ProductCode, Price, Quantity, Deleted) 
-VALUES (1, 'Mila polica', 'UCJ65', 1253, 5, 0)
+SET IDENTITY_INSERT [dbo].[Furniture] ON
+INSERT INTO [dbo].[Furniture] ([ID], [FurnitureTypeId], [Name], [ProductCode], [Quantity], [Price], [Deleted], [SaleId], [PriceOnSale]) VALUES (1, 1, N'Mila polica', N'UCJ65', 5, CAST(1253.00 AS Decimal(9, 2)), 0, NULL, CAST(0.00 AS Decimal(9, 2)))
+INSERT INTO [dbo].[Furniture] ([ID], [FurnitureTypeId], [Name], [ProductCode], [Quantity], [Price], [Deleted], [SaleId], [PriceOnSale]) VALUES (2, 3, N'Stolica Sanja', N'DSC526', 16, CAST(5240.00 AS Decimal(9, 2)), 0, NULL, CAST(0.00 AS Decimal(9, 2)))
+INSERT INTO [dbo].[Furniture] ([ID], [FurnitureTypeId], [Name], [ProductCode], [Quantity], [Price], [Deleted], [SaleId], [PriceOnSale]) VALUES (3, 2, N'Stoja garnitura', N'5151LK', 2, CAST(9033.00 AS Decimal(9, 2)), 0, NULL, CAST(0.00 AS Decimal(9, 2)))
+INSERT INTO [dbo].[Furniture] ([ID], [FurnitureTypeId], [Name], [ProductCode], [Quantity], [Price], [Deleted], [SaleId], [PriceOnSale]) VALUES (4, 4, N'Krevet ina', N'652sa', 3, CAST(20001.00 AS Decimal(9, 2)), 0, NULL, CAST(0.00 AS Decimal(9, 2)))
+INSERT INTO [dbo].[Furniture] ([ID], [FurnitureTypeId], [Name], [ProductCode], [Quantity], [Price], [Deleted], [SaleId], [PriceOnSale]) VALUES (5, 2, N'a', N'a', 1, CAST(4.00 AS Decimal(9, 2)), 0, NULL, CAST(0.00 AS Decimal(9, 2)))
+SET IDENTITY_INSERT [dbo].[Furniture] OFF
 
-INSERT INTO Furniture (FurnitureTypeId, Namee, ProductCode, Price, Quantity, Deleted) 
-VALUES (3, 'Stolica Sanja', 'DSC526', 5240, 16, 0)
+INSERT INTO [dbo].[UserTypes] ([Type]) VALUES (0)
+INSERT INTO [dbo].[UserTypes] ([Type]) VALUES (1)
 
-INSERT INTO Furniture (FurnitureTypeId, Namee, ProductCode, Price, Quantity, Deleted) 
-VALUES (2, 'Stoja garnitura', '5151LK', 9033, 2, 0)
+SET IDENTITY_INSERT [dbo].[User] ON
+INSERT INTO [dbo].[User] ([ID], [Name], [Surname], [Username], [Password], [UserType], [Deleted]) VALUES (1, N'a', N'a', N'a', N'a', 1, 0)
+INSERT INTO [dbo].[User] ([ID], [Name], [Surname], [Username], [Password], [UserType], [Deleted]) VALUES (2, N'b', N'b', N'b', N'b', 0, 0)
+SET IDENTITY_INSERT [dbo].[User] OFF
 
-INSERT INTO Furniture (FurnitureTypeId, Namee, ProductCode, Price, Quantity, Deleted) 
-VALUES (4, 'Krevet ina', '652sa', 20001, 3, 0)
+SET IDENTITY_INSERT [dbo].[Sale] ON
+INSERT INTO [dbo].[Sale] ([ID], [Discount], [StartDate], [EndDate], [Deleted]) VALUES (1, 10, N'2017-11-04 00:00:00', N'2018-11-04 00:00:00', 0)
+INSERT INTO [dbo].[Sale] ([ID], [Discount], [StartDate], [EndDate], [Deleted]) VALUES (2, 5, N'2017-11-04 00:00:00', N'2019-11-04 00:00:00', 0)
+SET IDENTITY_INSERT [dbo].[Sale] OFF
 
-INSERT INTO dbo.AdditionalService
-(
-    Name,
-    Price,
-    Deleted
-)
-VALUES
-(
-    'Sklapanje',  -- Name - nchar(15)
-    1000, -- Price - numeric(9, 2)
-    0  -- Deleted - bit
-)
+SET IDENTITY_INSERT [dbo].[AdditionalService] ON
+INSERT INTO [dbo].[AdditionalService] ([ID], [Name], [Price], [Deleted]) VALUES (1, N'Sklapanje      ', CAST(1000.00 AS Decimal(9, 2)), 0)
+INSERT INTO [dbo].[AdditionalService] ([ID], [Name], [Price], [Deleted]) VALUES (2, N'Prevoz         ', CAST(1500.00 AS Decimal(9, 2)), 0)
+SET IDENTITY_INSERT [dbo].[AdditionalService] OFF
 
-INSERT INTO dbo.AdditionalService
-(
-    Name,
-    Price,
-    Deleted
-)
-VALUES
-(
-    'Prevoz',  -- Name - nchar(15)
-    1500, -- Price - numeric(9, 2)
-    0  -- Deleted - bit
-)
+SET IDENTITY_INSERT [dbo].[Bill] ON
+INSERT INTO [dbo].[Bill] ([ID], [DateOfSale], [BillNo], [Buyer], [FullPrice], [Deleted]) VALUES (1, N'2017-11-04 00:00:00', 34, N'mile      ', CAST(0.00 AS Decimal(9, 2)), 0)
+SET IDENTITY_INSERT [dbo].[Bill] OFF
 
-INSERT INTO dbo.Bill
-(
-    dateOfSale,
-    BillNo,
-    Buyer,
-    PDV,
-    FullPrice,
-    Deleted
-)
-VALUES
-(  
-    GETDATE(), -- dateOfSale - datetime
-    52,         -- BillNo - int
-    'Vladislav',       -- Buyer - nchar(10)
-    200,      -- PDV - numeric(3, 2)
-    1000,      -- FullPrice - numeric(9, 2)
-    0       -- Deleted - bit
-)
+SET IDENTITY_INSERT [dbo].[FurnitureStore] ON
+INSERT INTO [dbo].[FurnitureStore] ([ID], [Name], [Address], [Phone], [Email], [Website], [CompanyNo], [AccountNo], [PIB]) VALUES (1, N'Forma Idejale', N'Idejalna ulica', N'555333', N'idejale@gmail.com', N'Idejale.com', N'53', N'35', N'3535')
+SET IDENTITY_INSERT [dbo].[FurnitureStore] OFF
 
-INSERT INTO dbo.Bill
-(
-    dateOfSale,
-    BillNo,
-    Buyer,
-    PDV,
-    FullPrice,
-    Deleted
-)
-VALUES
-(  
-    GETDATE(), -- dateOfSale - datetime
-    52,         -- BillNo - int
-    'Mina',       -- Buyer - nchar(10)
-    200,      -- PDV - numeric(3, 2)
-    1000,      -- FullPrice - numeric(9, 2)
-    0       -- Deleted - bit
-)
+INSERT INTO [dbo].[BillAdditionalServices] ([BillId], [AdditionalServiceId]) VALUES (1, 2)
 
+INSERT INTO [dbo].[BillFurniture] ([BillId], [FurnitureId]) VALUES (1, 1)
 
+INSERT INTO [dbo].[FurnitureSales] ([SaleId], [FurnitureId]) VALUES (2, 3)

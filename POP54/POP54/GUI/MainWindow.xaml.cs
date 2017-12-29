@@ -370,7 +370,7 @@ namespace POP54
         }
         private void BtnExit_Click(object sender, RoutedEventArgs e)
         {
-            this.Close();
+            Application.Current.Shutdown();
         }
         private void BtnEdit_Click(object sender, RoutedEventArgs e)
         {
@@ -676,11 +676,6 @@ namespace POP54
             }
             else if (dgBill.Visibility.Equals(Visibility.Visible))
             {
-                /* "Bill no",
-                    "Customer",
-                    "Selled furniture",
-                    "Date"
-                */
                 dgBill.ItemsSource = Project.Instance.BillsList;
                 var dataView = new CollectionViewSource() { Source = dgBill.ItemsSource };
                 ICollectionView ItemsList = dataView.View;
@@ -717,6 +712,19 @@ namespace POP54
                     dgBill.ItemsSource = ItemsList;
                 }
             }
+        }
+
+        private void LogOut_Click(object sender, RoutedEventArgs e)
+        {
+            Project.Instance.User = new User();
+            LoginWindow lw = new LoginWindow();
+            lw.Show();
+            this.Close();
+        }
+
+        private void MenuExit_Click(object sender, RoutedEventArgs e)
+        {
+            Application.Current.Shutdown();
         }
     }
 }

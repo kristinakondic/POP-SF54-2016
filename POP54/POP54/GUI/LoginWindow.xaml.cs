@@ -29,7 +29,7 @@ namespace POP54.GUI
         private void BtnLogin_Click(object sender, RoutedEventArgs e)
         {
             var username = tbUsername.Text;
-            var password = tbPassword.Text;
+            var password = tbPassword.Password;
             
             var ok = false;
 
@@ -39,17 +39,17 @@ namespace POP54.GUI
                 {
                     if (user.UserType == TypeOfUser.SALESMAN)
                     {
+                        Project.Instance.User = user;
                         MainWindow mainWindow = new MainWindow();
                         mainWindow.Show();
-                        Project.Instance.User = user;
                         this.Close();
                         ok = true;
                     }
                     else
                     {
+                        Project.Instance.User = user;
                         MainWindow mainWindow = new MainWindow();
                         mainWindow.Show();
-                        Project.Instance.User = user;
                         this.Close();
                         ok = true;
                     }

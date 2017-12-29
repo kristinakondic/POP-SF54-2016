@@ -22,7 +22,7 @@
         <TextBox Name="tbUsername" Grid.Row="1" Margin="126,10,103,10"/>
 
         <Label Content="Password" Width="Auto" Grid.Row="2" Margin="52,13,221,8" Padding="0" FontSize="12"/>
-        <TextBox Name="tbPassword" Grid.Row="2" Margin="126,10,103,10"/>
+        <PasswordBox Name="tbPassword" Grid.Row="2" Margin="126,10,103,10"/>
 
         <Label Name="lblWrongLogin" Content="Wrong username/password combination!" 
                Width="Auto" Grid.Row="3" HorizontalContentAlignment="Center" 
