@@ -8,6 +8,7 @@ using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 
 namespace POP54.DAO
 {
@@ -25,7 +26,7 @@ namespace POP54.DAO
                 SqlDataAdapter da = new SqlDataAdapter();
                 DataSet ds = new DataSet();
 
-                cmd.CommandText = "SELECT * FROM dbo.[Sale] WHERE Deleted = 0;";
+                cmd.CommandText = "SELECT * FROM dbo.[Sale];";
                 da.SelectCommand = cmd;
                 da.Fill(ds, "Sale");
 
@@ -46,61 +47,86 @@ namespace POP54.DAO
 
         public static Sale Create(Sale sale)
         {
-
-            using (var con = new SqlConnection(ConfigurationManager.ConnectionStrings["POP"].ConnectionString))
+            try
             {
-                con.Open();
+                using (var con = new SqlConnection(ConfigurationManager.ConnectionStrings["POP"].ConnectionString))
+                {
+                    con.Open();
 
-                SqlCommand cmd = con.CreateCommand();
+                    SqlCommand cmd = con.CreateCommand();
 
-                cmd.CommandText = "INSERT INTO Sale(Discount, StartDate, EndDate, Deleted) VALUES (@Discount, @StartDate, @EndDate, @Deleted);";
-                cmd.CommandText += "SELECT SCOPE_IDENTITY();";
-                cmd.Parameters.AddWithValue("Discount", sale.Discount);
-                cmd.Parameters.AddWithValue("StartDate", sale.StartDate);
-                cmd.Parameters.AddWithValue("EndDate", sale.EndDate);
-                cmd.Parameters.AddWithValue("Deleted", sale.Deleted);
+                    cmd.CommandText = "INSERT INTO Sale(Discount, StartDate, EndDate, Deleted) VALUES (@Discount, @StartDate, @EndDate, @Deleted);";
+                    cmd.CommandText += "SELECT SCOPE_IDENTITY();";
+                    cmd.Parameters.AddWithValue("Discount", sale.Discount);
+                    cmd.Parameters.AddWithValue("StartDate", sale.StartDate);
+                    cmd.Parameters.AddWithValue("EndDate", sale.EndDate);
+                    cmd.Parameters.AddWithValue("Deleted", sale.Deleted);
 
-                sale.ID = int.Parse(cmd.ExecuteScalar().ToString());
+                    sale.ID = int.Parse(cmd.ExecuteScalar().ToString());
+                }
+
+                Project.Instance.SalesList.Add(sale);
+
+                return sale;
             }
-
-            Project.Instance.SalesList.Add(sale);
-
-            return sale;
+            catch
+            {
+                MessageBox.Show("Database error!", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                return null;
+            }
         }
 
         public static void Update(Sale sale)
         {
-            using (var con = new SqlConnection(ConfigurationManager.ConnectionStrings["POP"].ConnectionString))
+            try
             {
-                con.Open();
-
-                SqlCommand cmd = con.CreateCommand();
-
-                cmd.CommandText = "UPDATE Sale SET Discount = Discount, StartDate = @StartDate, EndDate = @EndDate, Deleted = @Deleted WHERE ID = @ID;";
-                cmd.CommandText += "SELECT SCOPE_IDENTITY();";
-                cmd.Parameters.AddWithValue("ID", sale.ID);
-                cmd.Parameters.AddWithValue("Discount", sale.Discount);
-                cmd.Parameters.AddWithValue("StartDate", sale.StartDate);
-                cmd.Parameters.AddWithValue("EndDate", sale.EndDate);
-                cmd.Parameters.AddWithValue("Deleted", sale.Deleted);
-
-                cmd.ExecuteNonQuery();
-
-                foreach (var s in Project.Instance.SalesList)
+                using (var con = new SqlConnection(ConfigurationManager.ConnectionStrings["POP"].ConnectionString))
                 {
-                    if (sale.ID == s.ID)
+                    con.Open();
+
+                    SqlCommand cmd = con.CreateCommand();
+
+                    cmd.CommandText = "UPDATE Sale SET Discount = Discount, StartDate = @StartDate, EndDate = @EndDate, Deleted = @Deleted WHERE ID = @ID;";
+                    cmd.CommandText += "SELECT SCOPE_IDENTITY();";
+                    cmd.Parameters.AddWithValue("ID", sale.ID);
+                    cmd.Parameters.AddWithValue("Discount", sale.Discount);
+                    cmd.Parameters.AddWithValue("StartDate", sale.StartDate);
+                    cmd.Parameters.AddWithValue("EndDate", sale.EndDate);
+                    cmd.Parameters.AddWithValue("Deleted", sale.Deleted);
+
+                    cmd.ExecuteNonQuery();
+
+                    foreach (var s in Project.Instance.SalesList)
                     {
-                        s.Discount = sale.Discount;
-                        s.StartDate = sale.StartDate;
-                        s.EndDate = sale.EndDate;
-                        s.Deleted = sale.Deleted;
+                        if (sale.ID == s.ID)
+                        {
+                            s.Discount = sale.Discount;
+                            s.StartDate = sale.StartDate;
+                            s.EndDate = sale.EndDate;
+                            s.Deleted = sale.Deleted;
+                        }
                     }
                 }
+            }
+            catch
+            {
+                MessageBox.Show("Database error!", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
 
         public static void Delete(Sale sale)
         {
+            foreach (var f in Project.Instance.FurnitureList)
+            {
+                foreach (var s in f.Sales)
+                {
+                    if (s == sale)
+                    {
+                        f.PriceOnSale = 0;
+                        FurnitureDAO.Update(f);
+                    }
+                }
+            }
             sale.Deleted = true;
             Update(sale);
         }
@@ -132,7 +158,6 @@ namespace POP54.DAO
                 cmd.Parameters.AddWithValue("FurnitureId", furniture.ID);
                 cmd.Parameters.AddWithValue("SaleId", sale.ID);
                 cmd.ExecuteNonQuery();
-
             }
         }
     }

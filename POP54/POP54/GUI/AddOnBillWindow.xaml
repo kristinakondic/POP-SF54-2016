@@ -9,7 +9,7 @@
     <Grid>
         <Label Content="Quantity" FontSize="16" HorizontalAlignment="Left" Margin="104,42,0,0" VerticalAlignment="Top" Width="92" Height="38"/>
         <ComboBox Name="cbQuantity" HorizontalAlignment="Left" Margin="117,104,0,0" VerticalAlignment="Top" Width="60"/>
-        <Button Content="Add" HorizontalAlignment="Left" Margin="47,193,0,0" VerticalAlignment="Top" Width="75" Height="29" Click="Add_Click"/>
+        <Button Name="btnAdd" Content="Add" HorizontalAlignment="Left" Margin="47,193,0,0" VerticalAlignment="Top" Width="75" Height="29" Click="Add_Click"/>
         <Button Content="Cancel" HorizontalAlignment="Left" Margin="172,193,0,0" VerticalAlignment="Top" Width="75" Height="29" Click="Cancel_Click"/>
 
     </Grid>

@@ -22,6 +22,8 @@ namespace POP54.GUI
         public StoreWindow(FurnitureStore store)
         {
             InitializeComponent();
+            if (Project.Instance.User.UserType.Equals(TypeOfUser.SALESMAN))
+                btnSave.Visibility = Visibility.Hidden;
             this.store = store;
             DataContext = this;
             tbName.DataContext = store;

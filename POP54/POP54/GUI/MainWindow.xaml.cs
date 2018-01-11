@@ -1,4 +1,5 @@
-﻿using POP54.DAO;
+﻿using MahApps.Metro.Controls;
+using POP54.DAO;
 using POP54.GUI;
 using POP54.Model;
 using POP54.Util;
@@ -26,7 +27,7 @@ namespace POP54
         FURNITURE, FURNITURE_TYPE, SALES, USERS, ADDITIONAL, BILL
     }
 
-    public partial class MainWindow : Window
+    public partial class MainWindow : MetroWindow
     {
         public Furniture SelectedFurniture { get; set; }
         public FurnitureType SelectedFurnitureType { get; set; }
@@ -98,6 +99,7 @@ namespace POP54
             if (i != -1) SelectedBill = Project.Instance.BillsList[i];
 
             CheckSaleDate();
+            DeleteSoldFurniture();
         }
 
         private void HideAdminButtons()
@@ -110,18 +112,27 @@ namespace POP54
                 btnAddSale.Visibility = Visibility.Hidden;
             }
         }
-
+        public static void DeleteSoldFurniture()
+        {
+            foreach (var fur in Project.Instance.FurnitureList)
+            {
+                if (fur.Quantity == 0)
+                    FurnitureDAO.Delete(fur);
+            }
+        }
         public static void CheckSaleDate()
         {
             foreach (var sale in Project.Instance.SalesList)
             {
                 int dateCompare = DateTime.Compare(sale.EndDate, DateTime.Now);
-                if (dateCompare < 0)
+                if (dateCompare < 0 || sale.Deleted)
                 {
+                   
                     SaleDAO.Delete(sale);
                     SaleDAO.DeleteFurnitureSale(sale);
                 }
             }
+           
         }
         private void BtnFurniture_Click(object sender, RoutedEventArgs e)
         {
@@ -135,6 +146,7 @@ namespace POP54
             btnAddOnBill.Visibility = Visibility.Visible;
             btnDelete.Visibility = Visibility.Visible;
             btnAdd.Visibility = Visibility.Visible;
+            btnEdit.Visibility = Visibility.Visible;
 
             cbSearch.Visibility = Visibility.Visible;
             tbSearch.Visibility = Visibility.Visible;
@@ -172,15 +184,16 @@ namespace POP54
             dgUsers.Visibility = Visibility.Collapsed;
             dgAdditionalService.Visibility = Visibility.Collapsed;
             dgBill.Visibility = Visibility.Collapsed;
-            btnAddSale.Visibility = Visibility.Hidden;
-            btnAddOnBill.Visibility = Visibility.Hidden;
+            btnAddSale.Visibility = Visibility.Visible;
+            btnAddOnBill.Visibility = Visibility.Visible;
             btnDelete.Visibility = Visibility.Visible;
             btnAdd.Visibility = Visibility.Visible;
+            btnEdit.Visibility = Visibility.Visible;
 
-            cbSearch.Visibility = Visibility.Hidden;
-            tbSearch.Visibility = Visibility.Hidden;
-            btnSearch.Visibility = Visibility.Hidden;
-            lblSearch.Visibility = Visibility.Hidden;
+            cbSearch.Visibility = Visibility.Visible;
+            tbSearch.Visibility = Visibility.Visible;
+            btnSearch.Visibility = Visibility.Visible;
+            lblSearch.Visibility = Visibility.Visible;
             HideAdminButtons();
             string[] cbItems =
                 {
@@ -198,17 +211,17 @@ namespace POP54
             dgUsers.Visibility = Visibility.Collapsed;
             dgAdditionalService.Visibility = Visibility.Collapsed;
             dgBill.Visibility = Visibility.Collapsed;
-            btnAddSale.Visibility = Visibility.Hidden;
-            btnAddOnBill.Visibility = Visibility.Hidden;
+            btnAddSale.Visibility = Visibility.Visible;
+            btnAddOnBill.Visibility = Visibility.Visible;
             btnDelete.Visibility = Visibility.Visible;
             btnAdd.Visibility = Visibility.Visible;
+            btnEdit.Visibility = Visibility.Visible;
 
-            cbSearch.Visibility = Visibility.Hidden;
-            tbSearch.Visibility = Visibility.Hidden;
-            btnSearch.Visibility = Visibility.Hidden;
-            lblSearch.Visibility = Visibility.Hidden;
+            cbSearch.Visibility = Visibility.Visible;
+            tbSearch.Visibility = Visibility.Visible;
+            btnSearch.Visibility = Visibility.Visible;
+            lblSearch.Visibility = Visibility.Visible;
             HideAdminButtons();
-
             string[] cbItems =
                 {
                     "Discount",
@@ -231,6 +244,7 @@ namespace POP54
             btnAddOnBill.Visibility = Visibility.Hidden;
             btnDelete.Visibility = Visibility.Visible;
             btnAdd.Visibility = Visibility.Visible;
+            btnEdit.Visibility = Visibility.Visible;
 
             cbSearch.Visibility = Visibility.Visible;
             tbSearch.Visibility = Visibility.Visible;
@@ -267,15 +281,16 @@ namespace POP54
             dgUsers.Visibility = Visibility.Collapsed;
             dgAdditionalService.Visibility = Visibility.Visible;
             dgBill.Visibility = Visibility.Collapsed;
-            btnAddSale.Visibility = Visibility.Hidden;
+            btnAddSale.Visibility = Visibility.Visible;
             btnAddOnBill.Visibility = Visibility.Visible;
             btnDelete.Visibility = Visibility.Visible;
             btnAdd.Visibility = Visibility.Visible;
+            btnEdit.Visibility = Visibility.Visible;
 
-            cbSearch.Visibility = Visibility.Hidden;
-            tbSearch.Visibility = Visibility.Hidden;
-            btnSearch.Visibility = Visibility.Hidden;
-            lblSearch.Visibility = Visibility.Hidden;
+            cbSearch.Visibility = Visibility.Visible;
+            tbSearch.Visibility = Visibility.Visible;
+            btnSearch.Visibility = Visibility.Visible;
+            lblSearch.Visibility = Visibility.Visible;
             HideAdminButtons();
 
 
@@ -290,7 +305,7 @@ namespace POP54
 
         private void BtnBills_Click(object sender, RoutedEventArgs e)
         {
-            dgFurniture.Visibility = Visibility.Collapsed;
+            dgFurniture.Visibility = Visibility.Hidden;
             dgFurnitureType.Visibility = Visibility.Collapsed;
             dgSales.Visibility = Visibility.Collapsed;
             dgUsers.Visibility = Visibility.Collapsed;
@@ -300,6 +315,7 @@ namespace POP54
             btnAddOnBill.Visibility = Visibility.Hidden;
             btnDelete.Visibility = Visibility.Hidden;
             btnAdd.Visibility = Visibility.Hidden;
+            btnEdit.Visibility = Visibility.Hidden;
 
             cbSearch.Visibility = Visibility.Visible;
             tbSearch.Visibility = Visibility.Visible;

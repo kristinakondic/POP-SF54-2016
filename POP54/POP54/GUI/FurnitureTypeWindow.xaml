@@ -3,9 +3,9 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:POP54.GUI"
+        xmlns:local="clr-namespace:POP54.Validation"
         mc:Ignorable="d"
-        Title="Furniture Type" Height="199" Width="291"
+        Title="Furniture Type" Height="199" Width="310.415"
         WindowStartupLocation="CenterScreen">
     <Grid>
         <Grid.ColumnDefinitions>
@@ -16,9 +16,34 @@
             <RowDefinition Height="109*"/>
             <RowDefinition Height="110*"/>
         </Grid.RowDefinitions>
-        <Button Content="Save" HorizontalAlignment="Left" Margin="36,32,0,0" Grid.Row="1" VerticalAlignment="Top" Width="75" Click="Button_Click"/>
+        <Button Content="Save" HorizontalAlignment="Left" Margin="36,32,0,0" Grid.Row="1" VerticalAlignment="Top" Width="75" Click="Button_Click">
+            <Button.Style>
+                <Style TargetType="Button">
+                    <Setter Property="IsEnabled" Value="False"/>
+                    <Style.Triggers>
+                        <MultiDataTrigger>
+                            <MultiDataTrigger.Conditions>
+                                <Condition Binding="{Binding Path=(Validation.HasError), ElementName=tbName}" Value="False"/>
+                            </MultiDataTrigger.Conditions>
+                            <Setter Property="IsEnabled" Value="True"/>
+                        </MultiDataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </Button.Style>
+        </Button>
         <Button Content="Cancel" HorizontalAlignment="Left" Margin="55,32,0,0" Grid.Row="1" VerticalAlignment="Top" Width="75" Grid.Column="1" Click="Button_Click_1"/>
         <Label  Content="Name" HorizontalAlignment="Left" Margin="36,45,0,0" VerticalAlignment="Top" Width="59" RenderTransformOrigin="0.356,0.346"/>
-        <TextBox Name="tbName" HorizontalAlignment="Left" Text="{Binding Path=Name}" Height="23" Margin="10,45,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Grid.Column="1"/>
+        <TextBox Name="tbName" HorizontalAlignment="Left"  Height="23" Margin="10,45,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Grid.Column="1">
+            <TextBox.Text>
+                <Binding Path="Name" UpdateSourceTrigger="PropertyChanged">
+                    <Binding.ValidationRules>
+                        <local:StringValidation/>
+                    </Binding.ValidationRules>
+                </Binding>
+            </TextBox.Text>
+        </TextBox>
+        <TextBlock Margin="10,68,-22,0" Foreground="Red" FontWeight="Bold" 
+                           Text="{Binding ElementName=tbName, Path=(Validation.Errors).CurrentItem.ErrorContent}" 
+                           HorizontalAlignment="Left" Width="189" Height="23" VerticalAlignment="Top" Grid.RowSpan="2" Grid.Column="1" />
     </Grid>
 </Window>

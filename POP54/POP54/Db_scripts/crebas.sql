@@ -8,6 +8,7 @@ CREATE TABLE [dbo].[FurnitureType] (
     PRIMARY KEY CLUSTERED ([ID] ASC)
 );
 
+
 CREATE TABLE [dbo].[Furniture] (
     [ID]              INT            IDENTITY (1, 1) NOT NULL,
     [FurnitureTypeId] INT            NULL,
@@ -23,7 +24,7 @@ CREATE TABLE [dbo].[Furniture] (
 );
 
 CREATE TABLE [dbo].[FurnitureStore] (
-    [ID]        INT          IDENTITY (1, 1) NOT NULL,
+    [Id]        INT          IDENTITY (1, 1) NOT NULL,
     [Name]      VARCHAR (50) NOT NULL,
     [Address]   VARCHAR (50) NOT NULL,
     [Phone]     VARCHAR (50) NOT NULL,
@@ -35,8 +36,9 @@ CREATE TABLE [dbo].[FurnitureStore] (
     PRIMARY KEY CLUSTERED ([Id] ASC)
 );
 
+
 CREATE TABLE [dbo].[Sale] (
-    [ID]        INT      IDENTITY (1, 1) NOT NULL,
+    [Id]        INT      IDENTITY (1, 1) NOT NULL,
     [Discount]  INT      NOT NULL,
     [StartDate] DATETIME NOT NULL,
     [EndDate]   DATETIME NOT NULL,
@@ -50,7 +52,7 @@ CREATE TABLE [dbo].[UserTypes] (
 );
 
 CREATE TABLE [dbo].[User] (
-    [ID]       INT          IDENTITY (1, 1) NOT NULL,
+    [Id]       INT          IDENTITY (1, 1) NOT NULL,
     [Name]     VARCHAR (50) NOT NULL,
     [Surname]  VARCHAR (50) NOT NULL,
     [Username] VARCHAR (50) NOT NULL,
@@ -62,7 +64,7 @@ CREATE TABLE [dbo].[User] (
 );
 
 CREATE TABLE [dbo].[AdditionalService] (
-    [ID]      INT            IDENTITY (1, 1) NOT NULL,
+    [Id]      INT            IDENTITY (1, 1) NOT NULL,
     [Name]    VARCHAR (50)   NULL,
     [Price]   NUMERIC (9, 2) NULL,
     [Deleted] BIT            NULL,
@@ -70,7 +72,7 @@ CREATE TABLE [dbo].[AdditionalService] (
 );
 
 CREATE TABLE [dbo].[Bill] (
-    [ID]         INT            IDENTITY (1, 1) NOT NULL,
+    [Id]         INT            IDENTITY (1, 1) NOT NULL,
     [DateOfSale] DATETIME       NOT NULL,
     [BillNo]     INT            NOT NULL,
     [Buyer]      VARCHAR (50)   NOT NULL,
@@ -79,8 +81,9 @@ CREATE TABLE [dbo].[Bill] (
     PRIMARY KEY CLUSTERED ([Id] ASC)
 );
 
+
 CREATE TABLE [dbo].[BillAdditionalServices] (
-    [BillId]           INT   NOT NULL,
+    [BillId]              INT NOT NULL,
     [AdditionalServiceId] INT NOT NULL,
     CONSTRAINT [Bill_idd] FOREIGN KEY ([BillId]) REFERENCES [dbo].[Bill] ([Id]),
     CONSTRAINT [AdditionalS_id] FOREIGN KEY ([AdditionalServiceId]) REFERENCES [dbo].[AdditionalService] ([Id])
@@ -98,7 +101,8 @@ CREATE TABLE [dbo].[BillFurniture] (
 CREATE TABLE [dbo].[FurnitureSales] (
     [SaleId]      INT NOT NULL,
     [FurnitureId] INT NOT NULL,
-    FOREIGN KEY ([FurnitureId]) REFERENCES [dbo].[Furniture] ([ID]),
-    CONSTRAINT [Sale_id] FOREIGN KEY ([SaleId]) REFERENCES [dbo].[Sale] ([ID])
+    CONSTRAINT [Sale_id] FOREIGN KEY ([SaleId]) REFERENCES [dbo].[Sale] ([Id]),
+    FOREIGN KEY ([FurnitureId]) REFERENCES [dbo].[Furniture] ([ID])
 );
+
 

@@ -8,6 +8,7 @@ using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 
 namespace POP54.DAO
 {
@@ -44,50 +45,64 @@ namespace POP54.DAO
 
         public static FurnitureType Create(FurnitureType ft)
         {
-
-            using (var con = new SqlConnection(ConfigurationManager.ConnectionStrings["POP"].ConnectionString))
+            try
             {
-                con.Open();
+                using (var con = new SqlConnection(ConfigurationManager.ConnectionStrings["POP"].ConnectionString))
+                {
+                    con.Open();
 
-                SqlCommand cmd = con.CreateCommand();
+                    SqlCommand cmd = con.CreateCommand();
 
-                cmd.CommandText = "INSERT INTO FurnitureType(Name, Deleted) VALUES (@Name, @Deleted);";
-                cmd.CommandText += "SELECT SCOPE_IDENTITY();";
-                cmd.Parameters.AddWithValue("Name", ft.Name);
-                cmd.Parameters.AddWithValue("Deleted", ft.Deleted);
+                    cmd.CommandText = "INSERT INTO FurnitureType(Name, Deleted) VALUES (@Name, @Deleted);";
+                    cmd.CommandText += "SELECT SCOPE_IDENTITY();";
+                    cmd.Parameters.AddWithValue("Name", ft.Name);
+                    cmd.Parameters.AddWithValue("Deleted", ft.Deleted);
 
-                ft.ID = int.Parse(cmd.ExecuteScalar().ToString());
+                    ft.ID = int.Parse(cmd.ExecuteScalar().ToString());
+                }
+
+                Project.Instance.FurnitureTypesList.Add(ft);
+
+                return ft;
             }
-
-            Project.Instance.FurnitureTypesList.Add(ft);
-
-            return ft;
+            catch
+            {
+                MessageBox.Show("Database error!", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                return null;
+            }
         }
 
         public static void Update(FurnitureType ft)
         {
-            using (var con = new SqlConnection(ConfigurationManager.ConnectionStrings["POP"].ConnectionString))
+            try
             {
-                con.Open();
-
-                SqlCommand cmd = con.CreateCommand();
-
-                cmd.CommandText = "UPDATE FurnitureType SET Name=@Name, Deleted=@Deleted WHERE ID = @ID;";
-                cmd.CommandText += "SELECT SCOPE_IDENTITY();";
-                cmd.Parameters.AddWithValue("ID", ft.ID);
-                cmd.Parameters.AddWithValue("Name", ft.Name);
-                cmd.Parameters.AddWithValue("Deleted", ft.Deleted);
-
-                cmd.ExecuteNonQuery();
-
-                foreach (var type in Project.Instance.FurnitureTypesList)
+                using (var con = new SqlConnection(ConfigurationManager.ConnectionStrings["POP"].ConnectionString))
                 {
-                    if (ft.ID == type.ID)
+                    con.Open();
+
+                    SqlCommand cmd = con.CreateCommand();
+
+                    cmd.CommandText = "UPDATE FurnitureType SET Name=@Name, Deleted=@Deleted WHERE ID = @ID;";
+                    cmd.CommandText += "SELECT SCOPE_IDENTITY();";
+                    cmd.Parameters.AddWithValue("ID", ft.ID);
+                    cmd.Parameters.AddWithValue("Name", ft.Name);
+                    cmd.Parameters.AddWithValue("Deleted", ft.Deleted);
+
+                    cmd.ExecuteNonQuery();
+
+                    foreach (var type in Project.Instance.FurnitureTypesList)
                     {
-                        type.Name = ft.Name;
-                        type.Deleted = ft.Deleted;
+                        if (ft.ID == type.ID)
+                        {
+                            type.Name = ft.Name;
+                            type.Deleted = ft.Deleted;
+                        }
                     }
                 }
+            }
+            catch
+            {
+                MessageBox.Show("Database error!", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
 

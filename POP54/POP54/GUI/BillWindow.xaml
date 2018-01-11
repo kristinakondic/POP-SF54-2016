@@ -3,17 +3,42 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:POP54.GUI"
+        xmlns:local="clr-namespace:POP54.Validation"
         mc:Ignorable="d"
         Title="BillWindow" Height="400" Width="400"
         WindowStartupLocation="CenterScreen">
     <Grid>
-        <ScrollViewer Margin="10,0,0,199" >
+        <ScrollViewer Margin="10,0,0,141" >
             <TextBlock Name="tbBill" HorizontalAlignment="Left" TextWrapping="Wrap" VerticalAlignment="Top" Width="373" />
         </ScrollViewer>
-        <Label Content="Customer" HorizontalAlignment="Left" Margin="58,191,0,0" VerticalAlignment="Top" Width="77"/>
-        <TextBox Name="tbBuyer" HorizontalAlignment="Left" Text="{Binding Path=Buyer}" Height="23" Margin="172,191,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
-        <Button Content="Print bill" HorizontalAlignment="Left" Margin="104,305,0,0" VerticalAlignment="Top" Width="75" Click="PrintBill_Click"/>
+        <Label Content="Customer" HorizontalAlignment="Left" Margin="90,233,0,0" VerticalAlignment="Top" Width="77" RenderTransformOrigin="0.519,1.923"/>
+        <TextBox Name="tbBuyer" HorizontalAlignment="Left"  Height="23" Margin="172,236,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120">
+            <TextBox.Text>
+                <Binding Path="Buyer" UpdateSourceTrigger="PropertyChanged">
+                    <Binding.ValidationRules>
+                        <local:StringValidation/>
+                    </Binding.ValidationRules>
+                </Binding>
+            </TextBox.Text>
+        </TextBox>
+        <TextBlock Margin="172,259,0,0" Foreground="Red" FontWeight="Bold" 
+                           Text="{Binding ElementName=tbBuyer, Path=(Validation.Errors).CurrentItem.ErrorContent}" 
+                           HorizontalAlignment="Left" Width="156" Height="23" VerticalAlignment="Top" />
+        <Button Content="Print bill" HorizontalAlignment="Left" Margin="104,305,0,0" VerticalAlignment="Top" Width="75" Click="PrintBill_Click">
+            <Button.Style>
+                <Style TargetType="Button">
+                    <Setter Property="IsEnabled" Value="False"/>
+                    <Style.Triggers>
+                        <MultiDataTrigger>
+                            <MultiDataTrigger.Conditions>
+                                <Condition Binding="{Binding Path=(Validation.HasError), ElementName=tbBuyer}" Value="False"/>
+                            </MultiDataTrigger.Conditions>
+                            <Setter Property="IsEnabled" Value="True"/>
+                        </MultiDataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </Button.Style>
+        </Button>
         <Button Content="Cancel" HorizontalAlignment="Left" Margin="244,305,0,0" VerticalAlignment="Top" Width="75" Click="Cancel_Click"/>
     </Grid>
 </Window>

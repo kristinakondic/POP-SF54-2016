@@ -8,6 +8,7 @@ using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 
 namespace POP54.DAO
 {
@@ -45,52 +46,66 @@ namespace POP54.DAO
 
         public static AdditionalService Create(AdditionalService ads)
         {
-
-            using (var con = new SqlConnection(ConfigurationManager.ConnectionStrings["POP"].ConnectionString))
+            try
             {
-                con.Open();
+                using (var con = new SqlConnection(ConfigurationManager.ConnectionStrings["POP"].ConnectionString))
+                {
+                    con.Open();
 
-                SqlCommand cmd = con.CreateCommand();
+                    SqlCommand cmd = con.CreateCommand();
 
-                cmd.CommandText = "INSERT INTO AdditionalService(Name, Price, Deleted) VALUES (@Name, @Price, @Deleted);";
-                cmd.CommandText += "SELECT SCOPE_IDENTITY();";
-                cmd.Parameters.AddWithValue("Name", ads.Name);
-                cmd.Parameters.AddWithValue("Price", ads.Price);
-                cmd.Parameters.AddWithValue("Deleted", ads.Deleted);
+                    cmd.CommandText = "INSERT INTO AdditionalService(Name, Price, Deleted) VALUES (@Name, @Price, @Deleted);";
+                    cmd.CommandText += "SELECT SCOPE_IDENTITY();";
+                    cmd.Parameters.AddWithValue("Name", ads.Name);
+                    cmd.Parameters.AddWithValue("Price", ads.Price);
+                    cmd.Parameters.AddWithValue("Deleted", ads.Deleted);
 
-                ads.ID = int.Parse(cmd.ExecuteScalar().ToString());
+                    ads.ID = int.Parse(cmd.ExecuteScalar().ToString());
+                }
+
+                Project.Instance.AdditionalServicesList.Add(ads);
+
+                return ads;
             }
-
-            Project.Instance.AdditionalServicesList.Add(ads);
-
-            return ads;
+            catch
+            {
+                MessageBox.Show("", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                return null;
+            }
         }
 
         public static void Update(AdditionalService ads)
         {
-            using (var con = new SqlConnection(ConfigurationManager.ConnectionStrings["POP"].ConnectionString))
+            try
             {
-                con.Open();
-
-                SqlCommand cmd = con.CreateCommand();
-
-                cmd.CommandText = "UPDATE AdditionalService SET Name=@Name, Price=@Price, Deleted=@Deleted WHERE ID = @ID;";
-                cmd.CommandText += "SELECT SCOPE_IDENTITY();";
-                cmd.Parameters.AddWithValue("ID", ads.ID);
-                cmd.Parameters.AddWithValue("Name", ads.Name);
-                cmd.Parameters.AddWithValue("Price", ads.Price);
-                cmd.Parameters.AddWithValue("Deleted", ads.Deleted);
-
-                cmd.ExecuteNonQuery();
-
-                foreach (var a in Project.Instance.AdditionalServicesList)
+                using (var con = new SqlConnection(ConfigurationManager.ConnectionStrings["POP"].ConnectionString))
                 {
-                    if (ads.ID == a.ID)
+                    con.Open();
+
+                    SqlCommand cmd = con.CreateCommand();
+
+                    cmd.CommandText = "UPDATE AdditionalService SET Name=@Name, Price=@Price, Deleted=@Deleted WHERE ID = @ID;";
+                    cmd.CommandText += "SELECT SCOPE_IDENTITY();";
+                    cmd.Parameters.AddWithValue("ID", ads.ID);
+                    cmd.Parameters.AddWithValue("Name", ads.Name);
+                    cmd.Parameters.AddWithValue("Price", ads.Price);
+                    cmd.Parameters.AddWithValue("Deleted", ads.Deleted);
+
+                    cmd.ExecuteNonQuery();
+
+                    foreach (var a in Project.Instance.AdditionalServicesList)
                     {
-                        a.Name = ads.Name;
-                        a.Deleted = ads.Deleted;
+                        if (ads.ID == a.ID)
+                        {
+                            a.Name = ads.Name;
+                            a.Deleted = ads.Deleted;
+                        }
                     }
                 }
+            }
+            catch
+            {
+                MessageBox.Show("Database error!", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
 

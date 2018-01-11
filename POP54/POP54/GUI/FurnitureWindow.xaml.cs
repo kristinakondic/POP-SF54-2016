@@ -57,7 +57,10 @@ namespace POP54.GUI
 
         private void BtnSave_Click(object sender, RoutedEventArgs e)
         {
-
+            if (IsValid() == false)
+            {
+                return;
+            }
             switch (operation)
             {
                 case Operation.ADD:
@@ -94,5 +97,26 @@ namespace POP54.GUI
             }
             this.Close();
         }
+
+        public bool IsValid()
+        {
+            BindingExpression expression1 = tbName.GetBindingExpression(TextBox.TextProperty);
+            expression1.UpdateSource();
+            BindingExpression expression2 = tbCode.GetBindingExpression(TextBox.TextProperty);
+            expression2.UpdateSource();
+            BindingExpression expression3 = tbPrice.GetBindingExpression(TextBox.TextProperty);
+            expression3.UpdateSource();
+            BindingExpression expression4 = tbQuantity.GetBindingExpression(TextBox.TextProperty);
+            expression4.UpdateSource();
+            if (System.Windows.Controls.Validation.GetHasError(tbName) == true
+                || System.Windows.Controls.Validation.GetHasError(tbCode) == true
+                || System.Windows.Controls.Validation.GetHasError(tbPrice) == true 
+                || System.Windows.Controls.Validation.GetHasError(tbQuantity) == true)
+            {
+                return false;
+            }
+            return true;
+        } 
+
     }
 }

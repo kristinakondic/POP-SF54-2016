@@ -28,20 +28,13 @@ INSERT INTO [dbo].[Sale] ([ID], [Discount], [StartDate], [EndDate], [Deleted]) V
 SET IDENTITY_INSERT [dbo].[Sale] OFF
 
 SET IDENTITY_INSERT [dbo].[AdditionalService] ON
-INSERT INTO [dbo].[AdditionalService] ([ID], [Name], [Price], [Deleted]) VALUES (1, N'Sklapanje      ', CAST(1000.00 AS Decimal(9, 2)), 0)
-INSERT INTO [dbo].[AdditionalService] ([ID], [Name], [Price], [Deleted]) VALUES (2, N'Prevoz         ', CAST(1500.00 AS Decimal(9, 2)), 0)
+INSERT INTO [dbo].[AdditionalService] ([Id], [Name], [Price], [Deleted]) VALUES (1, N'Sklapanje', CAST(1000.00 AS Decimal(9, 2)), 0)
+INSERT INTO [dbo].[AdditionalService] ([Id], [Name], [Price], [Deleted]) VALUES (2, N'Prevoz u gradu', CAST(1500.00 AS Decimal(9, 2)), 0)
+INSERT INTO [dbo].[AdditionalService] ([Id], [Name], [Price], [Deleted]) VALUES (3, N'Prevoz van grada', CAST(2000.00 AS Decimal(9, 2)), 0)
 SET IDENTITY_INSERT [dbo].[AdditionalService] OFF
-
-SET IDENTITY_INSERT [dbo].[Bill] ON
-INSERT INTO [dbo].[Bill] ([ID], [DateOfSale], [BillNo], [Buyer], [FullPrice], [Deleted]) VALUES (1, N'2017-11-04 00:00:00', 34, N'mile      ', CAST(0.00 AS Decimal(9, 2)), 0)
-SET IDENTITY_INSERT [dbo].[Bill] OFF
 
 SET IDENTITY_INSERT [dbo].[FurnitureStore] ON
 INSERT INTO [dbo].[FurnitureStore] ([ID], [Name], [Address], [Phone], [Email], [Website], [CompanyNo], [AccountNo], [PIB]) VALUES (1, N'Forma Idejale', N'Idejalna ulica', N'555333', N'idejale@gmail.com', N'Idejale.com', N'53', N'35', N'3535')
 SET IDENTITY_INSERT [dbo].[FurnitureStore] OFF
-
-INSERT INTO [dbo].[BillAdditionalServices] ([BillId], [AdditionalServiceId]) VALUES (1, 2)
-
-INSERT INTO [dbo].[BillFurniture] ([BillId], [FurnitureId]) VALUES (1, 1)
 
 INSERT INTO [dbo].[FurnitureSales] ([SaleId], [FurnitureId]) VALUES (2, 3)

@@ -8,6 +8,7 @@ using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 
 namespace POP54.DAO
 {
@@ -92,59 +93,74 @@ namespace POP54.DAO
 
         public static Bill Create(Bill bill)
         {
-
-            using (var con = new SqlConnection(ConfigurationManager.ConnectionStrings["POP"].ConnectionString))
+            try
             {
-                con.Open();
+                using (var con = new SqlConnection(ConfigurationManager.ConnectionStrings["POP"].ConnectionString))
+                {
 
-                SqlCommand cmd = con.CreateCommand();
+                    con.Open();
 
-                cmd.CommandText = "INSERT INTO Bill(DateOfSale, BillNo, Buyer, FullPrice, Deleted) VALUES (@DateOfSale, @BillNo, @Buyer, @FullPrice, @Deleted);";
-                cmd.CommandText += "SELECT SCOPE_IDENTITY();";
-                cmd.Parameters.AddWithValue("DateOfSale", bill.DateOfSale);
-                cmd.Parameters.AddWithValue("BillNo", bill.BillNo);
-                cmd.Parameters.AddWithValue("Buyer", bill.Buyer);
-                cmd.Parameters.AddWithValue("FullPrice", bill.FullPrice);
-                cmd.Parameters.AddWithValue("Deleted", bill.Deleted);
+                    SqlCommand cmd = con.CreateCommand();
 
-                bill.ID = int.Parse(cmd.ExecuteScalar().ToString());
+                    cmd.CommandText = "INSERT INTO Bill(DateOfSale, BillNo, Buyer, FullPrice, Deleted) VALUES (@DateOfSale, @BillNo, @Buyer, @FullPrice, @Deleted);";
+                    cmd.CommandText += "SELECT SCOPE_IDENTITY();";
+                    cmd.Parameters.AddWithValue("DateOfSale", bill.DateOfSale);
+                    cmd.Parameters.AddWithValue("BillNo", bill.BillNo);
+                    cmd.Parameters.AddWithValue("Buyer", bill.Buyer);
+                    cmd.Parameters.AddWithValue("FullPrice", bill.FullPrice);
+                    cmd.Parameters.AddWithValue("Deleted", bill.Deleted);
+
+                    bill.ID = int.Parse(cmd.ExecuteScalar().ToString());
+                }
+
+                Project.Instance.BillsList.Add(bill);
+
+                return bill;
             }
-
-            Project.Instance.BillsList.Add(bill);
-
-            return bill;
+            catch
+            {
+                MessageBox.Show("Database error!", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                return null;
+            }
         }
 
         public static void Update(Bill bill)
         {
-            using (var con = new SqlConnection(ConfigurationManager.ConnectionStrings["POP"].ConnectionString))
+            try
             {
-                con.Open();
-
-                SqlCommand cmd = con.CreateCommand();
-
-                cmd.CommandText = "UPDATE Bill SET DateOfSale = @DateOfSale, BillNo = @BillNo, Buyer = @Buyer, FullPrice = @FullPrice, Deleted = @Deleted WHERE ID = @ID;";
-                cmd.CommandText += "SELECT SCOPE_IDENTITY();";
-                cmd.Parameters.AddWithValue("ID", bill.ID);
-                cmd.Parameters.AddWithValue("DateOfSale", bill.DateOfSale);
-                cmd.Parameters.AddWithValue("BillNo", bill.BillNo);
-                cmd.Parameters.AddWithValue("Buyer", bill.Buyer);
-                cmd.Parameters.AddWithValue("FullPrice", bill.FullPrice);
-                cmd.Parameters.AddWithValue("Deleted", bill.Deleted);
-
-                cmd.ExecuteNonQuery();
-
-                foreach (var b in Project.Instance.BillsList)
+                using (var con = new SqlConnection(ConfigurationManager.ConnectionStrings["POP"].ConnectionString))
                 {
-                    if (bill.ID == b.ID)
+                    con.Open();
+
+                    SqlCommand cmd = con.CreateCommand();
+
+                    cmd.CommandText = "UPDATE Bill SET DateOfSale = @DateOfSale, BillNo = @BillNo, Buyer = @Buyer, FullPrice = @FullPrice, Deleted = @Deleted WHERE ID = @ID;";
+                    cmd.CommandText += "SELECT SCOPE_IDENTITY();";
+                    cmd.Parameters.AddWithValue("ID", bill.ID);
+                    cmd.Parameters.AddWithValue("DateOfSale", bill.DateOfSale);
+                    cmd.Parameters.AddWithValue("BillNo", bill.BillNo);
+                    cmd.Parameters.AddWithValue("Buyer", bill.Buyer);
+                    cmd.Parameters.AddWithValue("FullPrice", bill.FullPrice);
+                    cmd.Parameters.AddWithValue("Deleted", bill.Deleted);
+
+                    cmd.ExecuteNonQuery();
+
+                    foreach (var b in Project.Instance.BillsList)
                     {
-                        b.DateOfSale = bill.DateOfSale;
-                        b.BillNo = bill.BillNo;
-                        b.Buyer = bill.Buyer;
-                        b.FullPrice = bill.FullPrice;
-                        b.Deleted = bill.Deleted;
+                        if (bill.ID == b.ID)
+                        {
+                            b.DateOfSale = bill.DateOfSale;
+                            b.BillNo = bill.BillNo;
+                            b.Buyer = bill.Buyer;
+                            b.FullPrice = bill.FullPrice;
+                            b.Deleted = bill.Deleted;
+                        }
                     }
                 }
+            }
+            catch
+            {
+                MessageBox.Show("Database error!", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
         public static void AddFurnitureOnBill(Bill bill, Furniture furniture)

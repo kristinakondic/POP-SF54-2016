@@ -49,10 +49,22 @@ namespace POP54.GUI
 
         private void BtnSave_Click(object sender, RoutedEventArgs e)
         {
+            if (IsValid() == false)
+            {
+                return;
+            }
             switch (operation)
             {
                 case Operation.ADD:
 
+                    foreach (var u in Project.Instance.UsersList)
+                    {
+                        if (user.Username == u.Username)
+                        {
+                            MessageBox.Show("This username is already used.", "Error", MessageBoxButton.OK, MessageBoxImage.Information);
+                            return;
+                        }
+                    }
                     UserDAO.Create(user);
                     break;
 
@@ -80,6 +92,22 @@ namespace POP54.GUI
         private void BtnCancel_Click(object sender, RoutedEventArgs e)
         {
             this.Close();
+        }
+        public bool IsValid()
+        {
+            BindingExpression expression1 = tbName.GetBindingExpression(TextBox.TextProperty);
+            expression1.UpdateSource();
+            BindingExpression expression2 = tbSurname.GetBindingExpression(TextBox.TextProperty);
+            expression2.UpdateSource();
+            BindingExpression expression3 = tbUsername.GetBindingExpression(TextBox.TextProperty);
+            expression3.UpdateSource();
+            BindingExpression expression4 = tbPassword.GetBindingExpression(TextBox.TextProperty);
+            expression4.UpdateSource();
+            if (System.Windows.Controls.Validation.GetHasError(tbName) == true)
+            {
+                return false;
+            }
+            return true;
         }
     }
 }

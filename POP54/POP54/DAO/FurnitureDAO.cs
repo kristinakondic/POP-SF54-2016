@@ -8,6 +8,7 @@ using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 
 namespace POP54.DAO
 {
@@ -71,66 +72,82 @@ namespace POP54.DAO
 
         public static Furniture Create(Furniture f)
         {
-
-            using (var con = new SqlConnection(ConfigurationManager.ConnectionStrings["POP"].ConnectionString))
+            try
             {
-                con.Open();
+                using (var con = new SqlConnection(ConfigurationManager.ConnectionStrings["POP"].ConnectionString))
+                {
+                    con.Open();
 
-                SqlCommand cmd = con.CreateCommand();
+                    SqlCommand cmd = con.CreateCommand();
 
-                cmd.CommandText = "INSERT INTO Furniture(Name, FurnitureTypeId, ProductCode, Quantity, Price, PriceOnSale, Deleted) VALUES (@Name, @FurnitureTypeId, @ProductCode, @Quantity, @Price, @PriceOnSale, @Deleted);";
-                cmd.CommandText += "SELECT SCOPE_IDENTITY();";
-                cmd.Parameters.AddWithValue("Name", f.Name);
-                cmd.Parameters.AddWithValue("FurnitureTypeId", f.FurnitureTypeId);
-                cmd.Parameters.AddWithValue("ProductCode", f.ProductCode);
-                cmd.Parameters.AddWithValue("Quantity", f.Quantity);
-                cmd.Parameters.AddWithValue("Price", f.Price);
-                cmd.Parameters.AddWithValue("PriceOnSale", f.PriceOnSale);
-                cmd.Parameters.AddWithValue("Deleted", f.Deleted);
+                    cmd.CommandText = "INSERT INTO Furniture(Name, FurnitureTypeId, ProductCode, Quantity, Price, PriceOnSale, Deleted) VALUES (@Name, @FurnitureTypeId, @ProductCode, @Quantity, @Price, @PriceOnSale, @Deleted);";
+                    cmd.CommandText += "SELECT SCOPE_IDENTITY();";
+                    cmd.Parameters.AddWithValue("Name", f.Name);
+                    cmd.Parameters.AddWithValue("FurnitureTypeId", f.FurnitureTypeId);
+                    cmd.Parameters.AddWithValue("ProductCode", f.ProductCode);
+                    cmd.Parameters.AddWithValue("Quantity", f.Quantity);
+                    cmd.Parameters.AddWithValue("Price", f.Price);
+                    cmd.Parameters.AddWithValue("PriceOnSale", f.PriceOnSale);
+                    cmd.Parameters.AddWithValue("Deleted", f.Deleted);
 
-                f.ID = int.Parse(cmd.ExecuteScalar().ToString());
+                    f.ID = int.Parse(cmd.ExecuteScalar().ToString());
+                }
+                f.Sales = new List<Sale>();
+                Project.Instance.FurnitureList.Add(f);
+
+                return f;
             }
-
-            Project.Instance.FurnitureList.Add(f);
-
-            return f;
+            catch
+            {
+                //MessageBox.Show("Database error!", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                return null;
+            }
+            
         }
 
         public static void Update(Furniture f)
         {
-            using (var con = new SqlConnection(ConfigurationManager.ConnectionStrings["POP"].ConnectionString))
+            try
             {
-                con.Open();
-
-                SqlCommand cmd = con.CreateCommand();
-
-                cmd.CommandText = "UPDATE Furniture SET Name = @Name, FurnitureTypeId = @FurnitureTypeId, ProductCode = @ProductCode, Quantity = @Quantity, Price = @Price, PriceOnSale = @PriceOnSale, Deleted=@Deleted WHERE ID = @ID;";
-                cmd.CommandText += "SELECT SCOPE_IDENTITY();";
-                cmd.Parameters.AddWithValue("ID", f.ID);
-                cmd.Parameters.AddWithValue("Name", f.Name);
-                cmd.Parameters.AddWithValue("FurnitureTypeId", f.FurnitureTypeId);
-                cmd.Parameters.AddWithValue("ProductCode", f.ProductCode);
-                cmd.Parameters.AddWithValue("Quantity", f.Quantity);
-                cmd.Parameters.AddWithValue("Price", f.Price);
-                cmd.Parameters.AddWithValue("PriceOnSale", f.PriceOnSale);
-                cmd.Parameters.AddWithValue("Deleted", f.Deleted);
-
-                cmd.ExecuteNonQuery();
-
-                foreach (var fur in Project.Instance.FurnitureList)
+                using (var con = new SqlConnection(ConfigurationManager.ConnectionStrings["POP"].ConnectionString))
                 {
-                    if (f.ID == fur.ID)
+                    con.Open();
+
+                    SqlCommand cmd = con.CreateCommand();
+
+                    cmd.CommandText = "UPDATE Furniture SET Name = @Name, FurnitureTypeId = @FurnitureTypeId, ProductCode = @ProductCode, Quantity = @Quantity, Price = @Price, PriceOnSale = @PriceOnSale, Deleted=@Deleted WHERE ID = @ID;";
+                    cmd.CommandText += "SELECT SCOPE_IDENTITY();";
+                    cmd.Parameters.AddWithValue("ID", f.ID);
+                    cmd.Parameters.AddWithValue("Name", f.Name);
+                    cmd.Parameters.AddWithValue("FurnitureTypeId", f.FurnitureTypeId);
+                    cmd.Parameters.AddWithValue("ProductCode", f.ProductCode);
+                    cmd.Parameters.AddWithValue("Quantity", f.Quantity);
+                    cmd.Parameters.AddWithValue("Price", f.Price);
+                    cmd.Parameters.AddWithValue("PriceOnSale", f.PriceOnSale);
+                    cmd.Parameters.AddWithValue("Deleted", f.Deleted);
+
+                    cmd.ExecuteNonQuery();
+
+                    foreach (var fur in Project.Instance.FurnitureList)
                     {
-                        fur.Name = f.Name;
-                        fur.FurnitureTypeId = f.FurnitureTypeId;
-                        fur.ProductCode = f.ProductCode;
-                        fur.Quantity = f.Quantity;
-                        fur.Price = f.Price;
-                        fur.PriceOnSale = f.PriceOnSale;
-                        fur.Deleted = f.Deleted;
+                        if (f.ID == fur.ID)
+                        {
+                            fur.Name = f.Name;
+                            fur.FurnitureTypeId = f.FurnitureTypeId;
+                            fur.ProductCode = f.ProductCode;
+                            fur.Quantity = f.Quantity;
+                            fur.Price = f.Price;
+                            fur.PriceOnSale = f.PriceOnSale;
+                            fur.Deleted = f.Deleted;
+                        }
                     }
                 }
             }
+            catch
+            {
+                MessageBox.Show("Database error!", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+            
         }
 
         public static void Delete(Furniture f)

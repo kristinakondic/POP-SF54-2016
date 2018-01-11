@@ -8,6 +8,7 @@ using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 
 namespace POP54.DAO
 {
@@ -47,62 +48,77 @@ namespace POP54.DAO
 
         public static User Create(User user)
         {
-
-            using (var con = new SqlConnection(ConfigurationManager.ConnectionStrings["POP"].ConnectionString))
+            try
             {
-                con.Open();
+                using (var con = new SqlConnection(ConfigurationManager.ConnectionStrings["POP"].ConnectionString))
+                {
+                    con.Open();
 
-                SqlCommand cmd = con.CreateCommand();
+                    SqlCommand cmd = con.CreateCommand();
 
-                cmd.CommandText = "INSERT INTO dbo.[User](Name, Surname, Username, Password, UserType, Deleted) VALUES (@Name, @Surname, @Username, @Password, @UserType, @Deleted);";
-                cmd.CommandText += "SELECT SCOPE_IDENTITY();";
-                cmd.Parameters.AddWithValue("Name", user.Name);
-                cmd.Parameters.AddWithValue("Surname", user.Surname);
-                cmd.Parameters.AddWithValue("Username", user.Username);
-                cmd.Parameters.AddWithValue("Password", user.Password);
-                cmd.Parameters.AddWithValue("UserType", user.UserType);
-                cmd.Parameters.AddWithValue("Deleted", user.Deleted);
+                    cmd.CommandText = "INSERT INTO dbo.[User](Name, Surname, Username, Password, UserType, Deleted) VALUES (@Name, @Surname, @Username, @Password, @UserType, @Deleted);";
+                    cmd.CommandText += "SELECT SCOPE_IDENTITY();";
+                    cmd.Parameters.AddWithValue("Name", user.Name);
+                    cmd.Parameters.AddWithValue("Surname", user.Surname);
+                    cmd.Parameters.AddWithValue("Username", user.Username);
+                    cmd.Parameters.AddWithValue("Password", user.Password);
+                    cmd.Parameters.AddWithValue("UserType", user.UserType);
+                    cmd.Parameters.AddWithValue("Deleted", user.Deleted);
 
-                user.ID = int.Parse(cmd.ExecuteScalar().ToString());
+                    user.ID = int.Parse(cmd.ExecuteScalar().ToString());
+                }
+
+                Project.Instance.UsersList.Add(user);
+
+                return user;
             }
-
-            Project.Instance.UsersList.Add(user);
-
-            return user;
+            catch
+            {
+                MessageBox.Show("Database error!", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                return null;
+            }
+            
         }
 
         public static void Update(User user)
         {
-            using (var con = new SqlConnection(ConfigurationManager.ConnectionStrings["POP"].ConnectionString))
+            try
             {
-                con.Open();
-
-                SqlCommand cmd = con.CreateCommand();
-
-                cmd.CommandText = "UPDATE dbo.[User] SET Name = @Name, Surname = @Surname, Username = @Username, Password = @Password, UserType = @UserType, Deleted = @Deleted WHERE ID = @ID;";
-                cmd.CommandText += "SELECT SCOPE_IDENTITY();";
-                cmd.Parameters.AddWithValue("ID", user.ID);
-                cmd.Parameters.AddWithValue("Name", user.Name);
-                cmd.Parameters.AddWithValue("Surname", user.Surname);
-                cmd.Parameters.AddWithValue("Username", user.Username);
-                cmd.Parameters.AddWithValue("Password", user.Password);
-                cmd.Parameters.AddWithValue("UserType", user.UserType);
-                cmd.Parameters.AddWithValue("Deleted", user.Deleted);
-
-                cmd.ExecuteNonQuery();
-
-                foreach (var u in Project.Instance.UsersList)
+                using (var con = new SqlConnection(ConfigurationManager.ConnectionStrings["POP"].ConnectionString))
                 {
-                    if (user.ID == u.ID)
+                    con.Open();
+
+                    SqlCommand cmd = con.CreateCommand();
+
+                    cmd.CommandText = "UPDATE dbo.[User] SET Name = @Name, Surname = @Surname, Username = @Username, Password = @Password, UserType = @UserType, Deleted = @Deleted WHERE ID = @ID;";
+                    cmd.CommandText += "SELECT SCOPE_IDENTITY();";
+                    cmd.Parameters.AddWithValue("ID", user.ID);
+                    cmd.Parameters.AddWithValue("Name", user.Name);
+                    cmd.Parameters.AddWithValue("Surname", user.Surname);
+                    cmd.Parameters.AddWithValue("Username", user.Username);
+                    cmd.Parameters.AddWithValue("Password", user.Password);
+                    cmd.Parameters.AddWithValue("UserType", user.UserType);
+                    cmd.Parameters.AddWithValue("Deleted", user.Deleted);
+
+                    cmd.ExecuteNonQuery();
+
+                    foreach (var u in Project.Instance.UsersList)
                     {
-                        u.Name = user.Name;
-                        u.Surname = user.Surname;
-                        u.Username = user.Username;
-                        u.Password = user.Password;
-                        u.UserType = user.UserType;
-                        u.Deleted = user.Deleted;
+                        if (user.ID == u.ID)
+                        {
+                            u.Name = user.Name;
+                            u.Surname = user.Surname;
+                            u.Username = user.Username;
+                            u.Password = user.Password;
+                            u.UserType = user.UserType;
+                            u.Deleted = user.Deleted;
+                        }
                     }
                 }
+            }
+            catch
+            {
+                MessageBox.Show("Database error!", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
 

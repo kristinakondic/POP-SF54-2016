@@ -4,10 +4,10 @@
         xmlns:eo="http://schemas.essentialobjects.com/wpf/"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:POP54.GUI"
+        xmlns:local="clr-namespace:POP54.Validation"
         xmlns:sys="clr-namespace:System;assembly=mscorlib"
         mc:Ignorable="d"
-        Title="SaleWindow" Height="261" Width="300"
+        Title="SaleWindow" Height="261" Width="366.449"
         WindowStartupLocation="CenterScreen">
     <Grid Height="251" VerticalAlignment="Top">
         <Grid.ColumnDefinitions>
@@ -22,12 +22,38 @@
             <RowDefinition Height="0*"/>
         </Grid.RowDefinitions>
         <Label Content="Discount" HorizontalAlignment="Left" Margin="44,10,0,0" VerticalAlignment="Top" Width="71" Height="26"/>
-        <TextBox Name="tbDiscount" Text="{Binding Path=Discount}" Grid.Column="1" HorizontalAlignment="Left" Height="23" Margin="10,13,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
+        <TextBox Name="tbDiscount" HorizontalAlignment="Left" Height="23" Margin="126,13,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="55">
+            <TextBox.Text>
+                <Binding Path="Discount" UpdateSourceTrigger="PropertyChanged">
+                    <Binding.ValidationRules>
+                        <local:SaleValidation/>
+                    </Binding.ValidationRules>
+                </Binding>
+            </TextBox.Text>
+        </TextBox>
+        <TextBlock Margin="126,37,0,0" Foreground="Red" FontWeight="Bold" 
+                           Text="{Binding ElementName=tbDiscount, Path=(Validation.Errors).CurrentItem.ErrorContent}" 
+                           HorizontalAlignment="Left" Width="189" Height="23" VerticalAlignment="Top" Grid.RowSpan="2" Grid.ColumnSpan="2" />
         <Label Content="Start date" HorizontalAlignment="Left" Margin="44,14,0,0" VerticalAlignment="Top" Width="88" Height="26" Grid.Row="1"/>
+        <Label Content="%" HorizontalAlignment="Left" Margin="7,10,0,10" Width="34" Grid.Column="1"/>
         <Label Content="End date" Grid.Column="1" HorizontalAlignment="Left" Margin="25,14,0,0" Grid.Row="1" VerticalAlignment="Top" Width="75" Height="26"/>
-        <DatePicker Name="dpStartDate"  FirstDayOfWeek="Monday"  HorizontalAlignment="Left" Margin="10,10,0,0" Grid.Row="2" VerticalAlignment="Top" Height="24" Width="128" Grid.RowSpan="2"/>
+        <DatePicker Name="dpStartDate" FirstDayOfWeek="Monday"  HorizontalAlignment="Left" Margin="10,10,0,0" Grid.Row="2" VerticalAlignment="Top" Height="24" Width="128" Grid.RowSpan="2"/>
         <DatePicker Name="dpEndDate" Grid.Column="1" HorizontalAlignment="Left" Margin="14,10,0,0" Grid.Row="2" VerticalAlignment="Top" Height="24" Width="120" Grid.RowSpan="2"/>
-        <Button Name="btnSave" Content="Save" HorizontalAlignment="Left" Margin="63,51,0,0" Grid.Row="3" VerticalAlignment="Top" Width="75" Height="28" Click="BtnSave_Click"/>
+        <Button Name="btnSave" Content="Save" HorizontalAlignment="Left" Margin="63,51,0,0" Grid.Row="3" VerticalAlignment="Top" Width="75" Height="28" Click="BtnSave_Click">
+            <Button.Style>
+                <Style TargetType="Button">
+                    <Setter Property="IsEnabled" Value="False"/>
+                    <Style.Triggers>
+                        <MultiDataTrigger>
+                            <MultiDataTrigger.Conditions>
+                                <Condition Binding="{Binding Path=(Validation.HasError), ElementName=tbDiscount}" Value="False"/>
+                            </MultiDataTrigger.Conditions>
+                            <Setter Property="IsEnabled" Value="True"/>
+                        </MultiDataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </Button.Style>
+        </Button>
         <Button Name="btnCancel" Content="Cancel" Grid.Column="1" HorizontalAlignment="Left" Margin="14,51,0,0" Grid.Row="3" VerticalAlignment="Top" Width="75" Height="28" Click="BtnCancel_Click"/>
     </Grid>
 </Window>

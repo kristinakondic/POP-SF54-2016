@@ -42,6 +42,10 @@ namespace POP54.GUI
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
+            if (IsValid() == false)
+            {
+                return;
+            }
             switch (operation)
             {
                 case Operation.ADD:
@@ -51,21 +55,26 @@ namespace POP54.GUI
 
                 case Operation.EDIT:
 
-                    foreach (var ft in Project.Instance.FurnitureTypesList)
-                    {
-                        if (ft.ID == furnitureType.ID)
-                            ft.Name = furnitureType.Name;
-                        break;
-                    }
+                    FurnitureTypeDAO.Update(furnitureType);
                     break;
             }
-            FurnitureTypeDAO.Update(furnitureType);
+            
             this.Close();
         }
 
         private void Button_Click_1(object sender, RoutedEventArgs e)
         {
             this.Close();
+        }
+        public bool IsValid()
+        {
+            BindingExpression expression = tbName.GetBindingExpression(TextBox.TextProperty);
+            expression.UpdateSource();
+            if (System.Windows.Controls.Validation.GetHasError(tbName) == true)
+            {
+                return false;
+            }
+            return true;
         }
     }
 }

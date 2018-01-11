@@ -3,14 +3,15 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:POP54.GUI"
+        xmlns:local="clr-namespace:POP54.Validation"
         mc:Ignorable="d"
         Title="FurnitureWindow" Height="350" Width="300"
         WindowStartupLocation="CenterScreen">
+    
     <Grid>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="27*"/>
-            <ColumnDefinition Width="46*"/>
+            <ColumnDefinition Width="93*"/>
+            <ColumnDefinition Width="199*"/>
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition Height="50*"/>
@@ -21,14 +22,59 @@
             <RowDefinition Height="69*"/>
         </Grid.RowDefinitions>
         <Label Content="Name" HorizontalAlignment="Left" Margin="20,10,0,0" VerticalAlignment="Top" Width="60" Height="30"/>
-        <TextBox Name="tbName" HorizontalAlignment="Left" Text="{Binding Path=Name}" Height="30" Margin="13,10,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="160" Grid.Column="1"/>
+        <TextBox Name="tbName" HorizontalAlignment="Left" Height="30" Margin="0,10,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="173" Grid.Column="1">
+            <TextBox.Text>
+                <Binding Path="Name" UpdateSourceTrigger="PropertyChanged">
+                    <Binding.ValidationRules>
+                        <local:StringValidation/>
+                    </Binding.ValidationRules>
+                </Binding>
+            </TextBox.Text>
+        </TextBox>
+        <TextBlock Margin="0,40,0,0" Foreground="Red" FontWeight="Bold" 
+                           Text="{Binding ElementName=tbName, Path=(Validation.Errors).CurrentItem.ErrorContent}" 
+                           HorizontalAlignment="Left" Width="189" Height="23" VerticalAlignment="Top" Grid.RowSpan="2" Grid.Column="1" />
         <Label Content="Code" HorizontalAlignment="Left" Margin="20,10,0,0" VerticalAlignment="Top" Width="60" Height="30" Grid.Row="1"/>
-        <TextBox  Name="tbCode" Text="{Binding Path=ProductCode}" HorizontalAlignment="Left" Height="30" Margin="13,10,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="160" Grid.Row="1" Grid.Column="1"/>
+        <TextBox  Name="tbCode" HorizontalAlignment="Left" Height="30" Margin="0,10,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="173" Grid.Row="1" Grid.Column="1">
+            <TextBox.Text>
+                <Binding Path="ProductCode" UpdateSourceTrigger="PropertyChanged">
+                    <Binding.ValidationRules>
+                        <local:StringValidation/>
+                    </Binding.ValidationRules>
+                </Binding>
+            </TextBox.Text>
+        </TextBox>
+        <TextBlock Margin="0,40,0,0" Foreground="Red" FontWeight="Bold" 
+                           Text="{Binding ElementName=tbCode, Path=(Validation.Errors).CurrentItem.ErrorContent}" 
+                           HorizontalAlignment="Left" Width="189" Height="23" VerticalAlignment="Top" Grid.RowSpan="2" Grid.Column="1" Grid.Row="1" />
         <Label Content="Price" HorizontalAlignment="Left" Margin="20,10,0,0" VerticalAlignment="Top" Width="60" Height="30" RenderTransformOrigin="0.6,-0.433" Grid.Row="2"/>
-        <TextBox Name="tbPrice" Text="{Binding Path=Price}" HorizontalAlignment="Left" Margin="13,10,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="160" Height="30" Grid.Row="2" Grid.Column="1"/>
+        <TextBox Name="tbPrice" HorizontalAlignment="Left" Margin="0,10,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="173" Height="30" Grid.Row="2" Grid.Column="1">
+            <TextBox.Text>
+                <Binding Path="Price" StringFormat="{}{##.##}"  UpdateSourceTrigger="PropertyChanged">
+                    <Binding.ValidationRules>
+                        <local:DoubleValidation/>
+                    </Binding.ValidationRules>
+                </Binding>
+            </TextBox.Text>
+        </TextBox>
+        <TextBlock Margin="0,40,0,0" Foreground="Red" FontWeight="Bold" 
+                           Text="{Binding ElementName=tbPrice, Path=(Validation.Errors).CurrentItem.ErrorContent}" 
+                           HorizontalAlignment="Left" Width="189" Height="23" VerticalAlignment="Top" Grid.RowSpan="2" Grid.Column="1" Grid.Row="2" />
         <Label Content="Quantity" HorizontalAlignment="Left" Margin="20,10,0,0" VerticalAlignment="Top" Width="60" Height="30" Grid.Row="3"/>
-        <TextBox Name="tbQuantity" Text="{Binding Path=Quantity}" HorizontalAlignment="Left" Margin="13,10,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="160" Height="30" Grid.Row="3" Grid.Column="1"/>
-        <ComboBox  Name="cbFurnitureType" SelectedItem="{Binding Path=FurnitureType}" Margin="13,12,10,0" Height="28" VerticalAlignment="Top" Grid.Row="4" Grid.Column="1" >
+        <TextBox Name="tbQuantity" HorizontalAlignment="Left" Margin="0,10,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="173" Height="30" Grid.Row="3" Grid.Column="1">
+            <TextBox.Text>
+                <Binding Path="Quantity" StringFormat="{}{##.##}" UpdateSourceTrigger="PropertyChanged">
+                    <Binding.ValidationRules>
+                        <local:DoubleValidation/>
+                    </Binding.ValidationRules>
+                </Binding>
+            </TextBox.Text>
+        </TextBox>
+        <TextBlock Margin="0,39,0,0" Foreground="Red" FontWeight="Bold" 
+                           Text="{Binding ElementName=tbQuantity, Path=(Validation.Errors).CurrentItem.ErrorContent}" 
+                           HorizontalAlignment="Left" Width="189" Height="23" VerticalAlignment="Top" Grid.RowSpan="2" Grid.Column="1" Grid.Row="3" />
+        <Label Content="Quantity" HorizontalAlignment="Left" Margin="20,10,0,0" VerticalAlignment="Top" Width="60" Height="30" Grid.Row="3"/>
+        <ComboBox  Name="cbFurnitureType" SelectedItem="{Binding Path=FurnitureType}" Margin="0,12,26,0" Height="28" VerticalAlignment="Top" Grid.Row="4" Grid.Column="1" >
             <ComboBox.ItemTemplate>
                 <DataTemplate>
                     <TextBlock Text="{Binding Name}"/>
@@ -46,8 +92,25 @@
         </ComboBox>
         <Label Content="Type" HorizontalAlignment="Left" Margin="20,12,0,0" VerticalAlignment="Top" Width="60" Height="30" Grid.Row="4"/>
 
-        <Button Name="btnSave" Content="Save" Margin="31,21,0,20" Click="BtnSave_Click" Grid.Row="5"/>
-        <Button Name="btnCancel" Content="Cancel" Margin="66,21,41,20" Click="BtnCancel_Click" Grid.Row="5" Grid.Column="1" RenderTransformOrigin="0.536,0.421"/>
+        <Button Name="btnSave" Content="Save" Margin="31,21,168,20" Click="BtnSave_Click" Grid.Row="5" Grid.ColumnSpan="2">
+            <Button.Style>
+                <Style TargetType="Button">
+                    <Setter Property="IsEnabled" Value="False"/>
+                    <Style.Triggers>
+                        <MultiDataTrigger>
+                            <MultiDataTrigger.Conditions>
+                                <Condition Binding="{Binding Path=(Validation.HasError), ElementName=tbName}" Value="False"/>
+                                <Condition Binding="{Binding Path=(Validation.HasError), ElementName=tbCode}" Value="False"/>
+                                <Condition Binding="{Binding Path=(Validation.HasError), ElementName=tbPrice}" Value="False"/>
+                                <Condition Binding="{Binding Path=(Validation.HasError), ElementName=tbQuantity}" Value="False"/>
+                            </MultiDataTrigger.Conditions>
+                            <Setter Property="IsEnabled" Value="True"/>
+                        </MultiDataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </Button.Style>
+        </Button>
+        <Button Name="btnCancel" Content="Cancel" Margin="81,21,26,20" Click="BtnCancel_Click" Grid.Row="5" Grid.Column="1" RenderTransformOrigin="0.536,0.421"/>
 
 
     </Grid>

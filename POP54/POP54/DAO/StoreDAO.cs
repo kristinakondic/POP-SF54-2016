@@ -8,6 +8,7 @@ using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 
 namespace POP54.DAO
 {
@@ -46,34 +47,41 @@ namespace POP54.DAO
         }
         public static void Update(FurnitureStore store)
         {
-            using (var con = new SqlConnection(ConfigurationManager.ConnectionStrings["POP"].ConnectionString))
+            try
             {
-                con.Open();
+                using (var con = new SqlConnection(ConfigurationManager.ConnectionStrings["POP"].ConnectionString))
+                {
+                    con.Open();
 
-                SqlCommand cmd = con.CreateCommand();
+                    SqlCommand cmd = con.CreateCommand();
 
-                cmd.CommandText = "UPDATE FurnitureStore SET Name = @Name, Address = @Address, Phone = @Phone, Email = @Email, Website = @Website, CompanyNo = @CompanyNo, AccountNo=@AccountNo, Pib = @Pib;";
-                cmd.CommandText += "SELECT SCOPE_IDENTITY();";
-                cmd.Parameters.AddWithValue("Name", store.Name);
-                cmd.Parameters.AddWithValue("Address", store.Address);
-                cmd.Parameters.AddWithValue("Phone", store.Phone);
-                cmd.Parameters.AddWithValue("Email", store.Email);
-                cmd.Parameters.AddWithValue("Website", store.Website);
-                cmd.Parameters.AddWithValue("CompanyNo", store.CompanyNo);
-                cmd.Parameters.AddWithValue("AccountNo", store.AccountNo);
-                cmd.Parameters.AddWithValue("Pib", store.Pib);
+                    cmd.CommandText = "UPDATE FurnitureStore SET Name = @Name, Address = @Address, Phone = @Phone, Email = @Email, Website = @Website, CompanyNo = @CompanyNo, AccountNo=@AccountNo, Pib = @Pib;";
+                    cmd.CommandText += "SELECT SCOPE_IDENTITY();";
+                    cmd.Parameters.AddWithValue("Name", store.Name);
+                    cmd.Parameters.AddWithValue("Address", store.Address);
+                    cmd.Parameters.AddWithValue("Phone", store.Phone);
+                    cmd.Parameters.AddWithValue("Email", store.Email);
+                    cmd.Parameters.AddWithValue("Website", store.Website);
+                    cmd.Parameters.AddWithValue("CompanyNo", store.CompanyNo);
+                    cmd.Parameters.AddWithValue("AccountNo", store.AccountNo);
+                    cmd.Parameters.AddWithValue("Pib", store.Pib);
 
-                cmd.ExecuteNonQuery();
+                    cmd.ExecuteNonQuery();
 
-                var s = Project.Instance.Store;
-                s.Name = store.Name;
-                s.Address = store.Address;
-                s.Phone = store.Phone;
-                s.Email = store.Email;
-                s.Website = store.Website;
-                s.CompanyNo = store.CompanyNo;
-                s.AccountNo = store.AccountNo;
-                s.Pib = store.Pib;
+                    var s = Project.Instance.Store;
+                    s.Name = store.Name;
+                    s.Address = store.Address;
+                    s.Phone = store.Phone;
+                    s.Email = store.Email;
+                    s.Website = store.Website;
+                    s.CompanyNo = store.CompanyNo;
+                    s.AccountNo = store.AccountNo;
+                    s.Pib = store.Pib;
+                }
+            }
+            catch
+            {
+                MessageBox.Show("Database error!", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
     }

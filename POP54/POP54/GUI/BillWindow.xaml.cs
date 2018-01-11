@@ -26,7 +26,10 @@ namespace POP54.GUI
             tbBuyer.DataContext = Project.Instance.Bill;
             foreach (var fur in Project.Instance.Bill.FurnitureForSaleList)
             {
-                tbBill.Text += "\nFurniture: " + fur.Name + " Price: " + fur.Price + ",00 RSD" + " Quantity: " + fur.Quantity;
+                if (fur.PriceOnSale == 0)
+                    tbBill.Text += "\nFurniture: " + fur.Name + " Price: " + fur.Price + ",00 RSD" + " Quantity: " + fur.Quantity;
+                else
+                    tbBill.Text += "\nFurniture: " + fur.Name + " Price: " + fur.PriceOnSale + ",00 RSD" + " Quantity: " + fur.Quantity;
             }
             foreach (var ads in Project.Instance.Bill.AdditionalServiceList)
             {
@@ -40,6 +43,14 @@ namespace POP54.GUI
 
         private void PrintBill_Click(object sender, RoutedEventArgs e)
         {
+            if (Project.Instance.Bill.FullPrice == 0)
+            {
+                MessageBox.Show("Bill cannot be empty", "Congratulations", MessageBoxButton.OK, MessageBoxImage.Information);
+                this.Close();
+            }
+               
+            if (IsValid() == false)
+                return;
             Project.Instance.Bill.DateOfSale = DateTime.Now;
             Project.Instance.Bill.BillNo = DateTime.Now.Millisecond;
             BillDAO.Create(Project.Instance.Bill);
@@ -64,11 +75,24 @@ namespace POP54.GUI
             }
             MessageBox.Show("Success!", "Congratulations", MessageBoxButton.OK, MessageBoxImage.Information);
             Project.Instance.Bill = new Bill();
+
+            MainWindow.DeleteSoldFurniture();
             this.Close();
         }
         private void Cancel_Click(object sender, RoutedEventArgs e)
         {
             this.Close();
+        }
+
+        public bool IsValid()
+        {
+            BindingExpression expression = tbBuyer.GetBindingExpression(TextBox.TextProperty);
+            expression.UpdateSource();
+            if (System.Windows.Controls.Validation.GetHasError(tbBuyer) == true)
+            {
+                return false;
+            }
+            return true;
         }
     }
 }

@@ -45,7 +45,7 @@ namespace POP54.GUI
             if (operation == Operation.ADD)
             {
                 dpStartDate.SelectedDate = DateTime.Now;
-                dpEndDate.SelectedDate = DateTime.Today;
+                dpEndDate.SelectedDate = DateTime.Now.AddDays(1);
             }
             else if (operation == Operation.EDIT)
             {
@@ -57,7 +57,17 @@ namespace POP54.GUI
 
         private void BtnSave_Click(object sender, RoutedEventArgs e)
         {
-            switch (operation)
+            if (IsValid() == false)
+            {
+                return;
+            }
+            if (dpStartDate.SelectedDate > dpEndDate.SelectedDate ||
+                dpStartDate.SelectedDate < DateTime.Now.AddDays(-1))
+            {
+                MessageBox.Show("Please pick a valid date.", "Bad date", MessageBoxButton.OK, MessageBoxImage.Information);
+                return;
+            }
+                switch (operation)
             {
                 case Operation.ADD:
                     
@@ -67,28 +77,44 @@ namespace POP54.GUI
                     break;
 
                 case Operation.EDIT:
+                    
                     foreach (var s in Project.Instance.SalesList)
                     {
                         if (s.ID == sale.ID)
                         {
-                            
+                            if(s.StartDate != (DateTime)dpStartDate.SelectedDate)
+                            {
+                                MessageBox.Show("You cannot edit start date.", "Error", MessageBoxButton.OK, MessageBoxImage.Information);
+                                return;
+                            }
                             s.Discount = sale.Discount;
                             s.StartDate = (DateTime)dpStartDate.SelectedDate;
                             s.EndDate = (DateTime)dpEndDate.SelectedDate;
                             s.Deleted = sale.Deleted;
                             MainWindow.CheckSaleDate();
+                            SaleDAO.Update(s);
                             break;
                         }
                     }
                     break;
             }
-            SaleDAO.Update(sale);
             this.Close();
         }
 
         private void BtnCancel_Click(object sender, RoutedEventArgs e)
         {
             this.Close();
+        }
+
+        public bool IsValid()
+        {
+            BindingExpression expression = tbDiscount.GetBindingExpression(TextBox.TextProperty);
+            expression.UpdateSource();
+            if (System.Windows.Controls.Validation.GetHasError(tbDiscount) == true)
+            {
+                return false;
+            }
+            return true;
         }
     }
 }
