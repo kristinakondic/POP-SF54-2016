@@ -1,4 +1,5 @@
-﻿using POP54.DAO;
+﻿using MahApps.Metro.Controls;
+using POP54.DAO;
 using POP54.Model;
 using POP54.Util;
 using System;
@@ -17,7 +18,7 @@ using System.Windows.Shapes;
 
 namespace POP54.GUI
 {
-    public partial class SalesListWindow : Window
+    public partial class SalesListWindow : MetroWindow
     {
         public Sale SelectedSale { get; set; }
         private Furniture furniture;
